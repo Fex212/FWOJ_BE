@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--绑定到Mapper-->
+<mapper namespace="com.teleport.dao.annMapper">
+
+    <!--查询公告列表(页数,每页几条)-->
+    <select id="getAnnList" resultType="ann">
+      SELECT * from onlinejudge.announcement;
+   </select>
+
+</mapper>
