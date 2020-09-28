@@ -8,7 +8,17 @@
 
     <!--查询公告列表(页数,每页几条)-->
     <select id="getAnnList" resultType="ann">
-      SELECT * from onlinejudge.announcement;
+    select * from onlinejudge.announcement limit #{start},#{num}
    </select>
+
+    <!--查询公告总数-->
+    <select id="getAnnSum" resultType="int">
+    select count(*) from onlinejudge.announcement
+   </select>
+
+<!--    按id查询公告详情-->
+    <select id="getAnnDetail" resultType="ann">
+        select * from onlinejudge.announcement where id=#{id}
+    </select>
 
 </mapper>

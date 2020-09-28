@@ -6,11 +6,11 @@ import com.teleport.pojo.ann;
 import com.teleport.service.annService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class IndexController {
@@ -20,15 +20,32 @@ public class IndexController {
     @Qualifier("annServiceImpl")
     private annService annServiceObject;
 
-    @RequestMapping(value = "/test",method = {RequestMethod.POST,RequestMethod.GET})
-    public String getAnnouncementList() throws JsonProcessingException {
+    //获取公告列表
+    @RequestMapping(value = "/getAnnList",method = {RequestMethod.GET})
+    @CrossOrigin
+    public String getAnnouncementList(@RequestParam("page") int page,@RequestParam("pre") int pre)throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
 
-        List<ann> list = annServiceObject.getAnnList(1,1);
+        List<ann> list = annServiceObject.getAnnList(page,pre);
+        int total  = annServiceObject.getAnnSum();
 
-        return  mapper.writeValueAsString(list);
-
+        HashMap s = new HashMap();
+        s.put("data",list);
+        s.put("total",total);
+        s.put("status",200);
+        return  mapper.writeValueAsString(s);
     }
 
+    //获取公告详情
+    @RequestMapping(value = "/getAnnDetail",method = {RequestMethod.GET})
+    @CrossOrigin
+    public String getAnnDetail(@RequestParam("id") int id)throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
 
+        ann annObject =  annServiceObject.getAnnDetail(id);
+
+        HashMap s = new HashMap();
+        s.put("data",annObject);
+        return  mapper.writeValueAsString(s);
+    }
 }
