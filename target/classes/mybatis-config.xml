@@ -8,6 +8,7 @@
     </typeAliases>
     <mappers>
         <mapper class="com.teleport.dao.annMapper"/>
+        <mapper class="com.teleport.dao.problemMapper"/>
     </mappers>
 
 </configuration>

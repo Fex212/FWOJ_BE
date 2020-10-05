@@ -1,6 +1,7 @@
 package com.teleport.service;
 
 import com.teleport.dao.annMapper;
+import com.teleport.dao.problemMapper;
 import com.teleport.pojo.ann;
 import java.util.List;
 
@@ -36,6 +37,5 @@ public class annServiceImpl implements annService{
     public ann getAnnDetail(int id) {
         return annMapperObject.getAnnDetail(id);
     }
-
 
 }
