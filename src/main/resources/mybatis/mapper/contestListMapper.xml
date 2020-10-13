@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.teleport.fwoj_backend.mapper.contestListMapper">
+
+    <select id="getContestList" resultType="contestList">
+    select title,startTime,endTime from onlinejudge.contest limit #{start},#{num}
+   </select>
+    <select id="getContestSum" resultType="int">
+    select count(*) from onlinejudge.contest
+   </select>
+
+
+</mapper>
