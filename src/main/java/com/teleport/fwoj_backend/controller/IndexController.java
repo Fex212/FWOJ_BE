@@ -106,7 +106,7 @@ public class IndexController {
     //获取问题详情
     @RequestMapping(value = "/getContestDetail",method = {RequestMethod.GET})
     @CrossOrigin
-    public String getContestDetail(@RequestParam("id") int id)throws JsonProcessingException {
+    public String getContestDetail(@RequestParam("id") int id) throws JsonProcessingException, ParseException {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
         s.put("data",contestServiceObject.getContestDetail(id));

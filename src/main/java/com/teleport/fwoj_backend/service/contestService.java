@@ -11,5 +11,5 @@ public interface contestService {
     List<contest> getContestList(int page, int pre) throws ParseException;
     //获取比赛总数
     int getContestSum();
-    contest getContestDetail(int id);
+    contest getContestDetail(int id) throws ParseException;
 }
