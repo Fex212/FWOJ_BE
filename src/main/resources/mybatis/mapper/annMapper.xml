@@ -12,7 +12,7 @@
 
     <!--查询公告总数-->
     <select id="getAnnSum" resultType="int">
-    select count(*) from onlinejudge.announcement
+    select count(id) from onlinejudge.announcement
    </select>
 
     <!--    按id查询公告详情-->

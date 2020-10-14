@@ -11,7 +11,7 @@
    </select>
     <!--查询问题总数-->
     <select id="getProblemSum" resultType="int">
-    select count(*) from onlinejudge.problem
+    select count(id) from onlinejudge.problem
    </select>
 
     <!--    按id查询问题详情-->

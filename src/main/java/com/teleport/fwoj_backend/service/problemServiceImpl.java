@@ -16,8 +16,7 @@ public class problemServiceImpl implements problemService{
     public List<problem> getProblemList(Integer page, Integer pre) {
         int start = pre * (page - 1);
         int num = pre;
-        List<problem> list = problemMapperObject.getProblemList(start,num);
-        return list;
+        return problemMapperObject.getProblemList(start,num);
     }
 
     @Override
@@ -25,7 +24,7 @@ public class problemServiceImpl implements problemService{
         return problemMapperObject.getProblemSum();
     }
 
-    //按id查找公告详情
+    //按id查找详情
     @Override
     public problem getProblemDetail(Integer id) {
         return problemMapperObject.getProblemDetail(id);
