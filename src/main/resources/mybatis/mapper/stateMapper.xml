@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.teleport.fwoj_backend.mapper.stateMapper">
+
+    <!--查询列表(页数,每页几条)-->
+    <select id="getStateList" resultType="state">
+    select id,problemId,authorId,date,language,state,memoryCost,timeCost from onlinejudge.state limit #{start},#{num}
+   </select>
+    <!--查询总数-->
+    <select id="getStateSum" resultType="int">
+    select count(id) from onlinejudge.state
+   </select>
+
+    <!--    按id查询详情-->
+    <select id="getStateDetail" resultType="state">
+        select * from onlinejudge.state where id=#{id}
+    </select>
+
+</mapper>
