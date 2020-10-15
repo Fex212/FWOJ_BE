@@ -5,9 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.teleport.fwoj_backend.pojo.ann;
 import com.teleport.fwoj_backend.pojo.contest;
 import com.teleport.fwoj_backend.pojo.problem;
+import com.teleport.fwoj_backend.pojo.state;
 import com.teleport.fwoj_backend.service.annService;
 import com.teleport.fwoj_backend.service.contestService;
 import com.teleport.fwoj_backend.service.problemService;
+import com.teleport.fwoj_backend.service.stateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +26,8 @@ public class IndexController {
     private problemService problemServiceObject;
     @Autowired
     private contestService contestServiceObject;
+    @Autowired
+    private stateService stateServiceObject;
 
     @RequestMapping("/hello")
     public String hello()
@@ -88,7 +92,7 @@ public class IndexController {
         return  mapper.writeValueAsString(s);
     }
 
-//  获取比赛列表
+    //获取比赛列表
     @RequestMapping(value = "/getContestList",method = {RequestMethod.GET})
     @CrossOrigin
     public String getContestList(@RequestParam("page") int page,@RequestParam("pre") int pre) throws JsonProcessingException, ParseException {
@@ -103,13 +107,38 @@ public class IndexController {
         return  mapper.writeValueAsString(s);
     }
 
-    //获取问题详情
+    //获取比赛详情
     @RequestMapping(value = "/getContestDetail",method = {RequestMethod.GET})
     @CrossOrigin
     public String getContestDetail(@RequestParam("id") int id) throws JsonProcessingException, ParseException {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
         s.put("data",contestServiceObject.getContestDetail(id));
+        return  mapper.writeValueAsString(s);
+    }
+
+    //获取状态列表
+    @RequestMapping(value = "/getStateList",method = {RequestMethod.GET})
+    @CrossOrigin
+    public String getStateList(@RequestParam("page") int page,@RequestParam("pre") int pre) throws JsonProcessingException, ParseException {
+        ObjectMapper mapper = new ObjectMapper();
+
+        List<state> list = stateServiceObject.getStateList(page,pre);
+        int total  = stateServiceObject.getStateSum();
+        HashMap s = new HashMap();
+        s.put("data",list);
+        s.put("total",total);
+        s.put("status",200);
+        return  mapper.writeValueAsString(s);
+    }
+
+    //获取比赛详情
+    @RequestMapping(value = "/getStateDetail",method = {RequestMethod.GET})
+    @CrossOrigin
+    public String getStateDetail(@RequestParam("id") int id) throws JsonProcessingException, ParseException {
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        s.put("data",stateServiceObject.getStateDetail(id));
         return  mapper.writeValueAsString(s);
     }
 }
