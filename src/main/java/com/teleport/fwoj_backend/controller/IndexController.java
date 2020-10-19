@@ -6,10 +6,7 @@ import com.teleport.fwoj_backend.pojo.ann;
 import com.teleport.fwoj_backend.pojo.contest;
 import com.teleport.fwoj_backend.pojo.problem;
 import com.teleport.fwoj_backend.pojo.state;
-import com.teleport.fwoj_backend.service.annService;
-import com.teleport.fwoj_backend.service.contestService;
-import com.teleport.fwoj_backend.service.problemService;
-import com.teleport.fwoj_backend.service.stateService;
+import com.teleport.fwoj_backend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +25,8 @@ public class IndexController {
     private contestService contestServiceObject;
     @Autowired
     private stateService stateServiceObject;
+    @Autowired
+    private userService userServiceObject;
 
     @RequestMapping("/hello")
     public String hello()
@@ -120,7 +119,7 @@ public class IndexController {
     //获取状态列表
     @RequestMapping(value = "/getStateList",method = {RequestMethod.GET})
     @CrossOrigin
-    public String getStateList(@RequestParam("page") int page,@RequestParam("pre") int pre) throws JsonProcessingException, ParseException {
+    public String getStateList(@RequestParam("page") int page,@RequestParam("pre") int pre) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
 
         List<state> list = stateServiceObject.getStateList(page,pre);
@@ -140,5 +139,21 @@ public class IndexController {
         HashMap s = new HashMap();
         s.put("data",stateServiceObject.getStateDetail(id));
         return  mapper.writeValueAsString(s);
+    }
+
+    //验证登陆是否成功
+    @RequestMapping(value = "/loginCheck",method = {RequestMethod.GET})
+    @CrossOrigin
+    public String loginCheck(@RequestParam("username") String username,@RequestParam("passwd") String passwd) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(userServiceObject.loginCheck(username,passwd) == 1)
+        {
+            s.put("status","1");
+            s.put("token",userServiceObject.createToken(username));
+        }
+        else
+            s.put("status","0");
+        return mapper.writeValueAsString(s);
     }
 }

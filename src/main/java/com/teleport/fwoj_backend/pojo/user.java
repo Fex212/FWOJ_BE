@@ -14,5 +14,9 @@ public class user {
     String avatar;
     String type;
     String token;
-
+    public user(String username,String token)
+    {
+        this.username = username;
+        this.token = token;
+    }
 }

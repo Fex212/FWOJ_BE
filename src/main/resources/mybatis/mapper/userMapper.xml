@@ -9,6 +9,11 @@
     <select id="loginCheck" resultType="int">
     select count(*) from onlinejudge.user where username=#{username} and passwd=#{passwd}
    </select>
+<!--    传入用户名和token，将token写入数据库-->
+    <insert id="createToken" parameterType="user">
+      update onlinejudge.user
+       set token=#{token} where username=#{username}
+   </insert>
 
 
 </mapper>
