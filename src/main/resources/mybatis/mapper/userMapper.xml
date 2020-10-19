@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.teleport.fwoj_backend.mapper.userMapper">
+
+<!--提供用户名密码查找是否有这个人-->
+    <select id="loginCheck" resultType="int">
+    select count(*) from onlinejudge.user where username=#{username} and passwd=#{passwd}
+   </select>
+
+
+</mapper>
