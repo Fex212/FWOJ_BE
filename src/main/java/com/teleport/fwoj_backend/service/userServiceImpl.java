@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Random;
 
 @Service
 public class userServiceImpl implements userService{
@@ -17,9 +18,16 @@ public class userServiceImpl implements userService{
     }
 
     @Override
-    public String createToken(String username) {
-        long t = new Date().getTime();
-        userMapperObject.createToken(username,String.valueOf(t));
-        return String.valueOf(t);
+    public String createToken(String username)
+    {
+        byte[] lock = new byte[0];
+        long w = 100000000;
+        long r = 0;
+        synchronized (lock) {
+            r = (long) ((Math.random() + 1) * w);
+        }
+        String token = System.currentTimeMillis() + String.valueOf(r).substring(1);
+        userMapperObject.createToken(username,token);
+        return token;
     }
 }

@@ -29,8 +29,7 @@ public class IndexController {
     private userService userServiceObject;
 
     @RequestMapping("/hello")
-    public String hello()
-    {
+    public String hello() {
         return "HelloWorld";
     }
 
@@ -140,7 +139,6 @@ public class IndexController {
         s.put("data",stateServiceObject.getStateDetail(id));
         return  mapper.writeValueAsString(s);
     }
-
     //验证登陆是否成功
     @RequestMapping(value = "/loginCheck",method = {RequestMethod.GET})
     @CrossOrigin
