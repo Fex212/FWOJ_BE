@@ -16,7 +16,6 @@ public class userServiceImpl implements userService{
     public int loginCheck(String username, String passwd) {
         return userMapperObject.loginCheck(username,passwd);
     }
-
     @Override
     public String createToken(String username)
     {

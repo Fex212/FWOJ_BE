@@ -133,25 +133,26 @@ public class IndexController {
     //获取比赛详情
     @RequestMapping(value = "/getStateDetail",method = {RequestMethod.GET})
     @CrossOrigin
-    public String getStateDetail(@RequestParam("id") int id) throws JsonProcessingException, ParseException {
+    public String getStateDetail(@RequestParam("id") int id) throws JsonProcessingException{
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
         s.put("data",stateServiceObject.getStateDetail(id));
         return  mapper.writeValueAsString(s);
     }
     //验证登陆是否成功
-    @RequestMapping(value = "/loginCheck",method = {RequestMethod.GET})
+    @RequestMapping(value = "/login",method = {RequestMethod.POST})
     @CrossOrigin
     public String loginCheck(@RequestParam("username") String username,@RequestParam("passwd") String passwd) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(userServiceObject.loginCheck(username,passwd) == 1)
-        {
-            s.put("status","1");
-            s.put("token",userServiceObject.createToken(username));
-        }
-        else
-            s.put("status","0");
+//        if(userServiceObject.loginCheck(username,passwd) == 1)
+//        {
+//            s.put("status","1");
+//            s.put("token",userServiceObject.createToken(username));
+//        }
+//        else
+//            s.put("status","0");
+        s.put("status",username+passwd);
         return mapper.writeValueAsString(s);
     }
 }
