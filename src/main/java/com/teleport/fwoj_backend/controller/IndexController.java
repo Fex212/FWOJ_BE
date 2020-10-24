@@ -139,8 +139,8 @@ public class IndexController {
     //验证登陆是否成功
     @RequestMapping(value = "/login",method = {RequestMethod.POST})
     @CrossOrigin
-    public String login(@RequestParam(value = "username",required = false) String username,
-                        @RequestBody @RequestParam(value = "passwd",required = false) String passwd) throws JsonProcessingException {
+    public String login(@RequestParam("username") String username,
+                        @RequestParam("passwd") String passwd) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
         if(userServiceObject.loginCheck(username,passwd) == 1)
