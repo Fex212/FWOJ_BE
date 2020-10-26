@@ -1,4 +1,4 @@
-package com.teleport.fwoj_backend.service;
+package com.teleport.fwoj_backend.service.Index;
 
 import com.teleport.fwoj_backend.mapper.annMapper;
 import com.teleport.fwoj_backend.pojo.ann;

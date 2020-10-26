@@ -3,7 +3,10 @@ package com.teleport.fwoj_backend.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.teleport.fwoj_backend.pojo.*;
-import com.teleport.fwoj_backend.service.*;
+import com.teleport.fwoj_backend.service.Index.annService;
+import com.teleport.fwoj_backend.service.Index.contestService;
+import com.teleport.fwoj_backend.service.Index.problemService;
+import com.teleport.fwoj_backend.service.Index.stateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,8 +25,7 @@ public class IndexController {
     private contestService contestServiceObject;
     @Autowired
     private stateService stateServiceObject;
-    @Autowired
-    private userService userServiceObject;
+
 
     @RequestMapping("/hello")
     public String hello() {
@@ -135,21 +137,5 @@ public class IndexController {
         HashMap s = new HashMap();
         s.put("data",stateServiceObject.getStateDetail(id));
         return  mapper.writeValueAsString(s);
-    }
-    //验证登陆是否成功
-    @RequestMapping(value = "/login",method = {RequestMethod.POST})
-    @CrossOrigin
-    public String login(@RequestParam("username") String username,
-                        @RequestParam("passwd") String passwd) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        HashMap s = new HashMap();
-        if(userServiceObject.loginCheck(username,passwd) == 1)
-        {
-            s.put("status","1");
-            s.put("token",userServiceObject.createToken(username));
-        }
-        else
-            s.put("status","0");
-        return mapper.writeValueAsString(s);
     }
 }

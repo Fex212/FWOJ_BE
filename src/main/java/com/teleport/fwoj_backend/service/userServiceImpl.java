@@ -4,8 +4,6 @@ import com.teleport.fwoj_backend.mapper.userMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.Random;
 
 @Service
 public class userServiceImpl implements userService{
@@ -28,5 +26,10 @@ public class userServiceImpl implements userService{
         String token = System.currentTimeMillis() + String.valueOf(r).substring(1);
         userMapperObject.createToken(username,token);
         return token;
+    }
+
+    @Override
+    public String getUserName(String token) {
+        return userMapperObject.getUserName(token);
     }
 }

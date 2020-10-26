@@ -11,5 +11,6 @@ public interface userMapper {
     int loginCheck(@Param("username") String username, @Param("passwd") String passwd);
     //token存到数据库并返回对象:
     int createToken(@Param("username") String username,@Param("token") String token);
-    //通过
+    //通过token查找用户名
+    String getUserName(@Param("token") String token);
 }

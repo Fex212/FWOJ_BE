@@ -14,6 +14,8 @@
       update onlinejudge.user
        set token=#{token} where username=#{username}
    </insert>
-
-
+<!--    根据传入的token查询用户的用户名-->
+    <select id="getUserName" resultType="String">
+    select username from onlinejudge.user where token=#{token}
+   </select>
 </mapper>
