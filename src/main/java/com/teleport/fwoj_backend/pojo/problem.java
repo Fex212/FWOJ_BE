@@ -35,4 +35,12 @@ public class problem {
         this.totalSubmit = totalSubmit;
         this.acRate = (acSubmit * 1.0) / (totalSubmit* 1.0)  ;
     }
+
+    public problem(int id,String title,int acSubmit,int totalSubmit)
+    {
+        this.id = id;
+        this.title = title;
+        this.acSubmit = acSubmit;
+        this.totalSubmit = totalSubmit;
+    }
 }

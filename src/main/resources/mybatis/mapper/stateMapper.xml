@@ -19,4 +19,10 @@
         select * from onlinejudge.state where id=#{id}
     </select>
 
+<!--    插入一条state-->
+    <insert id="addState" parameterType="state">
+        insert into state (problemId, authorId, date, language, state, memoryCost, timeCost, code)
+        values (#{problemId},#{authorId},#{date},#{language},'pending','0','0',#{code});
+    </insert>
+
 </mapper>

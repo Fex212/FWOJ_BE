@@ -7,10 +7,12 @@ import com.teleport.fwoj_backend.service.Index.annService;
 import com.teleport.fwoj_backend.service.Index.contestService;
 import com.teleport.fwoj_backend.service.Index.problemService;
 import com.teleport.fwoj_backend.service.Index.stateService;
+import com.teleport.fwoj_backend.service.userService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,6 +27,8 @@ public class IndexController {
     private contestService contestServiceObject;
     @Autowired
     private stateService stateServiceObject;
+    @Autowired
+    private userService userServiceObject;
 
 
     @RequestMapping("/hello")
@@ -143,9 +147,25 @@ public class IndexController {
     //获取比赛详情
     @RequestMapping(value = "/submitProblemCode",method = {RequestMethod.POST})
     @CrossOrigin
-    public String submitProblemCode(@RequestParam("code") String code) throws JsonProcessingException{
-
-        System.out.println(code);
-        return null;
+    public String submitProblemCode(@RequestParam("code") String code,@RequestParam("problemId") int problemId,
+                                    @RequestParam("token") String token,@RequestParam("language") String language) throws JsonProcessingException{
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        //token不合法
+        if(userServiceObject.getUserName(token) == null)
+        {
+            s.put("status","1");
+        }
+        else
+        {
+            //提交到state表
+            Date date = new Date();
+            int authorId = userServiceObject.getUserId(token);
+            if(stateServiceObject.addState(problemId,authorId,date,language,code))
+                s.put("status","0");
+            else
+                s.put("status","2");
+        }
+        return  mapper.writeValueAsString(s);
     }
 }

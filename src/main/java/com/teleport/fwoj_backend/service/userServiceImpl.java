@@ -34,6 +34,16 @@ public class userServiceImpl implements userService{
     }
 
     @Override
+    public int getUserId(String token) {
+        return userMapperObject.getUserId(token);
+    }
+
+    @Override
+    public String getUserType(String token) {
+        return userMapperObject.getUserType(token);
+    }
+
+    @Override
     public boolean emailExist(String email) {
         if(userMapperObject.emailExist(email) == 0)
             return false;

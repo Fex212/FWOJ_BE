@@ -5,6 +5,8 @@ public interface userService {
     int loginCheck(String username,String passwd);
     String createToken(String username);
     String getUserName(String token);
+    int getUserId(String token);
+    String getUserType(String token);
     //查询email是否存在
     boolean emailExist(String email);
     //查询username是否存在

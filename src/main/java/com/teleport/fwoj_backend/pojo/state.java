@@ -3,6 +3,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -10,16 +12,15 @@ public class state {
     int id;
     int problemId;
     int authorId;
-    String date;
+    Date date;
     String language;
     String state;
     String memoryCost;
     String timeCost;
     String code;
 
-    public state(int id,int problemId,int authorId,String date,String language,String state,String memoryCost,String timeCost)
+    public state(int problemId,int authorId,Date date,String language,String state,String memoryCost,String timeCost,String code)
     {
-        this.id = id;
         this.problemId = problemId;
         this.authorId = authorId;
         this.date = date;
@@ -27,5 +28,6 @@ public class state {
         this.state = state;
         this.memoryCost = memoryCost;
         this.timeCost = timeCost;
+        this.code = code;
     }
 }

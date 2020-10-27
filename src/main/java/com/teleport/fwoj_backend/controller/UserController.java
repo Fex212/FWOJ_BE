@@ -29,7 +29,7 @@ public class UserController {
         return mapper.writeValueAsString(s);
     }
 
-    //根据token查询用户名 用户类型
+    //根据token查询用户名
     @RequestMapping(value = "/getUserName",method = {RequestMethod.POST})
     @CrossOrigin
     public String getUserName(@RequestParam("token") String token) throws JsonProcessingException
@@ -39,6 +39,30 @@ public class UserController {
             return null;
         HashMap s = new HashMap();
         s.put("username",userServiceObject.getUserName(token));
+        return mapper.writeValueAsString(s);
+    }
+    //根据token查询用户Id
+    @RequestMapping(value = "/getUserId",method = {RequestMethod.POST})
+    @CrossOrigin
+    public String getUserId(@RequestParam("token") String token) throws JsonProcessingException
+    {
+        ObjectMapper mapper = new ObjectMapper();
+        if(token == null || token.equals(""))
+            return null;
+        HashMap s = new HashMap();
+        s.put("userId",userServiceObject.getUserId(token));
+        return mapper.writeValueAsString(s);
+    }
+    //根据token查询用户Type
+    @RequestMapping(value = "/getUserType",method = {RequestMethod.POST})
+    @CrossOrigin
+    public String getUserType(@RequestParam("token") String token) throws JsonProcessingException
+    {
+        ObjectMapper mapper = new ObjectMapper();
+        if(token == null || token.equals(""))
+            return null;
+        HashMap s = new HashMap();
+        s.put("userType",userServiceObject.getUserType(token));
         return mapper.writeValueAsString(s);
     }
 

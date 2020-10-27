@@ -5,6 +5,7 @@ import com.teleport.fwoj_backend.pojo.state;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 @Service
 public class stateServiceImpl implements stateService {
@@ -26,5 +27,13 @@ public class stateServiceImpl implements stateService {
     @Override
     public state getStateDetail(Integer id) {
         return stateMapperObject.getStateDetail(id);
+    }
+
+    @Override
+    public boolean addState(int problemId, int authorId, Date date, String language, String code) {
+        if(stateMapperObject.addState(problemId,authorId,date,language,code) == 1)
+            return true;
+        else
+            return false;
     }
 }

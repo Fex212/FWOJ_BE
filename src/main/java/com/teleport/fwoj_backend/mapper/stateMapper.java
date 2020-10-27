@@ -3,6 +3,8 @@ import com.teleport.fwoj_backend.pojo.state;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.Date;
 import java.util.List;
 
 @Mapper
@@ -12,7 +14,8 @@ public interface stateMapper{
     List<state> getStateList(@Param("start") int start, @Param("num") int num);
     //查询总记录数
     int getStateSum();
-    //按id查询
+    //按id查询state
     state getStateDetail(int id);
-
+    //插入一条
+    int addState(int problemId, int authorId, Date date,String language,String code);
 }

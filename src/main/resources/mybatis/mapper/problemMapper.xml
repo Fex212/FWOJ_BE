@@ -7,7 +7,7 @@
 
     <!--查询列表(页数,每页几条)-->
     <select id="getProblemList" resultType="problem">
-    select * from onlinejudge.problem limit #{start},#{num}
+    select id,title,acSubmit,totalSubmit from onlinejudge.problem limit #{start},#{num}
    </select>
     <!--查询总数-->
     <select id="getProblemSum" resultType="int">

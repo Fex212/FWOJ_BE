@@ -2,6 +2,7 @@ package com.teleport.fwoj_backend.service.Index;
 
 import com.teleport.fwoj_backend.pojo.state;
 
+import java.util.Date;
 import java.util.List;
 
 public interface stateService {
@@ -12,4 +13,6 @@ public interface stateService {
     Integer getStateSum();
     //查询详情
     state getStateDetail(Integer id);
+    //增加一条state
+    boolean addState(int problemId, int authorId, Date date, String language, String code);
 }

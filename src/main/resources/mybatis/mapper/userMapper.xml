@@ -18,11 +18,19 @@
     <select id="getUserName" resultType="String">
     select username from onlinejudge.user where token=#{token}
    </select>
+    <!--    根据传入的token查询用户的Id-->
+    <select id="getUserId" resultType="int">
+    select id from onlinejudge.user where token=#{token}
+   </select>
+    <!--    根据传入的token查询用户的Type-->
+    <select id="getUserType" resultType="String">
+    select type from onlinejudge.user where token=#{token}
+   </select>
     <!--    根据email查询用户数量-->
     <select id="emailExist" resultType="int">
     select count(*) from onlinejudge.user where email=#{email}
    </select>
-    <!--    根据email查询用户数量-->
+    <!--    根据username查询用户数量-->
     <select id="usernameExist" resultType="int">
     select count(*) from onlinejudge.user where username=#{username}
    </select>
