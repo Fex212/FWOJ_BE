@@ -123,7 +123,7 @@ public class IndexController {
     @CrossOrigin
     public String getStateList(@RequestParam("page") int page,@RequestParam("pre") int pre) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-
+;
         List<state> list = stateServiceObject.getStateList(page,pre);
         int total  = stateServiceObject.getStateSum();
         HashMap s = new HashMap();
@@ -133,7 +133,7 @@ public class IndexController {
         return  mapper.writeValueAsString(s);
     }
 
-    //获取比赛详情
+    //获取状态详情
     @RequestMapping(value = "/getStateDetail",method = {RequestMethod.GET})
     @CrossOrigin
     public String getStateDetail(@RequestParam("id") int id) throws JsonProcessingException{

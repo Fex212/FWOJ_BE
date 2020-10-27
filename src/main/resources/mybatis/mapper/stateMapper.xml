@@ -7,7 +7,7 @@
 
     <!--查询列表(页数,每页几条)-->
     <select id="getStateList" resultType="state">
-    select id,problemId,authorId,date,language,state,memoryCost,timeCost from onlinejudge.state limit #{start},#{num}
+    select id,problemId,authorId,date,language,state,memoryCost,timeCost from onlinejudge.state order by date desc limit #{start},#{num}
    </select>
     <!--查询总数-->
     <select id="getStateSum" resultType="int">
@@ -22,7 +22,7 @@
 <!--    插入一条state-->
     <insert id="addState" parameterType="state">
         insert into state (problemId, authorId, date, language, state, memoryCost, timeCost, code)
-        values (#{problemId},#{authorId},#{date},#{language},'pending','0','0',#{code});
+        values (#{problemId},#{authorId},#{date},#{language},'Pending','0','0',#{code});
     </insert>
 
 </mapper>
