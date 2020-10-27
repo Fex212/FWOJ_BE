@@ -138,4 +138,14 @@ public class IndexController {
         s.put("data",stateServiceObject.getStateDetail(id));
         return  mapper.writeValueAsString(s);
     }
+
+    //提交代码 题目
+    //获取比赛详情
+    @RequestMapping(value = "/submitProblemCode",method = {RequestMethod.POST})
+    @CrossOrigin
+    public String submitProblemCode(@RequestParam("code") String code) throws JsonProcessingException{
+
+        System.out.println(code);
+        return null;
+    }
 }

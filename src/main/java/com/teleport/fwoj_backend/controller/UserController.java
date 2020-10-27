@@ -42,4 +42,33 @@ public class UserController {
         return mapper.writeValueAsString(s);
     }
 
+    //传入email username passwd 注册
+    @RequestMapping(value = "/register",method = {RequestMethod.POST})
+    @CrossOrigin
+    public String register(@RequestParam("email") String email,@RequestParam("username") String username,@RequestParam("passwd") String passwd)
+            throws JsonProcessingException
+    {
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+
+        boolean emailE = userServiceObject.emailExist(email);
+        boolean usernameE = userServiceObject.usernameExist(username);
+
+        //error:1 email exist 2 username exist 3 format error sql error
+        if(emailE)
+            s.put("error","1");
+        else if(usernameE)
+            s.put("error","2");
+        else if(username.length() > 10 || username.length() < 2 || passwd.length()>35 || email.length() > 30)
+            s.put("error","3");
+        else
+        {
+            boolean r = userServiceObject.register(email,username,passwd);
+            if(r)
+                s.put("error","0");
+            else
+                s.put("error","4");
+        }
+        return mapper.writeValueAsString(s);
+    }
 }

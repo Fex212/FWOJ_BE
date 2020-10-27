@@ -32,4 +32,31 @@ public class userServiceImpl implements userService{
     public String getUserName(String token) {
         return userMapperObject.getUserName(token);
     }
+
+    @Override
+    public boolean emailExist(String email) {
+        if(userMapperObject.emailExist(email) == 0)
+            return false;
+        else
+            return true;
+    }
+
+    @Override
+    public boolean usernameExist(String username) {
+        if(userMapperObject.usernameExist(username) == 0)
+            return false;
+        else
+            return true;
+    }
+
+    @Override
+    public boolean register(String email, String username, String passwd) {
+        int r = userMapperObject.register(email,username,passwd);
+        if(r == 0)
+            return false;
+        else
+            return true;
+    }
+
+
 }

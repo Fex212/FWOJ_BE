@@ -13,4 +13,10 @@ public interface userMapper {
     int createToken(@Param("username") String username,@Param("token") String token);
     //通过token查找用户名
     String getUserName(@Param("token") String token);
+    //通过email查询用户数量
+    int emailExist(String email);
+    //通过username查询用户数量
+    int usernameExist(String username);
+    //传入email username passwd写入
+    int register(@Param("email") String email,@Param("username") String username,@Param("passwd") String passwd);
 }

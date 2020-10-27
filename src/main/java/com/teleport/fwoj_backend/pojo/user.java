@@ -13,10 +13,17 @@ public class user {
     String des;
     String avatar;
     String type;
+    String email;
     String token;
     public user(String username,String token)
     {
         this.username = username;
         this.token = token;
+    }
+    public user(String email,String username,String passwd)
+    {
+        this.email = email;
+        this.username = username;
+        this.passwd = passwd;
     }
 }
