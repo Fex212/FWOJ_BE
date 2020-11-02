@@ -39,4 +39,12 @@
     insert onlinejudge.user(email,username,passwd,type)
     values(#{email},#{username},#{passwd},'user')
     </insert>
+<!--    获得用户列表-->
+    <select id="getUserList" resultType="user">
+    select id,username,email,type from user order by id desc limit #{start},#{num}
+   </select>
+<!--    获取用户总数-->
+    <select id="getUserNum" resultType="int">
+    select count(id) from user;
+   </select>
 </mapper>

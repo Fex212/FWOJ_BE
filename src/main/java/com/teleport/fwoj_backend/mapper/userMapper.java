@@ -1,8 +1,11 @@
 package com.teleport.fwoj_backend.mapper;
 
+import com.teleport.fwoj_backend.pojo.user;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Mapper
 @Repository
@@ -23,4 +26,8 @@ public interface userMapper {
     int usernameExist(String username);
     //传入email username passwd写入
     int register(@Param("email") String email,@Param("username") String username,@Param("passwd") String passwd);
+    //获取用户列表
+    List<user> getUserList(@Param("start") int start, @Param("num") int num);
+    //获取用户总数
+    int getUserNum();
 }

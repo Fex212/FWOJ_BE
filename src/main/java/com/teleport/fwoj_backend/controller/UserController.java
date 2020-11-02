@@ -2,11 +2,13 @@ package com.teleport.fwoj_backend.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.teleport.fwoj_backend.pojo.user;
 import com.teleport.fwoj_backend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 public class UserController {
@@ -94,5 +96,18 @@ public class UserController {
                 s.put("error","4");
         }
         return mapper.writeValueAsString(s);
+    }
+
+    //获取用户列表
+    @RequestMapping(value = "/getUserList",method = {RequestMethod.GET})
+    @CrossOrigin
+    public String getUserList(@RequestParam("page") int page,@RequestParam("pre") int pre) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        List<user> list = userServiceObject.getUserList(page,pre);
+        int num = userServiceObject.getUserNum();
+        HashMap s = new HashMap();
+        s.put("data",list);
+        s.put("num",num);
+        return  mapper.writeValueAsString(s);
     }
 }

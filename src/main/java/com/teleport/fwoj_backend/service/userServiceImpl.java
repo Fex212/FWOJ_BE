@@ -1,8 +1,11 @@
 package com.teleport.fwoj_backend.service;
 
 import com.teleport.fwoj_backend.mapper.userMapper;
+import com.teleport.fwoj_backend.pojo.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
@@ -66,6 +69,19 @@ public class userServiceImpl implements userService{
             return false;
         else
             return true;
+    }
+
+    @Override
+    public List<user> getUserList(Integer page, Integer pre) {
+
+        int start = pre * (page - 1);
+        int num = pre;
+        return userMapperObject.getUserList(start,num);
+    }
+
+    @Override
+    public int getUserNum() {
+        return userMapperObject.getUserNum();
     }
 
 
