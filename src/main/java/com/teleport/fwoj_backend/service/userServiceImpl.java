@@ -52,7 +52,7 @@ public class userServiceImpl implements userService{
     }
 
     @Override
-    public boolean usernameExist(String username) {
+    public boolean usernameIsExist(String username) {
         if(userMapperObject.usernameExist(username) == 0)
             return false;
         else

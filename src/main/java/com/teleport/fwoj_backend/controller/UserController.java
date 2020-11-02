@@ -76,7 +76,7 @@ public class UserController {
         HashMap s = new HashMap();
 
         boolean emailE = userServiceObject.emailExist(email);
-        boolean usernameE = userServiceObject.usernameExist(username);
+        boolean usernameE = userServiceObject.usernameIsExist(username);
 
         //error:1 email exist 2 username exist 3 format error sql error
         if(emailE)

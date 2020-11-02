@@ -26,4 +26,13 @@ public class user {
         this.username = username;
         this.passwd = passwd;
     }
+
+    //admin页面用的对象
+    public user(int id,String username,String email,String type)
+    {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.type = type;
+    }
 }

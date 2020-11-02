@@ -1,4 +1,4 @@
-package com.teleport.fwoj_backend.service.Index;
+package com.teleport.fwoj_backend.service;
 
 import com.teleport.fwoj_backend.pojo.ann;
 import java.util.List;

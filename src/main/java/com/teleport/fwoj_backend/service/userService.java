@@ -10,7 +10,8 @@ public interface userService {
     //查询email是否存在
     boolean emailExist(String email);
     //查询username是否存在
-    boolean usernameExist(String username);
+    boolean usernameIsExist(String username);
     //注册
     boolean register(String email,String username,String passwd);
+    //
 }
