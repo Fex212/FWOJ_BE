@@ -21,4 +21,6 @@ public interface userService {
     List<user> getUserList(Integer page, Integer pre);
     //获取用户总数
     int getUserNum();
+    //查询token是否是管理员
+    boolean tokenIsAdmin(String token);
 }

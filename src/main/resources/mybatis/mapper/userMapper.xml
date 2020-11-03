@@ -47,4 +47,8 @@
     <select id="getUserNum" resultType="int">
     select count(id) from user;
    </select>
+<!--    查询token对应的type-->
+    <select id="getTypeByToken" resultType="String">
+        select type from user where token=#{token}
+    </select>
 </mapper>

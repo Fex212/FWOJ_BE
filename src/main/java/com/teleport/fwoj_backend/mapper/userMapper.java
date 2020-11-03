@@ -30,4 +30,6 @@ public interface userMapper {
     List<user> getUserList(@Param("start") int start, @Param("num") int num);
     //获取用户总数
     int getUserNum();
+    //查询token对应的type
+    String getTypeByToken(String token);
 }

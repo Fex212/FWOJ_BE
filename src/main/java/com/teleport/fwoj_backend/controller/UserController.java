@@ -101,13 +101,33 @@ public class UserController {
     //获取用户列表
     @RequestMapping(value = "/getUserList",method = {RequestMethod.GET})
     @CrossOrigin
-    public String getUserList(@RequestParam("page") int page,@RequestParam("pre") int pre) throws JsonProcessingException {
+    public String getUserList(@RequestParam("page") int page,@RequestParam("pre") int pre,@RequestParam("token") String token) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-        List<user> list = userServiceObject.getUserList(page,pre);
-        int num = userServiceObject.getUserNum();
         HashMap s = new HashMap();
-        s.put("data",list);
-        s.put("num",num);
+        if(userServiceObject.tokenIsAdmin(token))
+        {
+            List<user> list = userServiceObject.getUserList(page,pre);
+            int num = userServiceObject.getUserNum();
+            s.put("data",list);
+            s.put("num",num);
+            s.put("status",1);
+        }
+        else
+            s.put("status",0);
         return  mapper.writeValueAsString(s);
+    }
+    //根据token查询是否为管理员
+    @RequestMapping(value = "/tokenIsAdmin",method = {RequestMethod.GET})
+    @CrossOrigin
+    public String tokenIsAdmin(@RequestParam("token") String token) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(userServiceObject.tokenIsAdmin(token))
+        {
+            s.put("result","1");
+        }
+        else
+            s.put("result","0");
+        return mapper.writeValueAsString(s);
     }
 }

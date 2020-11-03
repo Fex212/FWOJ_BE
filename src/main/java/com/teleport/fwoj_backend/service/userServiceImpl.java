@@ -84,5 +84,13 @@ public class userServiceImpl implements userService{
         return userMapperObject.getUserNum();
     }
 
+    @Override
+    public boolean tokenIsAdmin(String token) {
+        if(userMapperObject.getTypeByToken(token) != null && userMapperObject.getTypeByToken(token).equals("admin"))
+            return true;
+        else
+            return false;
+    }
+
 
 }
