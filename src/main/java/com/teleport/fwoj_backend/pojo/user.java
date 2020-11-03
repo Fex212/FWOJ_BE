@@ -27,7 +27,7 @@ public class user {
         this.passwd = passwd;
     }
 
-    //admin页面用的对象
+    //admin页面列表对象
     public user(int id,String username,String email,String type)
     {
         this.id = id;
@@ -35,4 +35,26 @@ public class user {
         this.email = email;
         this.type = type;
     }
+
+    //admin编辑用户详情对象
+    public user(int id,String username,String email,String type,String des)
+    {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.type = type;
+        this.des = des;
+    }
+
+    //admin编辑用户提交对象
+    public user(int id,String email,String username,String type,String des,String passwd)
+    {
+        this.id = id;
+        this.email = email;
+        this.username = username;
+        this.type = type;
+        this.des = des;
+        this.passwd = passwd;
+    }
+
 }

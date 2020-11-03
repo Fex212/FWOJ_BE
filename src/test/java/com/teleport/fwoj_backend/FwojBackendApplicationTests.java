@@ -19,7 +19,7 @@ class FwojBackendApplicationTests {
     userService userServiceObject;
     @Test
     void contextLoads() {
-        System.out.println(userServiceObject.createToken("11"));
+        System.out.println(userServiceObject.getEmailNumExpect("1@q11.com",5));
     }
 
 }

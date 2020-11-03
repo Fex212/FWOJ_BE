@@ -63,6 +63,16 @@ public class userServiceImpl implements userService{
     }
 
     @Override
+    public int getEmailNumExpect(String email, int id) {
+        return userMapperObject.getEmailNumExpect(email,id);
+    }
+
+    @Override
+    public int getUsernameNumExpect(String username, int id) {
+        return userMapperObject.getUsernameNumExpect(username,id);
+    }
+
+    @Override
     public boolean register(String email, String username, String passwd) {
         int r = userMapperObject.register(email,username,passwd);
         if(r == 0)
@@ -72,11 +82,11 @@ public class userServiceImpl implements userService{
     }
 
     @Override
-    public List<user> getUserList(Integer page, Integer pre) {
+    public List<user> getUserList(Integer page, Integer pre,String key) {
 
         int start = pre * (page - 1);
         int num = pre;
-        return userMapperObject.getUserList(start,num);
+        return userMapperObject.getUserList(start,num,key);
     }
 
     @Override
@@ -87,6 +97,35 @@ public class userServiceImpl implements userService{
     @Override
     public boolean tokenIsAdmin(String token) {
         if(userMapperObject.getTypeByToken(token) != null && userMapperObject.getTypeByToken(token).equals("admin"))
+            return true;
+        else
+            return false;
+    }
+
+    @Override
+    public user getUserDetailById(int id) {
+        return userMapperObject.getUserDetailById(id);
+    }
+
+    @Override
+    public boolean editUserDetail(String email, String username, String type, String des, String passwd,int id) {
+        if(userMapperObject.editUserDetail(email,username,type,des,passwd,id) == 1)
+            return true;
+        else
+            return false;
+    }
+
+    @Override
+    public boolean editUserDetailWithoutPasswd(String email, String username, String type, String des,int id) {
+        if(userMapperObject.editUserDetailWithoutPasswd(email,username,type,des,id) == 1)
+            return true;
+        else
+            return false;
+    }
+
+    @Override
+    public boolean deleteUser(int id) {
+        if(userMapperObject.deleteUser(id) == 1)
             return true;
         else
             return false;
