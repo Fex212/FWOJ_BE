@@ -14,7 +14,14 @@ public class user {
     String avatar;
     String type;
     String email;
+    boolean available;
     String token;
+    //按username更改用户的available
+    public user(String username,boolean available)
+    {
+        this.username = username;
+        this.available = available;
+    }
     public user(String username,String token)
     {
         this.username = username;
@@ -28,12 +35,13 @@ public class user {
     }
 
     //admin页面列表对象
-    public user(int id,String username,String email,String type)
+    public user(int id,String username,String email,String type,boolean available)
     {
         this.id = id;
         this.username = username;
         this.email = email;
         this.type = type;
+        this.available = available;
     }
 
     //admin编辑用户详情对象

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.teleport.fwoj_backend.pojo.user;
 import com.teleport.fwoj_backend.service.*;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,10 +21,15 @@ public class UserController {
                         @RequestParam("passwd") String passwd) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
+        //status 1 登录成功 0 用户名或密码不正确 -1 被封号
         if(userServiceObject.loginCheck(username,passwd) == 1)
         {
-            s.put("status","1");
-            s.put("token",userServiceObject.createToken(username));
+            if(userServiceObject.getAvailableByUsername(username)) {
+                s.put("status", "1");
+                s.put("token", userServiceObject.createToken(username));
+            }
+            else
+                s.put("status","-1");
         }
         else
             s.put("status","0");
@@ -151,7 +155,6 @@ public class UserController {
 
     //更新用户信息
     //根据管理员的token和用户id查询用户详细信息(带密码)
-    //根据token查询是否为管理员
     @RequestMapping(value = "/updateUser",method = {RequestMethod.POST})
     @CrossOrigin
     public String updateUser(@RequestParam("token") String token, @RequestParam("email") String email, @RequestParam("username") String username,
@@ -191,7 +194,6 @@ public class UserController {
 
     //更新用户信息
     //根据管理员的token和用户id查询用户详细信息(带密码)
-    //根据token查询是否为管理员
     @RequestMapping(value = "/updateUserWithoutPasswd",method = {RequestMethod.POST})
     @CrossOrigin
     public String updateUserWithoutPasswd(@RequestParam("token") String token, @RequestParam("email") String email, @RequestParam("username") String username,
@@ -248,6 +250,31 @@ public class UserController {
         return mapper.writeValueAsString(s);
     }
 
+    //更改用户的available
+    @RequestMapping(value = "/changeUserAvailable",method = {RequestMethod.POST})
+    @CrossOrigin
+    public String changeUserAvailable (@RequestParam("token") String token,@RequestParam("username") String username) throws JsonProcessingException {
 
+
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(userServiceObject.tokenIsAdmin(token))
+        {
+            //可用
+            if(userServiceObject.getAvailableByUsername(username))
+                userServiceObject.setAvailableByUsername(username,false);
+            //不可用
+            else
+                userServiceObject.setAvailableByUsername(username,true);
+
+            s.put("error","0");
+
+        }
+        else
+            s.put("error","1");
+
+
+        return mapper.writeValueAsString(s);
+    }
 
 }

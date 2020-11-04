@@ -1,13 +1,21 @@
 package com.teleport.fwoj_backend.service;
 
 import com.teleport.fwoj_backend.pojo.user;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 public interface userService {
 
+    //登录
     int loginCheck(String username,String passwd);
+    //根据用户名查找available是否为true
+    boolean getAvailableByUsername(String username);
+    //根据用户名设置available
+    boolean setAvailableByUsername(String username,boolean available);
+    //创建token
     String createToken(String username);
+    //根据token获取用户名，id，用户类型
     String getUserName(String token);
     int getUserId(String token);
     String getUserType(String token);

@@ -12,6 +12,10 @@ import java.util.List;
 public interface userMapper {
     //提供用户名密码查找是否有这个人
     int loginCheck(@Param("username") String username, @Param("passwd") String passwd);
+    //根据用户名查找available是否为1
+    int getAvailableByUsername(@Param("username") String username);
+    //根据用户名设置available
+    int setAvailableByUsername(@Param("username") String username,@Param("available") boolean available);
     //token存到数据库并返回对象:
     int createToken(@Param("username") String username,@Param("token") String token);
     //通过token查找用户名
@@ -21,13 +25,13 @@ public interface userMapper {
     //通过token查户type
     String getUserType(@Param("token") String token);
     //通过email查询用户数量
-    int emailExist(String email);
+    int emailExist(@Param("email") String email);
     //通过username查询用户数量
-    int usernameExist(String username);
+    int usernameExist(@Param("username") String username);
 //  根据email查询除自己之外的用户数量
-    int getEmailNumExpect(String email,int id);
+    int getEmailNumExpect(@Param("email") String email,@Param("id") int id);
 //  根据email查询除自己之外的用户数量
-    int getUsernameNumExpect(String username,int id);
+    int getUsernameNumExpect(@Param("username") String username,@Param("id") int id);
     //传入email username passwd写入
     int register(@Param("email") String email,@Param("username") String username,@Param("passwd") String passwd);
     //获取用户列表

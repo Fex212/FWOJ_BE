@@ -17,6 +17,23 @@ public class userServiceImpl implements userService{
     public int loginCheck(String username, String passwd) {
         return userMapperObject.loginCheck(username,passwd);
     }
+
+    @Override
+    public boolean getAvailableByUsername(String username) {
+        if(userMapperObject.getAvailableByUsername(username) == 1)
+            return true;
+        else
+            return false;
+    }
+
+    @Override
+    public boolean setAvailableByUsername(String username, boolean available) {
+        if(userMapperObject.setAvailableByUsername(username,available) == 1)
+            return true;
+        else
+            return false;
+    }
+
     @Override
     public String createToken(String username)
     {

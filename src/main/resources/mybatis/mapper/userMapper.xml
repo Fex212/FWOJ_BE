@@ -9,7 +9,15 @@
     <select id="loginCheck" resultType="int">
     select count(*) from onlinejudge.user where username=#{username} and passwd=#{passwd}
    </select>
-<!--    传入用户名和token，将token写入数据库-->
+<!--    根据用户名查找available是否为1-->
+    <select id="getAvailableByUsername" resultType="int">
+        select available from user where username=#{username};
+    </select>
+<!--    根据用户名设置available-->
+    <update id="setAvailableByUsername" parameterType="user">
+        update user set available = #{available} where username=#{username};
+    </update>
+    <!--    传入用户名和token，将token写入数据库-->
     <insert id="createToken" parameterType="user">
       update onlinejudge.user
        set token=#{token} where username=#{username}
@@ -49,7 +57,7 @@
     </insert>
 <!--    获得用户列表-->
     <select id="getUserList" resultType="user">
-    select id,username,email,type from user where username like "%"#{key}"%"  order by id desc limit #{start},#{num}
+    select id,username,email,type,available from user where username like "%"#{key}"%"  order by id desc limit #{start},#{num}
    </select>
 <!--    获取用户总数-->
     <select id="getUserNum" resultType="int">
@@ -71,8 +79,9 @@
     <update id="editUserDetailWithoutPasswd" parameterType="user">
         update user set email=#{email},username=#{username},type=#{type},des=#{des} where id=#{id}
     </update>
-<!--    根据id删除用户-->
+    <!--    根据id删除用户-->
     <delete id="deleteUser" parameterType="int">
         delete from user where id=#{id}
     </delete>
+
 </mapper>
