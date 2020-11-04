@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @RestController
-public class UserController {
+public class userController {
     @Autowired
     private userService userServiceObject;
     //验证登陆是否成功
@@ -266,13 +266,10 @@ public class UserController {
             //不可用
             else
                 userServiceObject.setAvailableByUsername(username,true);
-
             s.put("error","0");
-
         }
         else
             s.put("error","1");
-
 
         return mapper.writeValueAsString(s);
     }

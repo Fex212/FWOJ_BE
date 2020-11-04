@@ -29,4 +29,27 @@ public class problemServiceImpl implements problemService{
     public problem getProblemDetail(Integer id) {
         return problemMapperObject.getProblemDetail(id);
     }
+
+    @Override
+    public List<problem> getProblemListAdmin(int page, int pre, String token, String key) {
+        int start = pre * (page - 1);
+        int num = pre;
+        return problemMapperObject.getProblemListAdmin(start,num,token,key);
+    }
+
+    @Override
+    public boolean getProblemVisibleById(int id) {
+        if(problemMapperObject.getProblemVisibleById(id) == 1)
+            return true;
+        else
+            return false;
+    }
+
+    @Override
+    public boolean setProblemVisibleById(int id, boolean visible) {
+        if(problemMapperObject.setProblemVisibleById(id,visible) == 1)
+            return true;
+        else
+            return false;
+    }
 }

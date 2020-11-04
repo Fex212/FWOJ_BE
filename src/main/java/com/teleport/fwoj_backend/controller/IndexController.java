@@ -10,14 +10,13 @@ import com.teleport.fwoj_backend.service.stateService;
 import com.teleport.fwoj_backend.service.userService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 @RestController
-public class IndexController {
+public class indexController {
 
     @Autowired
     private annService annServiceObject;
@@ -29,7 +28,6 @@ public class IndexController {
     private stateService stateServiceObject;
     @Autowired
     private userService userServiceObject;
-
 
     @RequestMapping("/hello")
     public String hello() {

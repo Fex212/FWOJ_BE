@@ -19,4 +19,20 @@
         select * from onlinejudge.problem where id=#{id}
     </select>
 
+
+<!--    //获取问题列表(Admin) id title createTime visible authorName-->
+    <select id="getProblemListAdmin" resultType="problem">
+    select id,title,createTime,visible,authorName from problem where title like "%"#{key}"%" order by id desc limit #{start},#{num}
+   </select>
+
+    <!--    根据id查询问题visibile-->
+    <select id="getProblemVisibleById" resultType="int">
+        select visible from problem where id=#{id}
+    </select>
+    <!--    根据id设置问题visibile-->
+    <update id="setProblemVisibleById" parameterType="problem">
+        update problem set visible=#{visible} where id=#{id}
+    </update>
+
+
 </mapper>
