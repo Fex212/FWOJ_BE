@@ -52,12 +52,12 @@
    </select>
     <!--    传入email username passwd，写入user表-->
     <insert id="register" parameterType="user">
-    insert onlinejudge.user(email,username,passwd,type)
-    values(#{email},#{username},#{passwd},'user')
+    insert onlinejudge.user(email,username,passwd,type,available)
+    values(#{email},#{username},#{passwd},'user','1')
     </insert>
 <!--    获得用户列表-->
     <select id="getUserList" resultType="user">
-    select id,username,email,type,available from user where username like "%"#{key}"%"  order by id desc limit #{start},#{num}
+    select id,username,email,type,available from user where username like "%"#{key}"%" or email like "%"#{key}"%" order by id desc limit #{start},#{num}
    </select>
 <!--    获取用户总数-->
     <select id="getUserNum" resultType="int">
