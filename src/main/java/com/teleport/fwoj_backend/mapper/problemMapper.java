@@ -21,4 +21,6 @@ public interface problemMapper {
     int getProblemVisibleById(int id);
     //根据id设置问题的visible
     int setProblemVisibleById(int id,boolean visible);
+    //根据id删除问题
+    int deleteProblemById(int id);
 }

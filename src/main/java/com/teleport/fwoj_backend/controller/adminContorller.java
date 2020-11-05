@@ -1,16 +1,12 @@
 package com.teleport.fwoj_backend.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.teleport.fwoj_backend.pojo.problem;
-import com.teleport.fwoj_backend.pojo.user;
 import com.teleport.fwoj_backend.service.problemService;
 import com.teleport.fwoj_backend.service.userService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
-
 @RestController
 public class adminContorller {
 
@@ -61,6 +57,29 @@ public class adminContorller {
                     s.put("error","0");
                 else
                     s.put("error","2");
+        }
+        else
+            s.put("error","1");
+
+        return mapper.writeValueAsString(s);
+    }
+
+
+    //根据id删除题目
+    @RequestMapping(value = "/deleteProblemById",method = {RequestMethod.DELETE})
+    @CrossOrigin
+    public String deleteProblemById(@RequestParam("token") String token,@RequestParam("id") int id) throws JsonProcessingException {
+
+        //error
+        //0 正常 1 越权 2 删除失败
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(userServiceObject.tokenIsAdmin(token))
+        {
+            if(problemServiceObject.deleteProblemById(id))
+                s.put("error","0");
+            else
+                s.put("error","2");
         }
         else
             s.put("error","1");

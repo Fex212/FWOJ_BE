@@ -52,4 +52,12 @@ public class problemServiceImpl implements problemService{
         else
             return false;
     }
+
+    @Override
+    public boolean deleteProblemById(int id) {
+        if(problemMapperObject.deleteProblemById(id) == 1)
+            return true;
+        else
+            return false;
+    }
 }

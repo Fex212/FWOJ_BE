@@ -20,4 +20,8 @@ public interface problemService {
     //根据id设置问题的visible
     boolean setProblemVisibleById(int id,boolean visible);
 
+
+    //根据id删除问题
+    boolean deleteProblemById(int id);
+
 }

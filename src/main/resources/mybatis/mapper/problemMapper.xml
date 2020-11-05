@@ -34,5 +34,9 @@
         update problem set visible=#{visible} where id=#{id}
     </update>
 
+<!--    根据id删除问题-->
+    <delete id="deleteProblemById" parameterType="int">
+        delete from problem where id=#{id}
+    </delete>
 
 </mapper>
