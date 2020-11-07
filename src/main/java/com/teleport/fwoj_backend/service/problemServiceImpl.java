@@ -1,9 +1,14 @@
 package com.teleport.fwoj_backend.service;
 
 import com.teleport.fwoj_backend.mapper.problemMapper;
+import com.teleport.fwoj_backend.mapper.userMapper;
 import com.teleport.fwoj_backend.pojo.problem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -11,6 +16,8 @@ public class problemServiceImpl implements problemService{
 
     @Autowired
     private problemMapper problemMapperObject;
+    @Autowired
+    private userMapper userMapperObject;
 
     @Override
     public List<problem> getProblemList(Integer page, Integer pre) {
@@ -60,4 +67,25 @@ public class problemServiceImpl implements problemService{
         else
             return false;
     }
+
+    @Override
+    public boolean createProblem(String title, String des, String input, String output, String inputExample, String outputExample, String hint,String authorName) {
+        DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateTime = simpleDateFormat.format(new Date());
+        if(problemMapperObject.createProblem(title,des,input,output,inputExample,outputExample,hint,
+        0,0,dateTime,authorName,false) == 1)
+            return true;
+        else
+           return false;
+    }
+
+    @Override
+    public boolean editProblem(String title, String des, String input, String output, String inputExample, String outputExample, String hint, int id) {
+        if(problemMapperObject.editProblem(title,des,input,output,inputExample,outputExample,hint,id) == 1)
+            return true;
+        else
+            return false;
+    }
+
+
 }

@@ -23,11 +23,37 @@ public class problem {
     private int totalSubmit;
     private boolean visible;
 
-
     private double acRate;
 
+    //创建问题对象
+    public problem(String title, String des, String input, String output, String inputExample, String outputExample, String hint, String authorName, String createTime, int acSubmit, int totalSubmit, boolean visible) {
+        this.title = title;
+        this.des = des;
+        this.input = input;
+        this.output = output;
+        this.inputExample = inputExample;
+        this.outputExample = outputExample;
+        this.hint = hint;
+        this.authorName = authorName;
+        this.createTime = createTime;
+        this.acSubmit = acSubmit;
+        this.totalSubmit = totalSubmit;
+        this.visible = visible;
+    }
+    //编辑问题对象
+    public problem(int id,String title, String des, String input, String output, String inputExample, String outputExample, String hint) {
+        this.id = id;
+        this.title = title;
+        this.des = des;
+        this.input = input;
+        this.output = output;
+        this.inputExample = inputExample;
+        this.outputExample = outputExample;
+        this.hint = hint;
+    }
 
-    public problem(Integer id, String title, String des, String input, String output, String inputExample, String outputExample,String hint, Integer acSubmit, Integer totalSubmit) {
+    //问题详情对象
+    public problem(Integer id, String title, String des, String input, String output, String inputExample, String outputExample, String hint, Integer acSubmit, Integer totalSubmit) {
         this.id = id;
         this.title = title;
         this.des = des;
@@ -67,4 +93,6 @@ public class problem {
         this.id = id;
         this.visible = visible;
     }
+
+
 }

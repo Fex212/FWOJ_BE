@@ -19,9 +19,12 @@ public interface problemService {
     boolean getProblemVisibleById(int id);
     //根据id设置问题的visible
     boolean setProblemVisibleById(int id,boolean visible);
-
-
     //根据id删除问题
     boolean deleteProblemById(int id);
 
+    //创建问题
+    boolean createProblem(String title,String des,String input,String output,String inputExample,String outputExample,String hint,String authorName);
+    //根据id编辑问题id
+    boolean editProblem(String title,String des,String input,String output,String inputExample,String outputExample,
+                    String hint,int id);
 }

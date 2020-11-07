@@ -39,4 +39,18 @@
         delete from problem where id=#{id}
     </delete>
 
+    <!--    添加问题-->
+    <!--   title input output inputExample outputExample hint authorName -->
+    <insert id="createProblem" parameterType="problem">
+        insert into problem(title, des, input, output, inputExample, outputExample, hint, acSubmit, totalSubmit,createTime,authorName,visible)
+        values(#{title},#{des},#{input},#{output},#{inputExample},#{outputExample},#{hint},#{acSubmit},#{totalSubmit},#{createTime},#{authorName},#{visible});
+    </insert>
+
+<!--   根据id更新问题信息-->
+    <update id="editProblem" parameterType="problem">
+        update problem set title=#{title},des=#{des},input=#{input},output=#{output},inputExample=#{inputExample},outputExample=#{outputExample},hint=#{hint} where id=#{id};
+    </update>
+
+
+
 </mapper>
