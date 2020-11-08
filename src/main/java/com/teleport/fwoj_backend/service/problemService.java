@@ -7,8 +7,10 @@ import java.util.List;
 public interface problemService {
     //查询列表(页数,每页几条),返回List
     List<problem> getProblemList(Integer page,Integer pre);
-    //查询总数
+    //查询总数(user)
     Integer getProblemSum();
+    //查询总数(admin)
+    int getProblemSumAdmin();
     //查询详情
     problem getProblemDetail(Integer id);
 
@@ -21,7 +23,6 @@ public interface problemService {
     boolean setProblemVisibleById(int id,boolean visible);
     //根据id删除问题
     boolean deleteProblemById(int id);
-
     //创建问题
     boolean createProblem(String title,String des,String input,String output,String inputExample,String outputExample,String hint,String authorName);
     //根据id编辑问题id

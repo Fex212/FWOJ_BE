@@ -7,13 +7,16 @@
 
     <!--查询列表(页数,每页几条)-->
     <select id="getProblemList" resultType="problem">
-    select id,title,acSubmit,totalSubmit from onlinejudge.problem limit #{start},#{num}
+    select id,title,acSubmit,totalSubmit from onlinejudge.problem  where visible='1' order by id desc limit #{start},#{num}
    </select>
     <!--查询总数-->
     <select id="getProblemSum" resultType="int">
+    select count(id) from onlinejudge.problem where visible='1'
+   </select>
+    <!--查询总数(Admin)-->
+    <select id="getProblemSumAdmin" resultType="int">
     select count(id) from onlinejudge.problem
    </select>
-
     <!--    按id查询详情-->
     <select id="getProblemDetail" resultType="problem">
         select * from onlinejudge.problem where id=#{id}

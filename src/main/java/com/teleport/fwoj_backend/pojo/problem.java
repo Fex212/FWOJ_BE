@@ -22,7 +22,6 @@ public class problem {
     private int acSubmit;
     private int totalSubmit;
     private boolean visible;
-
     private double acRate;
 
     //创建问题对象

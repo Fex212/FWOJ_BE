@@ -13,6 +13,8 @@ public interface problemMapper {
     List<problem> getProblemList(@Param("start") int start,@Param("num") int num);
     //查询问题总记录数
     Integer getProblemSum();
+    //查询总数(admin)
+    int getProblemSumAdmin();
     //查询问题详情
     problem getProblemDetail(int id);
     //获取问题列表(Admin) id title createTime visible authorName

@@ -17,6 +17,23 @@ public class adminContorller {
     @Autowired
     private userService userServiceObject;
 
+    //获取系统信息面板
+    @RequestMapping(value = "/getSystemInfo",method = {RequestMethod.GET})
+    @CrossOrigin
+    public String getSystemInfo(@RequestParam("token") String token)throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(userServiceObject.tokenIsAdmin(token))
+        {
+            s.put("userNum",userServiceObject.getUserNum());
+            s.put("problemNum",problemServiceObject.getProblemSumAdmin());
+            s.put("error",0);
+        }
+        else
+            s.put("error",1);
+        return  mapper.writeValueAsString(s);
+    }
+
     //获取问题列表(Admin)
     //id title createTime visible authorName
     @RequestMapping(value = "/getProblemListAdmin",method = {RequestMethod.GET})
@@ -27,7 +44,7 @@ public class adminContorller {
         if(userServiceObject.tokenIsAdmin(token))
         {
             s.put("data",problemServiceObject.getProblemListAdmin(page,pre,token,key));
-            s.put("num",problemServiceObject.getProblemSum());
+            s.put("num",problemServiceObject.getProblemSumAdmin());
             s.put("status",1);
         }
         else

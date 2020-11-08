@@ -10,20 +10,20 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.IntStream;
 
 @Service
 public class problemServiceImpl implements problemService{
 
     @Autowired
     private problemMapper problemMapperObject;
-    @Autowired
-    private userMapper userMapperObject;
 
     @Override
     public List<problem> getProblemList(Integer page, Integer pre) {
         int start = pre * (page - 1);
         int num = pre;
-        return problemMapperObject.getProblemList(start,num);
+        List<problem> problemList= problemMapperObject.getProblemList(start,num);
+        return problemList;
     }
 
     @Override
@@ -31,10 +31,19 @@ public class problemServiceImpl implements problemService{
         return problemMapperObject.getProblemSum();
     }
 
+    @Override
+    public int getProblemSumAdmin() {
+        return problemMapperObject.getProblemSumAdmin();
+    }
+
     //按id查找详情
     @Override
     public problem getProblemDetail(Integer id) {
-        return problemMapperObject.getProblemDetail(id);
+        problem problemObject = problemMapperObject.getProblemDetail(id);
+        if(!problemObject.isVisible())
+            return null;
+        else
+            return problemObject;
     }
 
     @Override

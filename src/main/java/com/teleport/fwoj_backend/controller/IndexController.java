@@ -87,7 +87,13 @@ public class indexController {
         problem problemObject =  problemServiceObject.getProblemDetail(id);
 
         HashMap s = new HashMap();
-        s.put("data",problemObject);
+        if(problemObject != null){
+            s.put("data",problemObject);
+            s.put("error","0");
+        }
+        //对象为null
+        else
+            s.put("error","1");
         return  mapper.writeValueAsString(s);
     }
 
