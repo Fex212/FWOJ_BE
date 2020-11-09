@@ -20,4 +20,9 @@ public interface contestService {
     boolean contestVisibleChanged(int id);
     //根据id删除比赛
     boolean deleteContestById(int id);
+    //创建比赛 title des problemList startTime endTime visible authorName
+    boolean createContest(String title,String des,String problemList,String startTime,String endTime,boolean visible,String authorName);
+    //  update title des problemList startTime endTime
+    boolean editContestById(String title,String des,String problemList,String startTime,String endTime,int id);
+
 }

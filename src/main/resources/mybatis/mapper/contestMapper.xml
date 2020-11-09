@@ -40,4 +40,16 @@
         delete from contest where id=#{id}
     </delete>
 
+<!--    创建比赛 title des problemList startTime endTime visible authorName-->
+    <insert id="createContest" parameterType="problem">
+        insert into contest(title, des, problemList, startTime, endTime,visible,authorName)
+        values(#{title},#{des},#{problemList},#{startTime},#{endTime},#{visible},#{authorName})
+    </insert>
+
+<!--    update title des problemList startTime endTime-->
+    <update id="editContestById" parameterType="problem">
+        update contest set title=#{title},des=#{des},problemList=#{problemList},startTime=#{startTime},
+        endTime=#{endTime} where id=#{id}
+    </update>
+
 </mapper>

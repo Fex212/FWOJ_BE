@@ -16,6 +16,19 @@ public class contest {
     boolean visible;
     String authorName;
 
+
+
+    //创建比赛 title des problemList startTime endTime visible authorName
+    public contest(String title, String des, String problemList, String startTime, String endTime, boolean visible, String authorName) {
+        this.title = title;
+        this.des = des;
+        this.problemList = problemList;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.visible = visible;
+        this.authorName = authorName;
+    }
+
     //设置visible对象
     public contest(int id, boolean visible) {
         this.id = id;

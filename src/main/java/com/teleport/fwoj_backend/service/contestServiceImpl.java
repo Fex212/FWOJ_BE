@@ -92,4 +92,21 @@ public class contestServiceImpl implements contestService{
         else
             return false;
     }
+
+    @Override
+    public boolean createContest(String title, String des, String problemList, String startTime, String endTime, boolean visible, String authorName) {
+        if(contestMapperObject.createContest(title,des,problemList,startTime,endTime,visible,authorName) == 1)
+            return true;
+        else
+            return false;
+    }
+
+    @Override
+    public boolean editContestById(String title, String des, String problemList, String startTime, String endTime,int id) {
+        if(contestMapperObject.editContestById(title,des,problemList,startTime,endTime,id) == 1)
+            return true;
+        else
+            return false;
+    }
+
 }

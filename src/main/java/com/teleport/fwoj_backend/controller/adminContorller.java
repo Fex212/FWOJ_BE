@@ -1,6 +1,7 @@
 package com.teleport.fwoj_backend.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.teleport.fwoj_backend.pojo.contest;
 import com.teleport.fwoj_backend.pojo.problem;
 import com.teleport.fwoj_backend.service.contestService;
 import com.teleport.fwoj_backend.service.problemService;
@@ -8,6 +9,7 @@ import com.teleport.fwoj_backend.service.userService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.HashMap;
 @RestController
 public class adminContorller {
@@ -227,6 +229,54 @@ public class adminContorller {
         if(userServiceObject.tokenIsAdmin(token))
         {
             if(contestServiceObject.deleteContestById(id))
+                s.put("error","0");
+            else
+                s.put("error","2");
+        }
+        else
+            s.put("error","1");
+
+        return mapper.writeValueAsString(s);
+    }
+
+
+    //创建比赛 title des problemList startTime endTime  authorName
+    @RequestMapping(value = "/createContest",method = {RequestMethod.POST})
+    @CrossOrigin
+    public String createContest(@RequestParam("token") String token,
+                                @RequestParam("title") String title,@RequestParam("des") String des, @RequestParam("problemList") String problemList,
+                                @RequestParam("startTime") String startTime,@RequestParam("endTime") String endTime) throws JsonProcessingException {
+        //error
+        //0 正常 1 越权 2 失败
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(userServiceObject.tokenIsAdmin(token))
+        {
+            if(contestServiceObject.createContest(title,des,problemList,startTime,endTime,false,userServiceObject.getUserName(token)))
+                s.put("error","0");
+            else
+                s.put("error","2");
+        }
+        else
+            s.put("error","1");
+
+        return mapper.writeValueAsString(s);
+    }
+
+    //根据id更新比赛信息 title title startTime endTime
+    //按id更新题目信息
+    @RequestMapping(value = "/editContestById",method = {RequestMethod.POST})
+    @CrossOrigin
+    public String editContestById(@RequestParam("token") String token,@RequestParam("title") String title,@RequestParam("des") String des,
+                              @RequestParam("problemList") String problemList,@RequestParam("startTime") String startTime,
+                                  @RequestParam("endTime") String endTime, @RequestParam("id") int id) throws JsonProcessingException {
+        //error
+        //0 正常 1 越权 2 失败
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(userServiceObject.tokenIsAdmin(token))
+        {
+            if(contestServiceObject.editContestById(title,des,problemList,startTime,endTime,id))
                 s.put("error","0");
             else
                 s.put("error","2");
