@@ -1,5 +1,6 @@
 package com.teleport.fwoj_backend;
 
+import com.teleport.fwoj_backend.mapper.contestMapper;
 import com.teleport.fwoj_backend.mapper.problemMapper;
 import com.teleport.fwoj_backend.mapper.userMapper;
 import com.teleport.fwoj_backend.pojo.user;
@@ -20,9 +21,11 @@ class FwojBackendApplicationTests {
     problemService problemServiceObject;
     @Autowired
     problemMapper problemMapperObject;
+    @Autowired
+    contestMapper contestMapperObject;
     @Test
     void contextLoads() {
-        System.out.println(problemMapperObject.getProblemVisibleById(2));
+         System.out.println(contestMapperObject.getContestList(1,10));
     }
 
 }

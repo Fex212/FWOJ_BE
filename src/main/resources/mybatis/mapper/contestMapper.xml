@@ -5,16 +5,39 @@
 
 <mapper namespace="com.teleport.fwoj_backend.mapper.contestMapper">
 
+<!--    查询比赛列表-->
     <select id="getContestList" resultType="contest">
-    select id,title,startTime,endTime from onlinejudge.contest
-    order by contest.startTime desc limit #{start},#{num}
+    select id,title,startTime,endTime from onlinejudge.contest where visible=1
+    order by id desc limit #{start},#{num}
    </select>
+<!--    查询比赛列表(admin)-->
+    <select id="getContestListAdmin" resultType="contest">
+    select id,title,startTime,endTime,visible,authorName from onlinejudge.contest where title like "%"#{key}"%"
+    order by id desc limit #{start},#{num}
+   </select>
+<!--    查询比赛数量-->
     <select id="getContestSum" resultType="int">
+    select count(id) from onlinejudge.contest where visible=1
+   </select>
+<!--    查询比赛数量(admin)-->
+    <select id="getContestSumAdmin" resultType="int">
     select count(id) from onlinejudge.contest
    </select>
     <!--    按id查询详情-->
     <select id="getContestDetail" resultType="contest">
         select * from onlinejudge.contest where id=#{id}
     </select>
+    <!--    按id查询比赛可见性-->
+    <select id="getContestVisibleById" resultType="int">
+        select visible from onlinejudge.contest where id=#{id}
+    </select>
+    <!--    根据id更新比赛的visible属性-->
+    <update id="setContestVisibleById" parameterType="contest">
+        update contest set visible=#{visible} where id=#{id}
+    </update>
+<!--    根据id删除比赛-->
+    <delete id="deleteContestById" parameterType="int">
+        delete from contest where id=#{id}
+    </delete>
 
 </mapper>

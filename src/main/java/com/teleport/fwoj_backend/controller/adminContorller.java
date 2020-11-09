@@ -2,6 +2,7 @@ package com.teleport.fwoj_backend.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.teleport.fwoj_backend.pojo.problem;
+import com.teleport.fwoj_backend.service.contestService;
 import com.teleport.fwoj_backend.service.problemService;
 import com.teleport.fwoj_backend.service.userService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ public class adminContorller {
     private problemService problemServiceObject;
     @Autowired
     private userService userServiceObject;
+    @Autowired
+    private contestService contestServiceObject;
 
     //获取系统信息面板
     @RequestMapping(value = "/getSystemInfo",method = {RequestMethod.GET})
@@ -51,7 +54,6 @@ public class adminContorller {
             s.put("status",0);
         return  mapper.writeValueAsString(s);
     }
-
 
     //更改题目的visible
     @RequestMapping(value = "/changeProblemVisible",method = {RequestMethod.POST})
@@ -167,6 +169,64 @@ public class adminContorller {
         if(userServiceObject.tokenIsAdmin(token))
         {
             if(problemServiceObject.editProblem(title,des,input,output,inputExample,outputExample,hint,id))
+                s.put("error","0");
+            else
+                s.put("error","2");
+        }
+        else
+            s.put("error","1");
+
+        return mapper.writeValueAsString(s);
+    }
+
+    //获取比赛列表(Admin)
+    //id title des createTime visible authorName
+    @RequestMapping(value = "/getContestListAdmin",method = {RequestMethod.GET})
+    @CrossOrigin
+    public String getContestListAdmin(@RequestParam("page") int page, @RequestParam("pre") int pre,@RequestParam("token") String token,@RequestParam("key") String key)throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(userServiceObject.tokenIsAdmin(token))
+        {
+            s.put("data",contestServiceObject.getContestListAdmin(page,pre,key));
+            s.put("num",contestServiceObject.getContestSumAdmin());
+            s.put("error",0);
+        }
+        else
+            s.put("error",1);
+        return  mapper.writeValueAsString(s);
+    }
+
+    //更改比赛可见性
+    @RequestMapping(value = "/changeContestVisible",method = {RequestMethod.POST})
+    @CrossOrigin
+    public String changeContestVisible(@RequestParam("token") String token,@RequestParam("id") int id)throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(userServiceObject.tokenIsAdmin(token))
+        {
+            if(contestServiceObject.contestVisibleChanged(id))
+                s.put("error","0");
+            else
+                s.put("error","2");
+        }
+        else
+            s.put("error","1");
+        return  mapper.writeValueAsString(s);
+    }
+
+    //根据id删除比赛
+    @RequestMapping(value = "/deleteContestById",method = {RequestMethod.DELETE})
+    @CrossOrigin
+    public String deleteContestById(@RequestParam("token") String token,@RequestParam("id") int id) throws JsonProcessingException {
+
+        //error
+        //0 正常 1 越权 2 删除失败
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(userServiceObject.tokenIsAdmin(token))
+        {
+            if(contestServiceObject.deleteContestById(id))
                 s.put("error","0");
             else
                 s.put("error","2");

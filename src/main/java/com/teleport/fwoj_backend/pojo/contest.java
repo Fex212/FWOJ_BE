@@ -13,7 +13,26 @@ public class contest {
     String startTime;
     String endTime;
     String state;
-    //getContestList
+    boolean visible;
+    String authorName;
+
+    //设置visible对象
+    public contest(int id, boolean visible) {
+        this.id = id;
+        this.visible = visible;
+    }
+
+    //contestAdmin列表
+    public contest(int id, String title, String startTime, String endTime, boolean visible,String authorName) {
+        this.id = id;
+        this.title = title;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.visible = visible;
+        this.authorName = authorName;
+    }
+
+    //contestList列表
     public contest(int id,String title,String startTime,String endTime)
     {
         this.id = id;
@@ -24,6 +43,7 @@ public class contest {
         this.des = "";
         this.problemList = "";
     }
+    //contestDetail(user)
     public contest(int id,String title,String des,String problemList,String startTime,String endTime)
     {
         this.id = id;
@@ -34,4 +54,5 @@ public class contest {
         this.endTime = endTime;
         this.state = "";
     }
+
 }

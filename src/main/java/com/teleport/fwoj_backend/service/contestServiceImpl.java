@@ -35,9 +35,22 @@ public class contestServiceImpl implements contestService{
         }
         return list;
     }
+
+    @Override
+    public List<contest> getContestListAdmin(int page, int pre,String key) {
+        int start = pre * (page - 1);
+        int num = pre;
+        return contestMapperObject.getContestListAdmin(start,num,key);
+    }
+
     @Override
     public int getContestSum() {
         return contestMapperObject.getContestSum();
+    }
+
+    @Override
+    public int getContestSumAdmin() {
+        return contestMapperObject.getContestSumAdmin();
     }
 
     @Override
@@ -54,5 +67,29 @@ public class contestServiceImpl implements contestService{
         if(endTime.getTime() <= currentTime.getTime())
             ct.setState("已结束");
         return ct;
+    }
+
+    @Override
+    public boolean contestVisibleChanged(int id) {
+        if (contestMapperObject.getContestVisibleById(id) == 1)
+        {
+            if(contestMapperObject.setContestVisibleById(id, false) == 1)
+                return true;
+            else
+                return false;
+        }
+        else
+            if(contestMapperObject.setContestVisibleById(id, true) == 1)
+                return true;
+            else
+                return false;
+    }
+
+    @Override
+    public boolean deleteContestById(int id) {
+        if(contestMapperObject.deleteContestById(id) == 1)
+            return true;
+        else
+            return false;
     }
 }
