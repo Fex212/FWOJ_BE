@@ -270,6 +270,8 @@ public class adminContorller {
     public String editContestById(@RequestParam("token") String token,@RequestParam("title") String title,@RequestParam("des") String des,
                               @RequestParam("problemList") String problemList,@RequestParam("startTime") String startTime,
                                   @RequestParam("endTime") String endTime, @RequestParam("id") int id) throws JsonProcessingException {
+
+        // System.out.println(token+"\n"+title+"\n"+des+"\n"+problemList+"\n"+startTime+"\n"+endTime+"\n"+id+"\n");
         //error
         //0 正常 1 越权 2 失败
         ObjectMapper mapper = new ObjectMapper();
