@@ -56,16 +56,19 @@ public class contestServiceImpl implements contestService{
     @Override
     public contest getContestDetail(int id) throws ParseException {
         contest ct = contestMapperObject.getContestDetail(id);
-        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        Date currentTime = new Date();
-        Date startTime = ft.parse(ct.getStartTime());
-        Date endTime = ft.parse(ct.getEndTime());
-        if(startTime.getTime() > currentTime.getTime())
-            ct.setState("筹备中");
-        if(startTime.getTime() <= currentTime.getTime() && endTime.getTime() > currentTime.getTime())
-            ct.setState("进行中");
-        if(endTime.getTime() <= currentTime.getTime())
-            ct.setState("已结束");
+        if(ct != null)
+        {
+            SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            Date currentTime = new Date();
+            Date startTime = ft.parse(ct.getStartTime());
+            Date endTime = ft.parse(ct.getEndTime());
+            if(startTime.getTime() > currentTime.getTime())
+                ct.setState("筹备中");
+            if(startTime.getTime() <= currentTime.getTime() && endTime.getTime() > currentTime.getTime())
+                ct.setState("进行中");
+            if(endTime.getTime() <= currentTime.getTime())
+                ct.setState("已结束");
+        }
         return ct;
     }
 

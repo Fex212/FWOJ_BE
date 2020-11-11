@@ -17,8 +17,10 @@ public interface problemMapper {
     int getProblemSumAdmin();
     //查询问题详情
     problem getProblemDetail(int id);
+    //查询问题详情(Admin)
+    problem getProblemDetailAdmin(int id);
     //获取问题列表(Admin) id title createTime visible authorName
-    List<problem> getProblemListAdmin(@Param("start") int start,@Param("num") int num,@Param("token") String token,@Param("key") String key);
+    List<problem> getProblemListAdmin(@Param("start") int start,@Param("num") int num,@Param("key") String key);
     //根据id获取问题的visible
     int getProblemVisibleById(int id);
     //根据id设置问题的visible

@@ -19,6 +19,10 @@
    </select>
     <!--    按id查询详情-->
     <select id="getProblemDetail" resultType="problem">
+        select * from onlinejudge.problem where id=#{id} and visible='1'
+    </select>
+    <!--    按id查询详情(Admin)-->
+    <select id="getProblemDetailAdmin" resultType="problem">
         select * from onlinejudge.problem where id=#{id}
     </select>
 

@@ -25,7 +25,7 @@
    </select>
     <!--    按id查询详情-->
     <select id="getContestDetail" resultType="contest">
-        select * from onlinejudge.contest where id=#{id}
+        select * from onlinejudge.contest where id=#{id} and visible='1'
     </select>
     <!--    按id查询比赛可见性-->
     <select id="getContestVisibleById" resultType="int">

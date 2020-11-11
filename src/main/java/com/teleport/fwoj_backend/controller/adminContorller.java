@@ -1,15 +1,16 @@
 package com.teleport.fwoj_backend.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.teleport.fwoj_backend.pojo.contest;
 import com.teleport.fwoj_backend.pojo.problem;
+import com.teleport.fwoj_backend.service.annService;
 import com.teleport.fwoj_backend.service.contestService;
 import com.teleport.fwoj_backend.service.problemService;
 import com.teleport.fwoj_backend.service.userService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 @RestController
 public class adminContorller {
@@ -21,6 +22,8 @@ public class adminContorller {
     private userService userServiceObject;
     @Autowired
     private contestService contestServiceObject;
+    @Autowired
+    private annService annServiceObject;
 
     //获取系统信息面板
     @RequestMapping(value = "/getSystemInfo",method = {RequestMethod.GET})
@@ -39,6 +42,119 @@ public class adminContorller {
         return  mapper.writeValueAsString(s);
     }
 
+
+    //    查询公告列表(Admin) id title date visible authorName
+    @RequestMapping(value = "/getAnnListAdmin",method = {RequestMethod.GET})
+    @CrossOrigin
+    public String getAnnListAdmin(@RequestParam("page") int page, @RequestParam("pre") int pre,
+                                  @RequestParam("key") String key,@RequestParam("token") String token)
+            throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(userServiceObject.tokenIsAdmin(token))
+        {
+            s.put("data",annServiceObject.getAnnListAdmin(page,pre,key));
+            s.put("num",annServiceObject.getAnnSumAdmin());
+            s.put("error","0");
+        }
+        else
+            s.put("error","1");
+        return  mapper.writeValueAsString(s);
+    }
+
+    //根据id删除公告
+    @RequestMapping(value = "/deleteAnnById",method = {RequestMethod.DELETE})
+    @CrossOrigin
+    public String deleteAnnById(@RequestParam("token") String token,@RequestParam("id") int id) throws JsonProcessingException {
+
+        //error
+        //0 正常 1 越权 2 删除失败
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(userServiceObject.tokenIsAdmin(token))
+        {
+            if(annServiceObject.deleteAnnById(id))
+                s.put("error","0");
+            else
+                s.put("error","2");
+        }
+        else
+            s.put("error","1");
+
+        return mapper.writeValueAsString(s);
+    }
+
+    //根据id改变公告的visible
+    @RequestMapping(value = "/changeAnnVisibleById",method = {RequestMethod.POST})
+    @CrossOrigin
+    public String changeAnnVisibleById(@RequestParam("token") String token,@RequestParam("id") int id) throws JsonProcessingException {
+
+        //error
+        //0 正常 1 越权 2 删除失败
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(userServiceObject.tokenIsAdmin(token))
+        {
+            if(annServiceObject.changeAnnVisible(id))
+                s.put("error","0");
+            else
+                s.put("error","2");
+        }
+        else
+            s.put("error","1");
+
+        return mapper.writeValueAsString(s);
+    }
+
+    //创建公告 title content token
+    @RequestMapping(value = "/createAnn",method = {RequestMethod.POST})
+    @CrossOrigin
+    public String createAnn(@RequestParam("token") String token,
+                            @RequestParam("title") String title,@RequestParam("content") String content) throws JsonProcessingException {
+
+        //error
+        //0 正常 1 越权 2 删除失败
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(userServiceObject.tokenIsAdmin(token))
+        {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String date =formatter.format(new Date());
+            if(annServiceObject.createAnn(date,title,content,userServiceObject.getUserId(token)))
+                s.put("error","0");
+            else
+                s.put("error","2");
+        }
+        else
+            s.put("error","1");
+
+        return mapper.writeValueAsString(s);
+    }
+
+    //修改公告 id title content token
+    @RequestMapping(value = "/updateAnn",method = {RequestMethod.POST})
+    @CrossOrigin
+    public String updateAnn(@RequestParam("token") String token,@RequestParam("id") int id,
+                            @RequestParam("title") String title,@RequestParam("content") String content) throws JsonProcessingException {
+
+        //error
+        //0 正常 1 越权 2 删除失败
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(userServiceObject.tokenIsAdmin(token))
+        {
+            if(annServiceObject.updateAnn(id,title,content))
+                s.put("error","0");
+            else
+                s.put("error","2");
+        }
+        else
+            s.put("error","1");
+
+        return mapper.writeValueAsString(s);
+    }
+
+
     //获取问题列表(Admin)
     //id title createTime visible authorName
     @RequestMapping(value = "/getProblemListAdmin",method = {RequestMethod.GET})
@@ -48,7 +164,7 @@ public class adminContorller {
         HashMap s = new HashMap();
         if(userServiceObject.tokenIsAdmin(token))
         {
-            s.put("data",problemServiceObject.getProblemListAdmin(page,pre,token,key));
+            s.put("data",problemServiceObject.getProblemListAdmin(page,pre,key));
             s.put("num",problemServiceObject.getProblemSumAdmin());
             s.put("status",1);
         }
@@ -134,7 +250,7 @@ public class adminContorller {
         return mapper.writeValueAsString(s);
     }
 
-    //按id查找题目详情
+    //按id查找题目详情(Admin)
     @RequestMapping(value = "/getProblemDetailAdmin",method = {RequestMethod.GET})
     @CrossOrigin
     public String getProblemDetailAdmin(@RequestParam("token") String token,@RequestParam("id") int id)throws JsonProcessingException {
@@ -142,7 +258,8 @@ public class adminContorller {
         HashMap s = new HashMap();
         if(userServiceObject.tokenIsAdmin(token))
         {
-            problem problemObject = problemServiceObject.getProblemDetail(id);
+            problem problemObject = problemServiceObject.getProblemDetailAdmin(id);
+            System.out.println(problemObject);
             if(problemObject != null)
             {
             s.put("error","0");

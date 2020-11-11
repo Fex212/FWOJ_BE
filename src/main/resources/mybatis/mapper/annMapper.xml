@@ -5,19 +5,50 @@
 
 <mapper namespace="com.teleport.fwoj_backend.mapper.annMapper">
 
-    <!--查询公告列表(页数,每页几条)-->
+    <!--查询公告列表 id,date,title,authorName-->
     <select id="getAnnList" resultType="ann">
-    select * from onlinejudge.announcement limit #{start},#{num}
+    select announcement.id,date,title,username as authorName from announcement,user
+     where authorId=user.id and visible='1' order by id desc limit #{start},#{num}
    </select>
 
     <!--查询公告总数-->
     <select id="getAnnSum" resultType="int">
-    select count(id) from onlinejudge.announcement
+    select count(id) from onlinejudge.announcement where visible='1'
    </select>
 
-    <!--    按id查询公告详情-->
+    <!--    按id查询公告详情 title,content,authorName,date-->
     <select id="getAnnDetail" resultType="ann">
-        select * from onlinejudge.announcement where id=#{id}
+        select title,content,username as authorName,date from announcement,user where announcement.id=#{id}
+         and user.id=announcement.authorId and visible='1'
     </select>
 
+<!--    查询公告列表(Admin) id title date visible authorName -->
+    <select id="getAnnListAdmin" resultType="ann">
+    select announcement.id,title,date,visible,username as authorName from announcement,user
+     where authorId=user.id and title like "%"#{key}"%" order by id desc limit #{start},#{num}
+   </select>
+    <!--查询公告总数(Admin)-->
+    <select id="getAnnSumAdmin" resultType="int">
+    select count(id) from onlinejudge.announcement
+   </select>
+<!--    根据id删除公告-->
+    <delete id="deleteAnnById" parameterType="int">
+        delete from announcement where id=#{id}
+    </delete>
+<!--    根据id查询公告visible-->
+    <select id="getAnnVisibleById" resultType="int">
+        select visible from announcement where id=#{id}
+    </select>
+<!--    根据id设置公告visible-->
+    <update id="setAnnVisibleById" parameterType="ann">
+        update announcement set visible=#{visible} where id=#{id}
+    </update>
+<!--    创建公告 date title content authorId-->
+    <insert id="createAnn" parameterType="ann">
+        insert into announcement(date,title,content,authorId,visible) values(#{date},#{title},#{content},#{authorId},'1')
+    </insert>
+<!--    通过id修改公告 title content-->
+    <update id="updateAnn" parameterType="ann">
+        update announcement set title=#{title},content=#{content} where id=#{id}
+    </update>
 </mapper>

@@ -11,11 +11,13 @@ public interface problemService {
     Integer getProblemSum();
     //查询总数(admin)
     int getProblemSumAdmin();
-    //查询详情
-    problem getProblemDetail(Integer id);
+    //查询问题详情
+    problem getProblemDetail(int id);
+    //查询问题详情(Admin)
+    problem getProblemDetailAdmin(int id);
 
     //获取问题列表(Admin) id title createTime visible authorName
-    List<problem> getProblemListAdmin(int page,int pre,String token,String key);
+    List<problem> getProblemListAdmin(int page,int pre,String key);
 
     //根据id获取问题的visible
     boolean getProblemVisibleById(int id);

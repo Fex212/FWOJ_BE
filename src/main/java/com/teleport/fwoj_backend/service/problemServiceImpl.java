@@ -38,19 +38,21 @@ public class problemServiceImpl implements problemService{
 
     //按id查找详情
     @Override
-    public problem getProblemDetail(Integer id) {
+    public problem getProblemDetail(int id) {
         problem problemObject = problemMapperObject.getProblemDetail(id);
-        if(!problemObject.isVisible())
-            return null;
-        else
-            return problemObject;
+        return problemObject;
     }
 
     @Override
-    public List<problem> getProblemListAdmin(int page, int pre, String token, String key) {
+    public problem getProblemDetailAdmin(int id) {
+        return problemMapperObject.getProblemDetailAdmin(id);
+    }
+
+    @Override
+    public List<problem> getProblemListAdmin(int page, int pre, String key) {
         int start = pre * (page - 1);
         int num = pre;
-        return problemMapperObject.getProblemListAdmin(start,num,token,key);
+        return problemMapperObject.getProblemListAdmin(start,num,key);
     }
 
     @Override

@@ -14,7 +14,8 @@ public class ann {
     private String date;
     private String title;
     private String content;
-    private Integer authorId;
-    private String authorUsername;
+    private int authorId;
+    private String authorName;
+    private boolean visible;
 
 }

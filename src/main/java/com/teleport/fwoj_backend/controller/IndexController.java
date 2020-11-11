@@ -60,6 +60,8 @@ public class indexController {
 
         HashMap s = new HashMap();
         s.put("data",annObject);
+        if(annObject != null)
+            s.put("error","0");
         return  mapper.writeValueAsString(s);
     }
 
@@ -118,7 +120,10 @@ public class indexController {
     public String getContestDetail(@RequestParam("id") int id) throws JsonProcessingException, ParseException {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        s.put("data",contestServiceObject.getContestDetail(id));
+        contest contestObject = contestServiceObject.getContestDetail(id);
+        s.put("data",contestObject);
+        if(contestObject != null)
+            s.put("error","0");
         return  mapper.writeValueAsString(s);
     }
 
@@ -148,7 +153,6 @@ public class indexController {
     }
 
     //提交代码 题目
-    //获取比赛详情
     @RequestMapping(value = "/submitProblemCode",method = {RequestMethod.POST})
     @CrossOrigin
     public String submitProblemCode(@RequestParam("code") String code,@RequestParam("problemId") int problemId,

@@ -13,7 +13,6 @@ public class annServiceImpl implements annService{
     @Autowired
     private annMapper annMapperObject;
 
-    //获得公告列表
     @Override
     public List<ann> getAnnList(int page,int pre)
     {
@@ -27,17 +26,71 @@ public class annServiceImpl implements annService{
         return list;
     }
 
-    //获得公告条数
     @Override
     public int getAnnSum() {
         int total = annMapperObject.getAnnSum();
         return total;
     }
 
-    //按id查找公告详情
     @Override
     public ann getAnnDetail(int id) {
         return annMapperObject.getAnnDetail(id);
+    }
+
+    @Override
+    public List<ann> getAnnListAdmin(int page, int pre,String key) {
+        int start = pre * (page - 1);
+        int num = pre;
+        List<ann> list = annMapperObject.getAnnListAdmin(start,num,key);
+        for(int i = 0 ; i < list.size(); i ++)
+        {
+            list.get(i).setDate(list.get(i).getDate().substring(0,10));
+        }
+        return list;
+    }
+
+    @Override
+    public int getAnnSumAdmin() {
+        int total = annMapperObject.getAnnSumAdmin();
+        return total;
+    }
+
+    @Override
+    public boolean deleteAnnById(int id) {
+        if(annMapperObject.deleteAnnById(id) == 1)
+            return true;
+        else
+            return false;
+    }
+
+    @Override
+    public boolean changeAnnVisible(int id) {
+        if(annMapperObject.getAnnVisibleById(id) == 1)
+            if(annMapperObject.setAnnVisibleById(id,false) == 1)
+                return true;
+            else
+                return false;
+        else
+            if(annMapperObject.setAnnVisibleById(id,true) == 1)
+                return true;
+            else
+                return false;
+    }
+
+    @Override
+    public boolean createAnn(String date, String title, String content, int authorId) {
+        if(annMapperObject.createAnn(date,title,content,authorId) == 1)
+            return true;
+        else
+            return false;
+    }
+
+    @Override
+    public boolean updateAnn(int id, String title, String content) {
+        if(annMapperObject.updateAnn(id,title,content) == 1)
+            return true;
+        else
+            return false;
     }
 
 }
