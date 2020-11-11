@@ -16,7 +16,9 @@ public class stateServiceImpl implements stateService {
     public List<state> getStateList(Integer page, Integer pre) {
         int start = pre * (page - 1);
         int num = pre;
-        return stateMapperObject.getStateList(start,num);
+        List<state> stateObject = stateMapperObject.getStateList(start,num);
+//        System.out.println(stateObject);
+        return stateObject;
     }
 
     @Override
@@ -26,7 +28,9 @@ public class stateServiceImpl implements stateService {
 
     @Override
     public state getStateDetail(Integer id) {
-        return stateMapperObject.getStateDetail(id);
+        state stateObject = stateMapperObject.getStateDetail(id);
+//        System.out.println(stateObject);
+        return stateObject;
     }
 
     @Override

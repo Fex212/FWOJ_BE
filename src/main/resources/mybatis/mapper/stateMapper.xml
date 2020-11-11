@@ -7,16 +7,17 @@
 
     <!--查询列表(页数,每页几条)-->
     <select id="getStateList" resultType="state">
-    select id,problemId,authorId,date,language,state,memoryCost,timeCost from onlinejudge.state order by date desc limit #{start},#{num}
+    select state.id,problemId,username as authorName,date,language,state,memoryCost,timeCost
+    from state,user where authorId=user.id order by date desc limit #{start},#{num}
    </select>
     <!--查询总数-->
     <select id="getStateSum" resultType="int">
     select count(id) from onlinejudge.state
    </select>
-
     <!--    按id查询详情-->
     <select id="getStateDetail" resultType="state">
-        select * from onlinejudge.state where id=#{id}
+    select state.id,problemId,username as authorName,date,language,state,memoryCost,timeCost,code
+    from state,user where authorId=user.id and state.id=#{id}
     </select>
 
 <!--    插入一条state-->
