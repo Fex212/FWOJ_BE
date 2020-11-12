@@ -289,7 +289,7 @@ public class adminContorller {
         if(userServiceObject.tokenIsAdmin(token))
         {
             problem problemObject = problemServiceObject.getProblemDetailAdmin(id);
-            System.out.println(problemObject);
+//            System.out.println(problemObject);
             if(problemObject != null)
             {
             s.put("error","0");
