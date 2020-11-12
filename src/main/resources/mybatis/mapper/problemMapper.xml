@@ -26,7 +26,6 @@
         select * from onlinejudge.problem where id=#{id}
     </select>
 
-
 <!--    //获取问题列表(Admin) id title createTime visible authorName-->
     <select id="getProblemListAdmin" resultType="problem">
     select id,title,createTime,visible,authorName from problem where title like "%"#{key}"%" order by id desc limit #{start},#{num}

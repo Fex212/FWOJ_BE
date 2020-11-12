@@ -162,17 +162,20 @@ public class indexController {
         //token不合法
         if(userServiceObject.getUserName(token) == null)
         {
-            s.put("status","1");
+            s.put("error","1");
         }
         else
         {
             //提交到state表
             Date date = new Date();
             int authorId = userServiceObject.getUserId(token);
-            if(stateServiceObject.addState(problemId,authorId,date,language,code))
-                s.put("status","0");
+            boolean isVisible = problemServiceObject.getProblemVisibleById(problemId);
+//            System.out.println(problemId);
+//            System.out.println(isVisible);
+            if(isVisible && stateServiceObject.addState(problemId,authorId,date,language,code))
+                s.put("error","0");
             else
-                s.put("status","2");
+                s.put("error","2");
         }
         return  mapper.writeValueAsString(s);
     }
