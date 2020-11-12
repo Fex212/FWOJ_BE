@@ -22,6 +22,11 @@
          and user.id=announcement.authorId and visible='1'
     </select>
 
+<!--    按id查询公告详情(admin) id title content-->
+    <select id="getAnnDetailByIdAdmin" resultType="ann">
+        select id,title,content from announcement where id=#{id}
+    </select>
+
 <!--    查询公告列表(Admin) id title date visible authorName -->
     <select id="getAnnListAdmin" resultType="ann">
     select announcement.id,title,date,visible,username as authorName from announcement,user

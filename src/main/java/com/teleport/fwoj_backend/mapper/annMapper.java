@@ -16,6 +16,8 @@ public interface annMapper {
     int getAnnSum();
 //    按id查询公告详情 title,content,authorName,date
     ann getAnnDetail(int id);
+    //按id查询公告详情(admin) id title content
+    ann getAnnDetailByIdAdmin(int id);
 //    查询公告列表(Admin) id title date visible authorName
     List<ann> getAnnListAdmin(@Param("start") int start, @Param("num") int num,@Param("key") String key);
 //    查询公告总数(Admin)

@@ -38,6 +38,11 @@ public class annServiceImpl implements annService{
     }
 
     @Override
+    public ann getAnnDetailByIdAdmin(int id) {
+        return annMapperObject.getAnnDetailByIdAdmin(id);
+    }
+
+    @Override
     public List<ann> getAnnListAdmin(int page, int pre,String key) {
         int start = pre * (page - 1);
         int num = pre;

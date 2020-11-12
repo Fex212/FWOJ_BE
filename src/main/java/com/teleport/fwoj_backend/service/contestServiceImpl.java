@@ -73,6 +73,11 @@ public class contestServiceImpl implements contestService{
     }
 
     @Override
+    public contest getContestDetailByIdAdmin(int id) {
+        return contestMapperObject.getContestDetailByIdAdmin(id);
+    }
+
+    @Override
     public boolean contestVisibleChanged(int id) {
         if (contestMapperObject.getContestVisibleById(id) == 1)
         {

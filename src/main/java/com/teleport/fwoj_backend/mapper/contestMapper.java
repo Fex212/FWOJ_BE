@@ -19,6 +19,8 @@ public interface contestMapper {
     int getContestSumAdmin();
     //按id查询比赛详情
     contest getContestDetail(int id);
+    //按id查询详情(Admin)
+    contest getContestDetailByIdAdmin(int id);
     //按id查询比赛可见性
     int getContestVisibleById(int id);
     //根据id更改比赛可见性

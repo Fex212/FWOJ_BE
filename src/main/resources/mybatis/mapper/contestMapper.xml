@@ -27,6 +27,10 @@
     <select id="getContestDetail" resultType="contest">
         select * from onlinejudge.contest where id=#{id} and visible='1'
     </select>
+    <!--    按id查询比赛详情(Admin) id,title,des,problemList,startTime,endTime-->
+    <select id="getContestDetailByIdAdmin" resultType="contest">
+        select id,title,des,problemList,startTime,endTime from contest where id=#{id}
+    </select>
     <!--    按id查询比赛可见性-->
     <select id="getContestVisibleById" resultType="int">
         select visible from onlinejudge.contest where id=#{id}

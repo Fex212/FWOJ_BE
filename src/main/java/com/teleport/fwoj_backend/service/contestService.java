@@ -16,6 +16,8 @@ public interface contestService {
     int getContestSumAdmin();
     //按id查询比赛详情
     contest getContestDetail(int id) throws ParseException;
+    //按id查询详情(Admin)
+    contest getContestDetailByIdAdmin(int id);
     //改变比赛可见性
     boolean contestVisibleChanged(int id);
     //根据id删除比赛

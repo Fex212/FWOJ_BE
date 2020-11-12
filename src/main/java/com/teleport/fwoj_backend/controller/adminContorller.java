@@ -1,6 +1,8 @@
 package com.teleport.fwoj_backend.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.teleport.fwoj_backend.pojo.ann;
+import com.teleport.fwoj_backend.pojo.contest;
 import com.teleport.fwoj_backend.pojo.problem;
 import com.teleport.fwoj_backend.service.annService;
 import com.teleport.fwoj_backend.service.contestService;
@@ -60,6 +62,34 @@ public class adminContorller {
         else
             s.put("error","1");
         return  mapper.writeValueAsString(s);
+    }
+
+
+    //按id查询公告详情(admin) id title content
+    @RequestMapping(value = "/getAnnDetailByIdAdmin",method = {RequestMethod.GET})
+    @CrossOrigin
+    public String getAnnDetailByIdAdmin(@RequestParam("token") String token,@RequestParam("id") int id) throws JsonProcessingException {
+
+        //error
+        //0 正常 1 越权 2 失败
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(userServiceObject.tokenIsAdmin(token))
+        {
+            ann annObject = annServiceObject.getAnnDetailByIdAdmin(id);
+//            System.out.println(annObject);
+            if(annObject != null)
+            {
+                s.put("data",annObject);
+                s.put("error","0");
+            }
+            else
+                s.put("error","2");
+        }
+        else
+            s.put("error","1");
+
+        return mapper.writeValueAsString(s);
     }
 
     //根据id删除公告
@@ -347,6 +377,31 @@ public class adminContorller {
         {
             if(contestServiceObject.deleteContestById(id))
                 s.put("error","0");
+            else
+                s.put("error","2");
+        }
+        else
+            s.put("error","1");
+
+        return mapper.writeValueAsString(s);
+    }
+
+    // 按id查询比赛详情(Admin) id,title,des,problemList,startTime,endTime
+    @RequestMapping(value = "/getContestDetailByIdAdmin",method = {RequestMethod.GET})
+    @CrossOrigin
+    public String getContestDetailByIdAdmin(@RequestParam("token") String token,@RequestParam("id") int id) throws JsonProcessingException {
+        //error
+        //0 正常 1 越权 2 失败
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(userServiceObject.tokenIsAdmin(token))
+        {
+            contest contestObject = contestServiceObject.getContestDetailByIdAdmin(id);
+            if(contestObject != null)
+            {
+                s.put("data",contestObject);
+                s.put("error","0");
+            }
             else
                 s.put("error","2");
         }
