@@ -21,6 +21,4 @@ public class state {
     String memoryCost;
     String timeCost;
     String code;
-
-
 }
