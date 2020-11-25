@@ -255,7 +255,6 @@ public class userController {
     @CrossOrigin
     public String changeUserAvailable (@RequestParam("token") String token,@RequestParam("username") String username) throws JsonProcessingException {
 
-
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
         if(userServiceObject.tokenIsAdmin(token))
@@ -270,6 +269,33 @@ public class userController {
         }
         else
             s.put("error","1");
+
+        return mapper.writeValueAsString(s);
+    }
+
+    //获取个人信息设置所需数据
+    @RequestMapping(value = "/getUserPersonInfo")
+    @CrossOrigin
+    public String getUserPersonInfo(@RequestParam("token") String token) throws JsonProcessingException {
+        System.out.println(token);
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        int id = userServiceObject.getUserId(token);
+        String username = userServiceObject.getUserName(token);
+        String email = userServiceObject.getUserEmail(token);
+        String type = userServiceObject.getUserType(token);
+        if(id != 0 && username != null && email != null && type != null)
+        {
+            s.put("error","0");
+            s.put("id",id);
+            s.put("username",username);
+            s.put("email",email);
+            s.put("type",type);
+        }
+        else
+            s.put("error","1");
+
+        System.out.println(s);
 
         return mapper.writeValueAsString(s);
     }

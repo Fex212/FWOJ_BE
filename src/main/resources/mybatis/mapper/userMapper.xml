@@ -34,6 +34,12 @@
     <select id="getUserType" resultType="String">
     select type from onlinejudge.user where token=#{token}
    </select>
+    <!--    根据传入的token查询用户的email-->
+    <select id="getUserEmail" resultType="String">
+    select email from onlinejudge.user where token=#{token}
+   </select>
+
+
     <!--    根据email查询用户数量-->
     <select id="emailExist" resultType="int">
     select count(id) from onlinejudge.user where email=#{email}

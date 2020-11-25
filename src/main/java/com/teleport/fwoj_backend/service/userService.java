@@ -15,10 +15,14 @@ public interface userService {
     boolean setAvailableByUsername(String username,boolean available);
     //创建token
     String createToken(String username);
-    //根据token获取用户名，id，用户类型
+
+    //根据token获取用户名，id，用户类型,邮箱
     String getUserName(String token);
     int getUserId(String token);
     String getUserType(String token);
+    String getUserEmail(String token);
+
+
     //查询email是否存在
     boolean emailExist(String email);
     //查询username是否存在
@@ -41,4 +45,5 @@ public interface userService {
     boolean editUserDetailWithoutPasswd(String email,String username,String type,String des,int id);
     //根据id删除用户
     boolean deleteUser(int id);
+
 }
