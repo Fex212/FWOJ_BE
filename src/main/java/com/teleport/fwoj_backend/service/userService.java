@@ -1,14 +1,14 @@
 package com.teleport.fwoj_backend.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.teleport.fwoj_backend.pojo.user;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 public interface userService {
 
     //登录
-    int loginCheck(String username,String passwd);
+    boolean loginCheck(String username,String passwd);
     //根据用户名查找available是否为true
     boolean getAvailableByUsername(String username);
     //根据用户名设置available
@@ -21,7 +21,6 @@ public interface userService {
     int getUserId(String token);
     String getUserType(String token);
     String getUserEmail(String token);
-
 
     //查询email是否存在
     boolean emailExist(String email);
@@ -45,5 +44,8 @@ public interface userService {
     boolean editUserDetailWithoutPasswd(String email,String username,String type,String des,int id);
     //根据id删除用户
     boolean deleteUser(int id);
+
+    //提供原密码修改密码
+    String updatePasswordByPrePassword(String token,String oldpasswd,String passwd) throws JsonProcessingException;
 
 }

@@ -22,7 +22,7 @@ public class userController {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
         //status 1 登录成功 0 用户名或密码不正确 -1 被封号
-        if(userServiceObject.loginCheck(username,passwd) == 1)
+        if(userServiceObject.loginCheck(username,passwd))
         {
             if(userServiceObject.getAvailableByUsername(username)) {
                 s.put("status", "1");
@@ -274,10 +274,9 @@ public class userController {
     }
 
     //获取个人信息设置所需数据
-    @RequestMapping(value = "/getUserPersonInfo")
+    @RequestMapping(value = "/getUserPersonInfo",method = {RequestMethod.POST})
     @CrossOrigin
     public String getUserPersonInfo(@RequestParam("token") String token) throws JsonProcessingException {
-        System.out.println(token);
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
         int id = userServiceObject.getUserId(token);
@@ -294,10 +293,14 @@ public class userController {
         }
         else
             s.put("error","1");
-
-        System.out.println(s);
-
         return mapper.writeValueAsString(s);
+    }
+
+    @RequestMapping(value = "updatePasswordByPrePasswd",method = {RequestMethod.POST})
+    @CrossOrigin
+    public String updatePasswordByPrePassword(@RequestParam("token") String token ,
+                                              @RequestParam("oldpasswd") String oldpasswd,@RequestParam("passwd") String passwd) throws JsonProcessingException {
+        return userServiceObject.updatePasswordByPrePassword(token,oldpasswd,passwd);
     }
 
 }

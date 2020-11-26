@@ -1,10 +1,13 @@
 package com.teleport.fwoj_backend.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.teleport.fwoj_backend.mapper.userMapper;
 import com.teleport.fwoj_backend.pojo.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -14,8 +17,12 @@ public class userServiceImpl implements userService{
     @Autowired
     private userMapper userMapperObject;
     @Override
-    public int loginCheck(String username, String passwd) {
-        return userMapperObject.loginCheck(username,passwd);
+    public boolean loginCheck(String username, String passwd)
+    {
+        if(userMapperObject.loginCheck(username,passwd) == 1)
+            return true;
+        else
+            return false;
     }
 
     @Override
@@ -151,6 +158,26 @@ public class userServiceImpl implements userService{
             return true;
         else
             return false;
+    }
+
+    @Override
+    public String updatePasswordByPrePassword(String token, String oldpasswd, String passwd) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        String username = userMapperObject.getUserName(token);
+        //原密码不对 error 1
+        //原密码对
+        if(userMapperObject.loginCheck(username,oldpasswd) == 1)
+        {
+            //更改密码
+            if(userMapperObject.updatePassword(username,passwd) == 1)
+                s.put("error","0");
+            else
+                s.put("error","2");
+        }
+        else
+            s.put("error","1");
+        return mapper.writeValueAsString(s);
     }
 
 

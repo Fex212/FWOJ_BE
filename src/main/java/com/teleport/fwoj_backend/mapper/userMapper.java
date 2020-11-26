@@ -51,4 +51,5 @@ public interface userMapper {
     int editUserDetailWithoutPasswd(@Param("email") String email,@Param("username") String username,@Param("type") String type,@Param("des") String des,@Param("id") int id);
     //根据id删除用户
     int deleteUser(int id);
+    int updatePassword(String username,String passwd);
 }

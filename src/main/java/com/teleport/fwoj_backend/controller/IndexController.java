@@ -70,7 +70,6 @@ public class indexController {
     @CrossOrigin
     public String getProblemList(@RequestParam("page") int page,@RequestParam("pre") int pre)throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-
         List<problem> list = problemServiceObject.getProblemList(page,pre);
         int total  = problemServiceObject.getProblemSum();
         HashMap s = new HashMap();

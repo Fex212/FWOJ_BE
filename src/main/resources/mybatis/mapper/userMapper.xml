@@ -39,7 +39,6 @@
     select email from onlinejudge.user where token=#{token}
    </select>
 
-
     <!--    根据email查询用户数量-->
     <select id="emailExist" resultType="int">
     select count(id) from onlinejudge.user where email=#{email}
@@ -89,5 +88,9 @@
     <delete id="deleteUser" parameterType="int">
         delete from user where id=#{id}
     </delete>
+
+    <update id="updatePassword" parameterType="user">
+        update user set passwd=#{passwd} where username=#{username}
+    </update>
 
 </mapper>
