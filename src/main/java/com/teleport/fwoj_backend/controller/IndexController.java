@@ -224,9 +224,8 @@ public class indexController {
     @RequestMapping(value = "/getAvatar",produces = MediaType.IMAGE_JPEG_VALUE)
     @ResponseBody
     @CrossOrigin
-    public  byte[] getAvatarUrl(@RequestParam("token") String token) throws IOException {
+    public  byte[] getAvatarUrl(@RequestParam("username") String username) throws IOException {
 
-        String username = userServiceObject.getUserName(token);
         byte[] bytes;
         FileInputStream inputStream;
         if (username != null)
