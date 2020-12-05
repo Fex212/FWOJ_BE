@@ -273,34 +273,39 @@ public class userController {
         return mapper.writeValueAsString(s);
     }
 
-    //获取个人信息设置所需数据
+    //根据token获取个人信息设置所需数据
     @RequestMapping(value = "/getUserPersonInfo",method = {RequestMethod.POST})
     @CrossOrigin
     public String getUserPersonInfo(@RequestParam("token") String token) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        HashMap s = new HashMap();
-        int id = userServiceObject.getUserId(token);
-        String username = userServiceObject.getUserName(token);
-        String email = userServiceObject.getUserEmail(token);
-        String type = userServiceObject.getUserType(token);
-        if(id != 0 && username != null && email != null && type != null)
-        {
-            s.put("error","0");
-            s.put("id",id);
-            s.put("username",username);
-            s.put("email",email);
-            s.put("type",type);
-        }
-        else
-            s.put("error","1");
-        return mapper.writeValueAsString(s);
+        return userServiceObject.getUserPersonInfo(token);
     }
-
+    //更新个人设置中的sign,site,github
+    @RequestMapping(value = "/updateUserPersonInfo", method = {RequestMethod.POST})
+    @CrossOrigin
+    public String updateUserPersonInfo(@RequestParam("token") String token,@RequestParam("sign") String sign,@RequestParam("site") String site,@RequestParam("github") String github) throws JsonProcessingException {
+        return userServiceObject.updateUserPersonInfo(token,sign,site,github);
+    }
+    //个人设置更新密码
     @RequestMapping(value = "updatePasswordByPrePasswd",method = {RequestMethod.POST})
     @CrossOrigin
     public String updatePasswordByPrePassword(@RequestParam("token") String token ,
                                               @RequestParam("oldpasswd") String oldpasswd,@RequestParam("passwd") String passwd) throws JsonProcessingException {
         return userServiceObject.updatePasswordByPrePassword(token,oldpasswd,passwd);
     }
+
+    //根据username获取个人资料卡所需数据
+    @RequestMapping(value = "/getUserCardInfo/{username}",method = {RequestMethod.GET})
+    @CrossOrigin
+    public String getUserCardInfo(@PathVariable("username") String username) throws JsonProcessingException {
+        return userServiceObject.getUserCardInfo(username);
+    }
+
+
+//    //根据username获取个人资料卡所需数据
+//    @RequestMapping(value = "/getUserCardInfo",method = {RequestMethod.GET})
+//    @CrossOrigin
+//    public String getUserCardInfo(@RequestParam("username") String username) throws JsonProcessingException {
+//        return userServiceObject.getUserCardInfo(username);
+//    }
 
 }

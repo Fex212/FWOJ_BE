@@ -23,10 +23,27 @@ public interface userMapper {
     String getUserName(@Param("token") String token);
     //通过token查找用户Id
     int getUserId(@Param("token") String token);
-    //通过token查户type
+    //通过token查找type
     String getUserType(@Param("token") String token);
     //根据token查找用户邮箱
     String getUserEmail(@Param("token") String token);
+
+    //通过username查找个人签名
+    String getUserSignByUsername(@Param("username") String username);
+    //通过username查找site
+    String getUserSiteByUsername(@Param("username") String username);
+    //通过username查找github
+    String getUserGithubByUsername(@Param("username") String username);
+    //通过username查找type
+    String getUserTypeByUsername(@Param("username") String username);
+
+
+    //    根据token更新个人签名
+    int updateUserSignByToken(@Param("token") String token,@Param("sign") String sign);
+    //    根据token更新site
+    int updateUserSiteByToken(@Param("token") String token,@Param("site") String site);
+    //    根据token更新github
+    int updateUserGithubByToken(@Param("token") String token,@Param("github") String github);
 
     //通过email查询用户数量
     int emailExist(@Param("email") String email);
@@ -46,7 +63,7 @@ public interface userMapper {
     String getTypeByToken(String token);
     //根据id查询用户详细信息
     user getUserDetailById(int id);
-    //编辑用户
+    //编辑用户(admin界面)
     int editUserDetail(@Param("email") String email,@Param("username") String username,@Param("type") String type,@Param("des") String des,@Param("passwd") String passwd,@Param("id") int id);
     int editUserDetailWithoutPasswd(@Param("email") String email,@Param("username") String username,@Param("type") String type,@Param("des") String des,@Param("id") int id);
     //根据id删除用户

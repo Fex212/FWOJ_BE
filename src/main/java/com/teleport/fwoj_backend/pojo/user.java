@@ -16,4 +16,7 @@ public class user {
     String email;
     boolean available;
     String token;
+    String github;
+    String sign;
+    String site;
 }

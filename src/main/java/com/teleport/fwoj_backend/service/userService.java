@@ -22,6 +22,14 @@ public interface userService {
     String getUserType(String token);
     String getUserEmail(String token);
 
+    //根据token获取用户名，id，用户类型,邮箱,sign,site,github
+    String getUserPersonInfo(String token) throws JsonProcessingException;
+    //根据token更新sign,site,github
+    String updateUserPersonInfo(String token,String sign,String site,String github)throws JsonProcessingException;
+    //根据username获取type,sign,site,github
+    String getUserCardInfo(String username) throws JsonProcessingException;
+
+
     //查询email是否存在
     boolean emailExist(String email);
     //查询username是否存在
@@ -44,7 +52,6 @@ public interface userService {
     boolean editUserDetailWithoutPasswd(String email,String username,String type,String des,int id);
     //根据id删除用户
     boolean deleteUser(int id);
-
     //提供原密码修改密码
     String updatePasswordByPrePassword(String token,String oldpasswd,String passwd) throws JsonProcessingException;
 

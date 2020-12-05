@@ -80,7 +80,7 @@
     <update id="editUserDetail" parameterType="user">
         update user set email=#{email},username=#{username},type=#{type},des=#{des},passwd=#{passwd} where id=#{id}
     </update>
-    <!--    更新用户信息email username type des passwd-->
+    <!--    更新用户信息email username type des -->
     <update id="editUserDetailWithoutPasswd" parameterType="user">
         update user set email=#{email},username=#{username},type=#{type},des=#{des} where id=#{id}
     </update>
@@ -88,9 +88,39 @@
     <delete id="deleteUser" parameterType="int">
         delete from user where id=#{id}
     </delete>
-
+<!--    根据用户名更新密码-->
     <update id="updatePassword" parameterType="user">
         update user set passwd=#{passwd} where username=#{username}
+    </update>
+
+<!--    通过username查找个人签名-->
+    <select id="getUserSignByUsername" resultType="String">
+        select sign from user where username=#{username}
+    </select>
+<!--    通过username查找site-->
+    <select id="getUserSiteByUsername" resultType="String">
+        select site from user where username=#{username}
+    </select>
+<!--    通过username查找github-->
+    <select id="getUserGithubByUsername" resultType="String">
+        select github from user where username=#{username}
+    </select>
+    <!--    通过username查找type-->
+    <select id="getUserTypeByUsername" resultType="String">
+        select type from user where username=#{username}
+    </select>
+
+    <!--    根据token更新sign-->
+    <update id="updateUserSignByToken" parameterType="user">
+        update user set sign=#{sign} where token=#{token}
+    </update>
+    <!--    根据token更新site-->
+    <update id="updateUserSiteByToken" parameterType="user">
+        update user set site=#{site} where token=#{token}
+    </update>
+    <!--    根据token更新github-->
+    <update id="updateUserGithubByToken" parameterType="user">
+        update user set github=#{github} where token=#{token}
     </update>
 
 </mapper>

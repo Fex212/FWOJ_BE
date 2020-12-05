@@ -76,6 +76,68 @@ public class userServiceImpl implements userService{
     }
 
     @Override
+    public String getUserPersonInfo(String token) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        int id = userMapperObject.getUserId(token);
+        String username = userMapperObject.getUserName(token);
+        String email = userMapperObject.getUserEmail(token);
+        String type = userMapperObject.getUserType(token);
+        String site = userMapperObject.getUserSiteByUsername(username);
+        String github = userMapperObject.getUserGithubByUsername(username);
+        String sign = userMapperObject.getUserSignByUsername(username);
+        if(id != 0 && username != null && email != null && type != null)
+        {
+            s.put("error","0");
+            s.put("id",id);
+            s.put("username",username);
+            s.put("email",email);
+            s.put("type",type);
+            s.put("github",github);
+            s.put("sign",sign);
+            s.put("site",site);
+        }
+        else
+            s.put("error","1");
+        return mapper.writeValueAsString(s);
+    }
+
+    @Override
+    public String updateUserPersonInfo(String token, String sign, String site, String github) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(userMapperObject.updateUserSiteByToken(token,site) == 1 &&
+            userMapperObject.updateUserGithubByToken(token,github) == 1 &&
+            userMapperObject.updateUserSignByToken(token,sign) == 1)
+            s.put("error","0");
+        else
+            s.put("error","1");
+        return mapper.writeValueAsString(s);
+    }
+
+    @Override
+    public String getUserCardInfo(String username) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        //type,sign,site,github
+        String type = userMapperObject.getUserTypeByUsername(username);
+        String sign = userMapperObject.getUserSignByUsername(username);
+        String site = userMapperObject.getUserSiteByUsername(username);
+        String github = userMapperObject.getUserGithubByUsername(username);
+        if(type != null)
+        {
+            s.put("error","0");
+            s.put("type",type);
+            s.put("site",site);
+            s.put("sign",sign);
+            s.put("github",github);
+        }
+        else
+            s.put("error","1");
+        return mapper.writeValueAsString(s);
+    }
+
+    @Override
     public boolean emailExist(String email) {
         if(userMapperObject.emailExist(email) == 0)
             return false;
