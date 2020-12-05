@@ -301,11 +301,4 @@ public class userController {
     }
 
 
-//    //根据username获取个人资料卡所需数据
-//    @RequestMapping(value = "/getUserCardInfo",method = {RequestMethod.GET})
-//    @CrossOrigin
-//    public String getUserCardInfo(@RequestParam("username") String username) throws JsonProcessingException {
-//        return userServiceObject.getUserCardInfo(username);
-//    }
-
 }

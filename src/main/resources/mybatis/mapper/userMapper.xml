@@ -57,8 +57,8 @@
    </select>
     <!--    传入email username passwd，写入user表-->
     <insert id="register" parameterType="user">
-    insert onlinejudge.user(email,username,passwd,type,available)
-    values(#{email},#{username},#{passwd},'user','1')
+    insert onlinejudge.user(email,username,passwd,type,available,sign,site,github)
+    values(#{email},#{username},#{passwd},'user','1','这里没有签名档','about:blank','about:blank')
     </insert>
 <!--    获得用户列表-->
     <select id="getUserList" resultType="user">
