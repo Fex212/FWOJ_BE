@@ -10,6 +10,7 @@ import java.util.List;
 @Mapper
 @Repository
 public interface userMapper {
+
     //提供用户名密码查找是否有这个人
     int loginCheck(@Param("username") String username, @Param("passwd") String passwd);
     //根据用户名查找available是否为1
@@ -20,15 +21,15 @@ public interface userMapper {
     int createToken(@Param("username") String username,@Param("token") String token);
 
     //通过token查找用户名
-    String getUserName(@Param("token") String token);
+    String getUserNameByToken(@Param("token") String token);
     //通过token查找用户Id
-    int getUserId(@Param("token") String token);
+    int getUserIdByToken(@Param("token") String token);
     //通过token查找type
-    String getUserType(@Param("token") String token);
+    String getUserTypeByToken(@Param("token") String token);
     //根据token查找用户邮箱
-    String getUserEmail(@Param("token") String token);
+    String getUserEmailByToken(@Param("token") String token);
 //    通过token查找用户soledList
-    String getUserSolvedList(@Param("token") String token);
+    String getUserSolvedListByToken(@Param("token") String token);
 
 
     //通过username查找个人签名

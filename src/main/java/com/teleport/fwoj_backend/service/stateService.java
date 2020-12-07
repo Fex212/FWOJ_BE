@@ -1,5 +1,6 @@
 package com.teleport.fwoj_backend.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.teleport.fwoj_backend.pojo.state;
 
 import java.util.Date;
@@ -14,5 +15,5 @@ public interface stateService {
     //查询详情
     state getStateDetail(Integer id);
     //增加一条state
-    boolean addState(int problemId, int authorId, Date date, String language, String code);
+    String addState(String code,int problemId,String token,String language) throws JsonProcessingException;
 }

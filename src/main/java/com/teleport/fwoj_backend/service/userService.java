@@ -2,25 +2,31 @@ package com.teleport.fwoj_backend.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.teleport.fwoj_backend.pojo.user;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 public interface userService {
 
     //登录
     String login(String username,String passwd) throws JsonProcessingException;
-    boolean loginCheck(String username,String passwd);
+    //注册
+    String register(String email,String username,String passwd) throws JsonProcessingException;
+
+
     //根据用户名查找available是否为true
     boolean getAvailableByUsername(String username);
     //根据用户名设置available
     boolean setAvailableByUsername(String username,boolean available);
-    //创建token
-    String createToken(String username);
+
 
     //根据token获取用户名，id，用户类型,邮箱
-    String getUserName(String token);
-    int getUserId(String token);
-    String getUserType(String token);
+    String getUserNameByToken(String token) throws JsonProcessingException;
+    String getUserIdByToken(String token) throws JsonProcessingException;
+    String getUserTypeByToken(String token) throws JsonProcessingException;
     String getUserEmail(String token);
 
     //根据token获取用户名，id，用户类型,邮箱,sign,site,github
@@ -39,8 +45,7 @@ public interface userService {
     int getEmailNumExpect(String email,int id);
     //  根据username查询除自己之外的用户数量
     int getUsernameNumExpect(String username,int id);
-    //注册
-    boolean register(String email,String username,String passwd);
+
     //获取用户列表(页数,每页几条)
     List<user> getUserList(Integer page, Integer pre,String key);
     //获取用户总数
@@ -56,4 +61,6 @@ public interface userService {
     //提供原密码修改密码
     String updatePasswordByPrePassword(String token,String oldpasswd,String passwd) throws JsonProcessingException;
 
+    String uploadAvatar(MultipartFile file,String token) throws JsonProcessingException;
+    byte[] getAvatarUrl(String username) throws IOException;
 }

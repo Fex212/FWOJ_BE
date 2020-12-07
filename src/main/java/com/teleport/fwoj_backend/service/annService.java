@@ -1,5 +1,6 @@
 package com.teleport.fwoj_backend.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.teleport.fwoj_backend.pojo.ann;
 import java.util.List;
 
@@ -22,6 +23,6 @@ public interface annService {
     //改变公告的visible
     boolean changeAnnVisible(int id);
     //创建公告 date title content authorId
-    boolean createAnn(String date,String title,String content,int authorId);
+    String createAnn(String title,String content,String token) throws JsonProcessingException;
     boolean updateAnn(int id,String title,String content);
 }

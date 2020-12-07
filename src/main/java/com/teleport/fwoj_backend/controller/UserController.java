@@ -23,43 +23,28 @@ public class userController {
         return userServiceObject.login(username,passwd);
     }
 
-    
     //根据token查询用户名
     @RequestMapping(value = "/getUserName",method = {RequestMethod.POST})
     @CrossOrigin
-    public String getUserName(@RequestParam("token") String token) throws JsonProcessingException
+    public String getUserNameByToken(@RequestParam("token") String token) throws JsonProcessingException
     {
-        ObjectMapper mapper = new ObjectMapper();
-        if(token == null || token.equals(""))
-            return null;
-        HashMap s = new HashMap();
-        s.put("username",userServiceObject.getUserName(token));
-        return mapper.writeValueAsString(s);
+        return userServiceObject.getUserNameByToken(token);
     }
 
     //根据token查询用户Id
     @RequestMapping(value = "/getUserId",method = {RequestMethod.POST})
     @CrossOrigin
-    public String getUserId(@RequestParam("token") String token) throws JsonProcessingException
+    public String getUserIdByToken(@RequestParam("token") String token) throws JsonProcessingException
     {
-        ObjectMapper mapper = new ObjectMapper();
-        if(token == null || token.equals(""))
-            return null;
-        HashMap s = new HashMap();
-        s.put("userId",userServiceObject.getUserId(token));
-        return mapper.writeValueAsString(s);
+        return userServiceObject.getUserIdByToken(token);
     }
+
     //根据token查询用户Type
     @RequestMapping(value = "/getUserType",method = {RequestMethod.POST})
     @CrossOrigin
-    public String getUserType(@RequestParam("token") String token) throws JsonProcessingException
+    public String getUserTypeByToken(@RequestParam("token") String token) throws JsonProcessingException
     {
-        ObjectMapper mapper = new ObjectMapper();
-        if(token == null || token.equals(""))
-            return null;
-        HashMap s = new HashMap();
-        s.put("userType",userServiceObject.getUserType(token));
-        return mapper.writeValueAsString(s);
+        return userServiceObject.getUserTypeByToken(token);
     }
 
     //传入email username passwd 注册
@@ -68,28 +53,7 @@ public class userController {
     public String register(@RequestParam("email") String email,@RequestParam("username") String username,@RequestParam("passwd") String passwd)
             throws JsonProcessingException
     {
-        ObjectMapper mapper = new ObjectMapper();
-        HashMap s = new HashMap();
-
-        boolean emailE = userServiceObject.emailExist(email);
-        boolean usernameE = userServiceObject.usernameIsExist(username);
-
-        //error:1 email exist 2 username exist 3 format error 4sql error
-        if(emailE)
-            s.put("error","1");
-        else if(usernameE)
-            s.put("error","2");
-        else if(username.length() > 10 || username.length() < 2 || passwd.length()>35 || email.length() > 30)
-            s.put("error","3");
-        else
-        {
-            boolean r = userServiceObject.register(email,username,passwd);
-            if(r)
-                s.put("error","0");
-            else
-                s.put("error","4");
-        }
-        return mapper.writeValueAsString(s);
+        return userServiceObject.register(email,username,passwd);
     }
 
     //获取用户列表

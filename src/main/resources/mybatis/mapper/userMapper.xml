@@ -25,23 +25,23 @@
 
 
     <!--    根据token查询用户的用户名-->
-    <select id="getUserName" resultType="String">
+    <select id="getUserNameByToken" resultType="String">
     select username from onlinejudge.user where token=#{token}
    </select>
     <!--    根据token查询用户的Id-->
-    <select id="getUserId" resultType="int">
+    <select id="getUserIdByToken" resultType="int">
     select id from onlinejudge.user where token=#{token}
    </select>
     <!--    根据token查询用户的Type-->
-    <select id="getUserType" resultType="String">
+    <select id="getUserTypeByToken" resultType="String">
     select type from onlinejudge.user where token=#{token}
    </select>
     <!--    根据token查询用户的email-->
-    <select id="getUserEmail" resultType="String">
+    <select id="getUserEmailByToken" resultType="String">
     select email from onlinejudge.user where token=#{token}
    </select>
 <!--    通过token查找用户solvedList-->
-    <select id="getUserSolvedList" resultType="String">
+    <select id="getUserSolvedListByToken" resultType="String">
         select solvedList from user where token=#{token};
     </select>
 

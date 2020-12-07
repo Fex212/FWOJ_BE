@@ -6,9 +6,18 @@ import com.teleport.fwoj_backend.mapper.userMapper;
 import com.teleport.fwoj_backend.pojo.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 
 @Service
@@ -44,13 +53,32 @@ public class userServiceImpl implements userService{
     }
 
     @Override
-    public boolean loginCheck(String username, String passwd)
-    {
-        if(userMapperObject.loginCheck(username,passwd) == 1)
-            return true;
+    public String register(String email, String username, String passwd) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+
+        int emailE = userMapperObject.emailExist(email);
+        int usernameE = userMapperObject.usernameExist(username);
+
+        //error:1 email exist 2 username exist 3 format error 4sql error
+        if(emailE == 1)
+            s.put("error","1");
+        else if(usernameE == 1)
+            s.put("error","2");
+        else if(username.length() > 10 || username.length() < 2 || passwd.length()>35 || email.length() > 30)
+            s.put("error","3");
         else
-            return false;
+        {
+
+            int r = userMapperObject.register(email,username,passwd);
+            if(r == 1)
+                s.put("error","0");
+            else
+                s.put("error","4");
+        }
+        return mapper.writeValueAsString(s);
     }
+
 
     @Override
     public boolean getAvailableByUsername(String username) {
@@ -69,47 +97,48 @@ public class userServiceImpl implements userService{
     }
 
     @Override
-    public String createToken(String username)
-    {
-        byte[] lock = new byte[0];
-        long w = 100000000;
-        long r = 0;
-        synchronized (lock) {
-            r = (long) ((Math.random() + 1) * w);
-        }
-        String token = System.currentTimeMillis() + String.valueOf(r).substring(1);
-        userMapperObject.createToken(username,token);
-        return token;
+    public String getUserNameByToken(String token) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        if(token == null)
+            return null;
+        HashMap s = new HashMap();
+        s.put("username",userMapperObject.getUserNameByToken(token));
+        return mapper.writeValueAsString(s);
     }
 
     @Override
-    public String getUserName(String token) {
-        return userMapperObject.getUserName(token);
+    public String getUserIdByToken(String token) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        if(token == null)
+            return null;
+        HashMap s = new HashMap();
+        s.put("userId",userMapperObject.getUserIdByToken(token));
+        return mapper.writeValueAsString(s);
     }
 
     @Override
-    public int getUserId(String token) {
-        return userMapperObject.getUserId(token);
-    }
-
-    @Override
-    public String getUserType(String token) {
-        return userMapperObject.getUserType(token);
+    public String getUserTypeByToken(String token) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        if(token == null)
+            return null;
+        HashMap s = new HashMap();
+        s.put("userType",userMapperObject.getUserTypeByToken(token));
+        return mapper.writeValueAsString(s);
     }
 
     @Override
     public String getUserEmail(String token) {
-        return userMapperObject.getUserEmail(token);
+        return userMapperObject.getUserEmailByToken(token);
     }
 
     @Override
     public String getUserPersonInfo(String token) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        int id = userMapperObject.getUserId(token);
-        String username = userMapperObject.getUserName(token);
-        String email = userMapperObject.getUserEmail(token);
-        String type = userMapperObject.getUserType(token);
+        int id = userMapperObject.getUserIdByToken(token);
+        String username = userMapperObject.getUserNameByToken(token);
+        String email = userMapperObject.getUserEmailByToken(token);
+        String type = userMapperObject.getUserTypeByToken(token);
         String site = userMapperObject.getUserSiteByUsername(username);
         String github = userMapperObject.getUserGithubByUsername(username);
         String sign = userMapperObject.getUserSignByUsername(username);
@@ -190,14 +219,6 @@ public class userServiceImpl implements userService{
         return userMapperObject.getUsernameNumExpect(username,id);
     }
 
-    @Override
-    public boolean register(String email, String username, String passwd) {
-        int r = userMapperObject.register(email,username,passwd);
-        if(r == 0)
-            return false;
-        else
-            return true;
-    }
 
     @Override
     public List<user> getUserList(Integer page, Integer pre,String key) {
@@ -253,7 +274,7 @@ public class userServiceImpl implements userService{
     public String updatePasswordByPrePassword(String token, String oldpasswd, String passwd) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        String username = userMapperObject.getUserName(token);
+        String username = userMapperObject.getUserNameByToken(token);
         //原密码不对 error 1
         //原密码对
         if(userMapperObject.loginCheck(username,oldpasswd) == 1)
@@ -269,5 +290,66 @@ public class userServiceImpl implements userService{
         return mapper.writeValueAsString(s);
     }
 
+    @Override
+    public String uploadAvatar(MultipartFile file, String token) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        String UPLOAD_FOLDER = "./uploadFolder/avatar/";
+        String username = userMapperObject.getUserNameByToken(token);
+        if (username != null) {
+            String kzm = ".jpg";
+            if (Objects.isNull(file)) {
+                s.put("error", "-1");
+                return mapper.writeValueAsString(s);
+            }
+            try {
+                byte[] bytes = file.getBytes();
+                Path path = Paths.get(UPLOAD_FOLDER + username + kzm);
+                if (!Files.isWritable(path)) {
+                    Files.createDirectories(Paths.get(UPLOAD_FOLDER));
+                }
+                Files.write(path, bytes);
+                s.put("error", "0");
+            } catch (IOException e) {
+                s.put("error", "-2");
+            }
+        }
+        else
+            s.put("error", "-3");
+        return mapper.writeValueAsString(s);
+    }
 
+    @Override
+    public byte[] getAvatarUrl(String username) throws IOException {
+        byte[] bytes;
+        FileInputStream inputStream;
+        if (username != null)
+        {
+            boolean flag = true;
+            File avatarFile = new File("./uploadFolder/avatar/" + username + ".jpg");
+            if (!avatarFile.exists()) {
+                flag = false;
+            }
+            //存在,返回对应头像
+            if (flag) {
+                inputStream = new FileInputStream(avatarFile);
+                bytes = new byte[inputStream.available()];
+                inputStream.read(bytes, 0, inputStream.available());
+            }
+            //不存在,返回默认头像
+            else {
+                inputStream = new FileInputStream("./uploadFolder/defaultAvatar.jpg");
+                bytes = new byte[inputStream.available()];
+                inputStream.read(bytes, 0, inputStream.available());
+            }
+            return bytes;
+        }
+        else
+        {
+            inputStream = new FileInputStream("./uploadFolder/defaultAvatar.jpg");
+            bytes = new byte[inputStream.available()];
+            inputStream.read(bytes, 0, inputStream.available());
+            return bytes;
+        }
+    }
 }

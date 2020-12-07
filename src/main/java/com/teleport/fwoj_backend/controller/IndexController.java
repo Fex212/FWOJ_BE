@@ -169,55 +169,14 @@ public class indexController {
     @CrossOrigin
     public String submitProblemCode(@RequestParam("code") String code, @RequestParam("problemId") int problemId,
                                     @RequestParam("token") String token, @RequestParam("language") String language) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        HashMap s = new HashMap();
-        //token不合法
-        if (userServiceObject.getUserName(token) == null) {
-            s.put("error", "1");
-        } else {
-            //提交到state表
-            Date date = new Date();
-            int authorId = userServiceObject.getUserId(token);
-            boolean isVisible = problemServiceObject.getProblemVisibleById(problemId);
-//            System.out.println(problemId);
-//            System.out.println(isVisible);
-            if (isVisible && stateServiceObject.addState(problemId, authorId, date, language, code))
-                s.put("error", "0");
-            else
-                s.put("error", "2");
-        }
-        return mapper.writeValueAsString(s);
+        return stateServiceObject.addState(code,problemId,token,language);
     }
 
     //error -1 文件为空 -2 后端异常
     @RequestMapping("/uploadAvatar")
     @CrossOrigin
-    public String singleFileUpload(@RequestParam("avatar") MultipartFile file, @RequestParam("token") String token) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        HashMap s = new HashMap();
-        String UPLOAD_FOLDER = "./uploadFolder/avatar/";
-        String username = userServiceObject.getUserName(token);
-        if (username != null) {
-            String kzm = ".jpg";
-            if (Objects.isNull(file)) {
-                s.put("error", "-1");
-                return mapper.writeValueAsString(s);
-            }
-            try {
-                byte[] bytes = file.getBytes();
-                Path path = Paths.get(UPLOAD_FOLDER + username + kzm);
-                if (!Files.isWritable(path)) {
-                    Files.createDirectories(Paths.get(UPLOAD_FOLDER));
-                }
-                Files.write(path, bytes);
-                s.put("error", "0");
-            } catch (IOException e) {
-                s.put("error", "-2");
-            }
-        }
-        else
-            s.put("error", "-3");
-        return mapper.writeValueAsString(s);
+    public String uploadAvatar(@RequestParam("avatar") MultipartFile file, @RequestParam("token") String token) throws JsonProcessingException {
+        return userServiceObject.uploadAvatar(file,token);
     }
 
     //error -1 用户不存在
@@ -225,37 +184,7 @@ public class indexController {
     @ResponseBody
     @CrossOrigin
     public  byte[] getAvatarUrl(@RequestParam("username") String username) throws IOException {
-
-        byte[] bytes;
-        FileInputStream inputStream;
-        if (username != null)
-        {
-            boolean flag = true;
-            File avatarFile = new File("./uploadFolder/avatar/" + username + ".jpg");
-            if (!avatarFile.exists()) {
-                flag = false;
-            }
-            //存在,返回对应头像
-            if (flag) {
-                inputStream = new FileInputStream(avatarFile);
-                bytes = new byte[inputStream.available()];
-                inputStream.read(bytes, 0, inputStream.available());
-            }
-            //不存在,返回默认头像
-            else {
-                inputStream = new FileInputStream("./uploadFolder/defaultAvatar.jpg");
-                bytes = new byte[inputStream.available()];
-                inputStream.read(bytes, 0, inputStream.available());
-            }
-            return bytes;
-        }
-        else
-        {
-            inputStream = new FileInputStream("./uploadFolder/defaultAvatar.jpg");
-            bytes = new byte[inputStream.available()];
-            inputStream.read(bytes, 0, inputStream.available());
-            return bytes;
-        }
+        return userServiceObject.getAvatarUrl(username);
     }
 
 }

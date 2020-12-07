@@ -144,21 +144,7 @@ public class adminContorller {
 
         //error
         //0 正常 1 越权 2 删除失败
-        ObjectMapper mapper = new ObjectMapper();
-        HashMap s = new HashMap();
-        if(userServiceObject.tokenIsAdmin(token))
-        {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String date =formatter.format(new Date());
-            if(annServiceObject.createAnn(date,title,content,userServiceObject.getUserId(token)))
-                s.put("error","0");
-            else
-                s.put("error","2");
-        }
-        else
-            s.put("error","1");
-
-        return mapper.writeValueAsString(s);
+        return annServiceObject.createAnn(title,content,token);
     }
 
     //修改公告 id title content token
@@ -269,7 +255,7 @@ public class adminContorller {
         HashMap s = new HashMap();
         if(userServiceObject.tokenIsAdmin(token))
         {
-            if(problemServiceObject.createProblem(title,des,input,output,inputExample,outputExample,hint,userServiceObject.getUserName(token)))
+            if(problemServiceObject.createProblem(title,des,input,output,inputExample,outputExample,hint,userServiceObject.getUserNameByToken(token)))
                 s.put("error","0");
             else
                 s.put("error","2");
@@ -424,7 +410,7 @@ public class adminContorller {
         HashMap s = new HashMap();
         if(userServiceObject.tokenIsAdmin(token))
         {
-            if(contestServiceObject.createContest(title,des,problemList,startTime,endTime,false,userServiceObject.getUserName(token)))
+            if(contestServiceObject.createContest(title,des,problemList,startTime,endTime,false,userServiceObject.getUserNameByToken(token)))
                 s.put("error","0");
             else
                 s.put("error","2");
