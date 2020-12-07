@@ -2,6 +2,7 @@ package com.teleport.fwoj_backend.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.teleport.fwoj_backend.mapper.problemMapper;
 import com.teleport.fwoj_backend.mapper.userMapper;
 import com.teleport.fwoj_backend.pojo.user;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ public class userServiceImpl implements userService{
 
     @Autowired
     private userMapper userMapperObject;
+    @Autowired
+    private problemMapper problemMapperObject;
 
     @Override
     public String login(String username, String passwd) throws JsonProcessingException {
@@ -79,21 +82,7 @@ public class userServiceImpl implements userService{
     }
 
 
-    @Override
-    public boolean getAvailableByUsername(String username) {
-        if(userMapperObject.getAvailableByUsername(username) == 1)
-            return true;
-        else
-            return false;
-    }
 
-    @Override
-    public boolean setAvailableByUsername(String username, boolean available) {
-        if(userMapperObject.setAvailableByUsername(username,available) == 1)
-            return true;
-        else
-            return false;
-    }
 
     @Override
     public String getUserNameByToken(String token) throws JsonProcessingException {
@@ -123,11 +112,6 @@ public class userServiceImpl implements userService{
         HashMap s = new HashMap();
         s.put("userType",userMapperObject.getUserTypeByToken(token));
         return mapper.writeValueAsString(s);
-    }
-
-    @Override
-    public String getUserEmail(String token) {
-        return userMapperObject.getUserEmailByToken(token);
     }
 
     @Override
@@ -193,31 +177,24 @@ public class userServiceImpl implements userService{
     }
 
     @Override
-    public boolean emailExist(String email) {
-        if(userMapperObject.emailExist(email) == 0)
-            return false;
+    public String changeUserAvailable(String token, String username) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(userMapperObject.getUserTypeByToken(token).equals("admin"))
+        {
+            //可用
+            if(userMapperObject.getAvailableByUsername(username) == 1)
+                userMapperObject.setAvailableByUsername(username,false);
+                //不可用
+            else
+                userMapperObject.setAvailableByUsername(username,true);
+            s.put("error","0");
+        }
         else
-            return true;
-    }
+            s.put("error","1");
 
-    @Override
-    public boolean usernameIsExist(String username) {
-        if(userMapperObject.usernameExist(username) == 0)
-            return false;
-        else
-            return true;
+        return mapper.writeValueAsString(s);
     }
-
-    @Override
-    public int getEmailNumExpect(String email, int id) {
-        return userMapperObject.getEmailNumExpect(email,id);
-    }
-
-    @Override
-    public int getUsernameNumExpect(String username, int id) {
-        return userMapperObject.getUsernameNumExpect(username,id);
-    }
-
 
     @Override
     public String getUserList(Integer page, Integer pre, String key, String token) throws JsonProcessingException {
@@ -239,45 +216,113 @@ public class userServiceImpl implements userService{
     }
 
     @Override
-    public int getUserNum() {
-        return userMapperObject.getUserNum();
-    }
-
-    @Override
-    public boolean tokenIsAdmin(String token) {
-        if(userMapperObject.getTypeByToken(token) != null && userMapperObject.getTypeByToken(token).equals("admin"))
-            return true;
+    public String tokenIsAdmin(String token) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(userMapperObject.getUserTypeByToken(token).equals("admin"))
+        {
+            s.put("result","1");
+        }
         else
-            return false;
+            s.put("result","0");
+        return mapper.writeValueAsString(s);
     }
 
     @Override
-    public user getUserDetailById(int id) {
-        return userMapperObject.getUserDetailById(id);
-    }
+    public String getUserDetailById(String token,int id) throws JsonProcessingException {
 
-    @Override
-    public boolean editUserDetail(String email, String username, String type, String des, String passwd,int id) {
-        if(userMapperObject.editUserDetail(email,username,type,des,passwd,id) == 1)
-            return true;
+
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(userMapperObject.getUserTypeByToken(token).equals("admin"))
+        {
+            s.put("result","1");
+            s.put("userDetail",userMapperObject.getUserDetailById(id));
+        }
         else
-            return false;
+            s.put("result","0");
+        return mapper.writeValueAsString(s);
     }
 
     @Override
-    public boolean editUserDetailWithoutPasswd(String email, String username, String type, String des,int id) {
-        if(userMapperObject.editUserDetailWithoutPasswd(email,username,type,des,id) == 1)
-            return true;
+    public String editUserDetail
+            (String token,String email, String username, String type, String des, String passwd,int id) throws JsonProcessingException {
+
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        int emailNumExcept = userMapperObject.getEmailNumExpect(email,id);
+        int usernameNumExcept = userMapperObject.getUsernameNumExpect(username,id);
+        //error:1 email exist 2 username exist
+        //3 format error 4 sql error
+        //5 permission error
+        //判断是否是admin权限
+        if(userMapperObject.getUserTypeByToken(token).equals("Admin"))
+        {
+            if(emailNumExcept != 0)
+                s.put("error","1");
+            else if(usernameNumExcept  != 0)
+                s.put("error","2");
+            else if(username.length() > 10 || username.length() < 2 || passwd.length()>35 || email.length() > 30 || (!type.equals("admin") && !type.equals("user")))
+                s.put("error","3");
+            else
+            {
+                if(userMapperObject.editUserDetail(email,username,type,des,passwd,id) == 1)
+                    s.put("error","0");
+                else
+                    s.put("error","4");
+            }
+        }
         else
-            return false;
+            s.put("error","5");
+        return mapper.writeValueAsString(s);
+
     }
 
     @Override
-    public boolean deleteUser(int id) {
-        if(userMapperObject.deleteUser(id) == 1)
-            return true;
+    public String editUserDetailWithoutPasswd
+            (String token,String email, String username, String type, String des,int id) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        int emailNumExcept = userMapperObject.getEmailNumExpect(email,id);
+        int usernameNumExcept = userMapperObject.getUsernameNumExpect(username,id);
+        //error:1 email exist 2 username exist
+        //3 format error 4 sql error
+        //5 permission error
+        //判断是否是admin权限
+        if(userMapperObject.getUserTypeByToken(token).equals("admin"))
+        {
+            if(emailNumExcept != 0)
+                s.put("error","1");
+            else if(usernameNumExcept  != 0)
+                s.put("error","2");
+            else if(username.length() > 10 || username.length() < 2  || email.length() > 30 || (!type.equals("admin") && !type.equals("user")))
+                s.put("error","3");
+            else
+            {
+                if(userMapperObject.editUserDetailWithoutPasswd(email,username,type,des,id) == 1)
+                    s.put("error","0");
+                else
+                    s.put("error","4");
+            }
+        }
         else
-            return false;
+            s.put("error","5");
+        return mapper.writeValueAsString(s);
+
+    }
+
+    @Override
+    public String deleteUser(String token,int id) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(userMapperObject.getUserTypeByToken(token).equals("admin"))
+        {
+            if(userMapperObject.deleteUser(id) == 1)
+                s.put("error","0");
+        }
+        else
+            s.put("error","1");
+        return mapper.writeValueAsString(s);
     }
 
     @Override
@@ -361,5 +406,20 @@ public class userServiceImpl implements userService{
             inputStream.read(bytes, 0, inputStream.available());
             return bytes;
         }
+    }
+
+    @Override
+    public String getSystemInfo(String token) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(userMapperObject.getUserTypeByToken(token).equals("admin"))
+        {
+            s.put("userNum",userMapperObject.getUserNum());
+            s.put("problemNum",problemMapperObject.getProblemSumAdmin());
+            s.put("error",0);
+        }
+        else
+            s.put("error",1);
+        return  mapper.writeValueAsString(s);
     }
 }

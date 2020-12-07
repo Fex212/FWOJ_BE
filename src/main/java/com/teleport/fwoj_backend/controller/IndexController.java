@@ -51,31 +51,14 @@ public class indexController {
     @RequestMapping(value = "/getAnnList", method = {RequestMethod.GET})
     @CrossOrigin
     public String getAnnouncementList(@RequestParam("page") int page, @RequestParam("pre") int pre) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-
-        List<ann> list = annServiceObject.getAnnList(page, pre);
-        int total = annServiceObject.getAnnSum();
-
-        HashMap s = new HashMap();
-        s.put("data", list);
-        s.put("total", total);
-        s.put("status", 200);
-        return mapper.writeValueAsString(s);
+        return annServiceObject.getAnnList(page,pre);
     }
 
     //获取公告详情
     @RequestMapping(value = "/getAnnDetail", method = {RequestMethod.GET})
     @CrossOrigin
     public String getAnnDetail(@RequestParam("id") int id) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-
-        ann annObject = annServiceObject.getAnnDetail(id);
-
-        HashMap s = new HashMap();
-        s.put("data", annObject);
-        if (annObject != null)
-            s.put("error", "0");
-        return mapper.writeValueAsString(s);
+        return annServiceObject.getAnnDetail(id);
     }
 
     //获取问题列表

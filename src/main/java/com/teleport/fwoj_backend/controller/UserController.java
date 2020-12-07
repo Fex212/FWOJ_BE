@@ -6,9 +6,7 @@ import com.teleport.fwoj_backend.pojo.user;
 import com.teleport.fwoj_backend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.HashMap;
-import java.util.List;
 
 @RestController
 public class userController {
@@ -67,152 +65,47 @@ public class userController {
     @RequestMapping(value = "/tokenIsAdmin",method = {RequestMethod.GET})
     @CrossOrigin
     public String tokenIsAdmin(@RequestParam("token") String token) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        HashMap s = new HashMap();
-        if(userServiceObject.tokenIsAdmin(token))
-        {
-            s.put("result","1");
-        }
-        else
-            s.put("result","0");
-        return mapper.writeValueAsString(s);
+        return userServiceObject.tokenIsAdmin(token);
     }
 
     //根据管理员的token和用户id查询用户详细信息
-    //根据token查询是否为管理员
     @RequestMapping(value = "/getUserDetailById",method = {RequestMethod.GET})
     @CrossOrigin
     public String getUserDetailById(@RequestParam("token") String token,@RequestParam("id") int id) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-        HashMap s = new HashMap();
-        if(userServiceObject.tokenIsAdmin(token))
-        {
-            s.put("result","1");
-            s.put("userDetail",userServiceObject.getUserDetailById(id));
-        }
-        else
-            s.put("result","0");
-        return mapper.writeValueAsString(s);
+        return userServiceObject.getUserDetailById(token,id);
     }
 
-    //更新用户信息
-    //根据管理员的token和用户id查询用户详细信息(带密码)
+    //更新用户Admin
     @RequestMapping(value = "/updateUser",method = {RequestMethod.POST})
     @CrossOrigin
     public String updateUser(@RequestParam("token") String token, @RequestParam("email") String email, @RequestParam("username") String username,
                              @RequestParam("type") String type, @RequestParam("des") String des, @RequestParam("passwd") String passwd,
                                 @RequestParam("id") int id) throws JsonProcessingException {
-
-        ObjectMapper mapper = new ObjectMapper();
-        HashMap s = new HashMap();
-        int emailNumExcept = userServiceObject.getEmailNumExpect(email,id);
-        int usernameNumExcept = userServiceObject.getUsernameNumExpect(username,id);
-        //error:1 email exist 2 username exist
-        //3 format error 4 sql error
-        //5 permission error
-        //判断是否是admin权限
-        if(userServiceObject.tokenIsAdmin(token))
-        {
-            if(emailNumExcept != 0)
-                s.put("error","1");
-            else if(usernameNumExcept  != 0)
-                s.put("error","2");
-            else if(username.length() > 10 || username.length() < 2 || passwd.length()>35 || email.length() > 30 || (!type.equals("admin") && !type.equals("user")))
-                s.put("error","3");
-            else
-            {
-                boolean r;
-                r = userServiceObject.editUserDetail(email,username,type,des,passwd,id);
-                if(r)
-                    s.put("error","0");
-                else
-                    s.put("error","4");
-            }
-        }
-        else
-            s.put("error","5");
-        return mapper.writeValueAsString(s);
+        return userServiceObject.editUserDetail(token,email,username,type,des,passwd,id);
     }
 
-    //更新用户信息
-    //根据管理员的token和用户id查询用户详细信息(带密码)
+    //更新用户信息不带密码Admin
     @RequestMapping(value = "/updateUserWithoutPasswd",method = {RequestMethod.POST})
     @CrossOrigin
     public String updateUserWithoutPasswd(@RequestParam("token") String token, @RequestParam("email") String email, @RequestParam("username") String username,
                              @RequestParam("type") String type, @RequestParam("des") String des, @RequestParam("id") int id) throws JsonProcessingException {
 
-
-        ObjectMapper mapper = new ObjectMapper();
-        HashMap s = new HashMap();
-        int emailNumExcept = userServiceObject.getEmailNumExpect(email,id);
-        int usernameNumExcept = userServiceObject.getUsernameNumExpect(username,id);
-        //error:1 email exist 2 username exist
-        //3 format error 4 sql error
-        //5 permission error
-        //判断是否是admin权限
-        if(userServiceObject.tokenIsAdmin(token))
-        {
-            if(emailNumExcept != 0)
-                s.put("error","1");
-            else if(usernameNumExcept  != 0)
-                s.put("error","2");
-            else if(username.length() > 10 || username.length() < 2  || email.length() > 30 || (!type.equals("admin") && !type.equals("user")))
-                s.put("error","3");
-            else
-            {
-                boolean r;
-                r = userServiceObject.editUserDetailWithoutPasswd(email,username,type,des,id);
-                if(r)
-                    s.put("error","0");
-                else
-                    s.put("error","4");
-            }
-        }
-        else
-            s.put("error","5");
-        return mapper.writeValueAsString(s);
+        return userServiceObject.editUserDetailWithoutPasswd(token,email,username,type,des,id);
     }
 
     //通过id删除用户
-    //根据token查询是否为管理员
     @RequestMapping(value = "/deleteUser",method = {RequestMethod.DELETE})
     @CrossOrigin
     public String deleteUser(@RequestParam("token") String token,@RequestParam("id") int id) throws JsonProcessingException {
-
-
-        ObjectMapper mapper = new ObjectMapper();
-        HashMap s = new HashMap();
-        if(userServiceObject.tokenIsAdmin(token))
-        {
-            if(userServiceObject.deleteUser(id))
-                s.put("error","0");
-        }
-        else
-            s.put("error","1");
-        return mapper.writeValueAsString(s);
+        return userServiceObject.deleteUser(token,id);
     }
 
     //更改用户的available
     @RequestMapping(value = "/changeUserAvailable",method = {RequestMethod.POST})
     @CrossOrigin
     public String changeUserAvailable (@RequestParam("token") String token,@RequestParam("username") String username) throws JsonProcessingException {
-
-        ObjectMapper mapper = new ObjectMapper();
-        HashMap s = new HashMap();
-        if(userServiceObject.tokenIsAdmin(token))
-        {
-            //可用
-            if(userServiceObject.getAvailableByUsername(username))
-                userServiceObject.setAvailableByUsername(username,false);
-            //不可用
-            else
-                userServiceObject.setAvailableByUsername(username,true);
-            s.put("error","0");
-        }
-        else
-            s.put("error","1");
-
-        return mapper.writeValueAsString(s);
+        return userServiceObject.changeUserAvailable(token,username);
     }
 
     //根据token获取个人信息设置所需数据
@@ -221,12 +114,14 @@ public class userController {
     public String getUserPersonInfo(@RequestParam("token") String token) throws JsonProcessingException {
         return userServiceObject.getUserPersonInfo(token);
     }
+
     //更新个人设置中的sign,site,github
     @RequestMapping(value = "/updateUserPersonInfo", method = {RequestMethod.POST})
     @CrossOrigin
     public String updateUserPersonInfo(@RequestParam("token") String token,@RequestParam("sign") String sign,@RequestParam("site") String site,@RequestParam("github") String github) throws JsonProcessingException {
         return userServiceObject.updateUserPersonInfo(token,sign,site,github);
     }
+
     //个人设置更新密码
     @RequestMapping(value = "updatePasswordByPrePasswd",method = {RequestMethod.POST})
     @CrossOrigin
