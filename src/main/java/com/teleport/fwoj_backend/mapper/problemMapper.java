@@ -16,7 +16,7 @@ public interface problemMapper {
     //查询总数(admin)
     int getProblemSumAdmin();
     //查询问题详情
-    problem getProblemDetail(int id);
+    problem getProblemDetailById(int id);
     //查询问题详情(Admin)
     problem getProblemDetailAdmin(int id);
     //获取问题列表(Admin) id title createTime visible authorName

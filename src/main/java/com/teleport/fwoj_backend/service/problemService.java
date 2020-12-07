@@ -1,33 +1,28 @@
 package com.teleport.fwoj_backend.service;
 
-import com.teleport.fwoj_backend.pojo.problem;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
-import java.util.List;
 
 public interface problemService {
     //查询列表(页数,每页几条),返回List
-    List<problem> getProblemList(Integer page,Integer pre);
-    //查询总数(user)
-    Integer getProblemSum();
-    //查询总数(admin)
-    int getProblemSumAdmin();
+    String getProblemList(int page,int pre) throws JsonProcessingException;
     //查询问题详情
-    problem getProblemDetail(int id);
-    //查询问题详情(Admin)
-    problem getProblemDetailAdmin(int id);
+    String getProblemDetailById(int id) throws JsonProcessingException;
 
     //获取问题列表(Admin) id title createTime visible authorName
-    List<problem> getProblemListAdmin(int page,int pre,String key);
+    String getProblemListAdmin(int page,int pre,String key,String token) throws JsonProcessingException;
+    //查询问题详情(Admin)
+    String getProblemDetailAdmin(String token,int id) throws JsonProcessingException;
 
-    //根据id获取问题的visible
-    boolean getProblemVisibleById(int id);
-    //根据id设置问题的visible
-    boolean setProblemVisibleById(int id,boolean visible);
+
+    String changeProblemVisible(String token,int id) throws JsonProcessingException;
+
     //根据id删除问题
-    boolean deleteProblemById(int id);
+    String deleteProblemById(String token,int id) throws JsonProcessingException;
+
     //创建问题
-    boolean createProblem(String title,String des,String input,String output,String inputExample,String outputExample,String hint,String authorName);
+    String createProblem(String token,String title,String des,String input,String output,String inputExample,String outputExample,String hint) throws JsonProcessingException;
     //根据id编辑问题id
-    boolean editProblem(String title,String des,String input,String output,String inputExample,String outputExample,
-                    String hint,int id);
+    String editProblem(String token,String title,String des,String input,String output,String inputExample,String outputExample,
+                    String hint,int id) throws JsonProcessingException;
 }

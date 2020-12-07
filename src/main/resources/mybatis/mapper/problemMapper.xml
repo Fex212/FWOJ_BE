@@ -18,7 +18,7 @@
     select count(id) from onlinejudge.problem
    </select>
     <!--    按id查询详情-->
-    <select id="getProblemDetail" resultType="problem">
+    <select id="getProblemDetailById" resultType="problem">
         select * from onlinejudge.problem where id=#{id} and visible='1'
     </select>
     <!--    按id查询详情(Admin)-->

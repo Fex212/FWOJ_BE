@@ -65,33 +65,14 @@ public class indexController {
     @RequestMapping(value = "/getProblemList", method = {RequestMethod.GET})
     @CrossOrigin
     public String getProblemList(@RequestParam("page") int page, @RequestParam("pre") int pre) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        List<problem> list = problemServiceObject.getProblemList(page, pre);
-        int total = problemServiceObject.getProblemSum();
-        HashMap s = new HashMap();
-        s.put("data", list);
-        s.put("total", total);
-        s.put("status", 200);
-        return mapper.writeValueAsString(s);
+        return problemServiceObject.getProblemList(page,pre);
     }
 
     //获取问题详情
     @RequestMapping(value = "/getProblemDetail", method = {RequestMethod.GET})
     @CrossOrigin
     public String getProblemDetail(@RequestParam("id") int id) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-
-        problem problemObject = problemServiceObject.getProblemDetail(id);
-
-        HashMap s = new HashMap();
-        if (problemObject != null) {
-            s.put("data", problemObject);
-            s.put("error", "0");
-        }
-        //对象为null
-        else
-            s.put("error", "1");
-        return mapper.writeValueAsString(s);
+        return problemServiceObject.getProblemDetailById(id);
     }
 
     //获取比赛列表
