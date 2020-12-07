@@ -8,7 +8,6 @@ import com.teleport.fwoj_backend.pojo.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -80,9 +79,6 @@ public class userServiceImpl implements userService{
         }
         return mapper.writeValueAsString(s);
     }
-
-
-
 
     @Override
     public String getUserNameByToken(String token) throws JsonProcessingException {
@@ -180,7 +176,7 @@ public class userServiceImpl implements userService{
     public String changeUserAvailable(String token, String username) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(userMapperObject.getUserTypeByToken(token).equals("admin"))
+        if(userMapperObject.getUserTypeByToken(token) != null &&  userMapperObject.getUserTypeByToken(token).equals("admin"))
         {
             //可用
             if(userMapperObject.getAvailableByUsername(username) == 1)
@@ -201,8 +197,7 @@ public class userServiceImpl implements userService{
 
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if (userMapperObject.getUserTypeByToken(token) != null
-            && userMapperObject.getUserTypeByToken(token).equals("admin")) {
+        if (userMapperObject.getUserTypeByToken(token) != null &&  userMapperObject.getUserTypeByToken(token).equals("admin")) {
             int start = pre * (page - 1);
             int num = pre;
             List<user> list = userMapperObject.getUserList(start, num, key);
@@ -219,7 +214,8 @@ public class userServiceImpl implements userService{
     public String tokenIsAdmin(String token) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(userMapperObject.getUserTypeByToken(token).equals("admin"))
+
+        if(userMapperObject.getUserTypeByToken(token) != null &&  userMapperObject.getUserTypeByToken(token).equals("admin"))
         {
             s.put("result","1");
         }
@@ -230,23 +226,21 @@ public class userServiceImpl implements userService{
 
     @Override
     public String getUserDetailById(String token,int id) throws JsonProcessingException {
-
-
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(userMapperObject.getUserTypeByToken(token).equals("admin"))
+        if(userMapperObject.getUserTypeByToken(token) != null &&  userMapperObject.getUserTypeByToken(token).equals("admin"))
         {
-            s.put("result","1");
+            s.put("error","0");
             s.put("userDetail",userMapperObject.getUserDetailById(id));
         }
         else
-            s.put("result","0");
+            s.put("error","1");
         return mapper.writeValueAsString(s);
     }
 
     @Override
     public String editUserDetail
-            (String token,String email, String username, String type, String des, String passwd,int id) throws JsonProcessingException {
+            (String token,String email, String username, String type, String passwd,int id) throws JsonProcessingException {
 
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
@@ -256,7 +250,7 @@ public class userServiceImpl implements userService{
         //3 format error 4 sql error
         //5 permission error
         //判断是否是admin权限
-        if(userMapperObject.getUserTypeByToken(token).equals("Admin"))
+        if(userMapperObject.getUserTypeByToken(token) != null &&  userMapperObject.getUserTypeByToken(token).equals("admin"))
         {
             if(emailNumExcept != 0)
                 s.put("error","1");
@@ -266,8 +260,25 @@ public class userServiceImpl implements userService{
                 s.put("error","3");
             else
             {
-                if(userMapperObject.editUserDetail(email,username,type,des,passwd,id) == 1)
+                //如果更新了密码，创建新的token
+                int f = 0;
+                if(userMapperObject.getUserPasswdByUsername(username) != null && !userMapperObject.getUserPasswdByUsername(username).equals(passwd))
+                    f = 1;
+                if(userMapperObject.editUserDetail(email,username,type,passwd,id) == 1)
+                {
                     s.put("error","0");
+                    if(f == 1)
+                    {
+                        byte[] lock = new byte[0];
+                        long w = 100000000;
+                        long r = 0;
+                        synchronized (lock) {
+                            r = (long) ((Math.random() + 1) * w);
+                        }
+                        String newToken = System.currentTimeMillis() + String.valueOf(r).substring(1);
+                        userMapperObject.createToken(username,newToken);
+                    }
+                }
                 else
                     s.put("error","4");
             }
@@ -280,7 +291,7 @@ public class userServiceImpl implements userService{
 
     @Override
     public String editUserDetailWithoutPasswd
-            (String token,String email, String username, String type, String des,int id) throws JsonProcessingException {
+            (String token,String email, String username, String type,int id) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
         int emailNumExcept = userMapperObject.getEmailNumExpect(email,id);
@@ -289,7 +300,7 @@ public class userServiceImpl implements userService{
         //3 format error 4 sql error
         //5 permission error
         //判断是否是admin权限
-        if(userMapperObject.getUserTypeByToken(token).equals("admin"))
+        if(userMapperObject.getUserTypeByToken(token) != null &&  userMapperObject.getUserTypeByToken(token).equals("admin"))
         {
             if(emailNumExcept != 0)
                 s.put("error","1");
@@ -299,7 +310,7 @@ public class userServiceImpl implements userService{
                 s.put("error","3");
             else
             {
-                if(userMapperObject.editUserDetailWithoutPasswd(email,username,type,des,id) == 1)
+                if(userMapperObject.editUserDetailWithoutPasswd(email,username,type,id) == 1)
                     s.put("error","0");
                 else
                     s.put("error","4");
@@ -315,7 +326,7 @@ public class userServiceImpl implements userService{
     public String deleteUser(String token,int id) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(userMapperObject.getUserTypeByToken(token).equals("admin"))
+        if(userMapperObject.getUserTypeByToken(token) != null &&  userMapperObject.getUserTypeByToken(token).equals("admin"))
         {
             if(userMapperObject.deleteUser(id) == 1)
                 s.put("error","0");
@@ -412,7 +423,7 @@ public class userServiceImpl implements userService{
     public String getSystemInfo(String token) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(userMapperObject.getUserTypeByToken(token).equals("admin"))
+        if(userMapperObject.getUserTypeByToken(token) != null &&  userMapperObject.getUserTypeByToken(token).equals("admin"))
         {
             s.put("userNum",userMapperObject.getUserNum());
             s.put("problemNum",problemMapperObject.getProblemSumAdmin());

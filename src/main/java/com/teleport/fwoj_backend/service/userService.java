@@ -32,15 +32,16 @@ public interface userService {
 
     //根据id获取用户详细信息
     String getUserDetailById(String token,int id) throws JsonProcessingException;
-    //根据id删除用户
-    String deleteUser(String token,int id) throws JsonProcessingException;
 
     //更新用户信息(管理员)
-    String editUserDetail(String token,String email,String username,String type,String des,String passwd,int id) throws JsonProcessingException;
-    String editUserDetailWithoutPasswd(String token,String email,String username,String type,String des,int id) throws JsonProcessingException;
+    String editUserDetail(String token,String email,String username,String type,String passwd,int id) throws JsonProcessingException;
+    String editUserDetailWithoutPasswd(String token,String email,String username,String type,int id) throws JsonProcessingException;
 
     //更改用户的available
     String changeUserAvailable(String token,String username) throws JsonProcessingException;
+    //根据id删除用户
+    String deleteUser(String token,int id) throws JsonProcessingException;
+
 
     //提供原密码修改密码
     String updatePasswordByPrePassword(String token,String oldpasswd,String passwd) throws JsonProcessingException;

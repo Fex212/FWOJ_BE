@@ -1,5 +1,4 @@
 package com.teleport.fwoj_backend.service;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.teleport.fwoj_backend.mapper.problemMapper;
@@ -7,13 +6,11 @@ import com.teleport.fwoj_backend.mapper.userMapper;
 import com.teleport.fwoj_backend.pojo.problem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.IntStream;
 
 @Service
 public class problemServiceImpl implements problemService{
@@ -56,7 +53,7 @@ public class problemServiceImpl implements problemService{
     public String getProblemDetailAdmin(String token,int id) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(userMapperObject.getUserTypeByToken(token).equals("admin"))
+        if(userMapperObject.getUserTypeByToken(token) != null &&  userMapperObject.getUserTypeByToken(token).equals("admin"))
         {
             problem problemObject = problemMapperObject.getProblemDetailAdmin(id);
             if(problemObject != null)
@@ -77,7 +74,7 @@ public class problemServiceImpl implements problemService{
 
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(userMapperObject.getUserTypeByToken(token).equals("admin"))
+        if(userMapperObject.getUserTypeByToken(token) != null &&  userMapperObject.getUserTypeByToken(token).equals("admin"))
         {
             //可见
             if(problemMapperObject.getProblemVisibleById(id) == 1)
@@ -102,7 +99,7 @@ public class problemServiceImpl implements problemService{
 
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(userMapperObject.getUserTypeByToken(token).equals("admin"))
+        if(userMapperObject.getUserTypeByToken(token) != null &&  userMapperObject.getUserTypeByToken(token).equals("admin"))
         {
             int start = pre * (page - 1);
             int num = pre;
@@ -122,7 +119,7 @@ public class problemServiceImpl implements problemService{
         //0 正常 1 越权 2 删除失败
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(userMapperObject.getUserTypeByToken(token).equals("admin"))
+        if(userMapperObject.getUserTypeByToken(token) != null &&  userMapperObject.getUserTypeByToken(token).equals("admin"))
         {
             if(problemMapperObject.deleteProblemById(id) == 1)
                 s.put("error","0");
@@ -141,7 +138,7 @@ public class problemServiceImpl implements problemService{
         //0 正常 1 越权 2 失败
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(userMapperObject.getUserTypeByToken(token).equals("admin"))
+        if(userMapperObject.getUserTypeByToken(token) != null &&  userMapperObject.getUserTypeByToken(token).equals("admin"))
         {
             DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String dateTime = simpleDateFormat.format(new Date());
@@ -163,7 +160,7 @@ public class problemServiceImpl implements problemService{
         //0 正常 1 越权 2 失败
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(userMapperObject.getUserTypeByToken(token).equals("admin"))
+        if(userMapperObject.getUserTypeByToken(token) != null &&  userMapperObject.getUserTypeByToken(token).equals("admin"))
         {
             if(problemMapperObject.editProblem(title,des,input,output,inputExample,outputExample,hint,id) == 1)
                 s.put("error","0");

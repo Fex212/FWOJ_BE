@@ -1,11 +1,7 @@
 package com.teleport.fwoj_backend.service;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.teleport.fwoj_backend.pojo.ann;
-import java.util.List;
 
 public interface annService {
-
     //    查询公告列表 id,date,title,authorName
     String getAnnList(int page, int pre) throws JsonProcessingException;
     //查询公告详情

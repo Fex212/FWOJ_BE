@@ -22,6 +22,8 @@ public interface userMapper {
 
     //通过token查找用户名
     String getUserNameByToken(@Param("token") String token);
+    //通过token查找密码
+    String getUserPasswdByUsername(@Param("username") String username);
     //通过token查找用户Id
     int getUserIdByToken(@Param("token") String token);
     //通过token查找type
@@ -70,8 +72,8 @@ public interface userMapper {
     //根据id查询用户详细信息
     user getUserDetailById(int id);
     //编辑用户(admin界面)
-    int editUserDetail(@Param("email") String email,@Param("username") String username,@Param("type") String type,@Param("des") String des,@Param("passwd") String passwd,@Param("id") int id);
-    int editUserDetailWithoutPasswd(@Param("email") String email,@Param("username") String username,@Param("type") String type,@Param("des") String des,@Param("id") int id);
+    int editUserDetail(@Param("email") String email,@Param("username") String username,@Param("type") String type,@Param("passwd") String passwd,@Param("id") int id);
+    int editUserDetailWithoutPasswd(@Param("email") String email,@Param("username") String username,@Param("type") String type,@Param("id") int id);
     //根据id删除用户
     int deleteUser(int id);
     int updatePassword(String username,String passwd);

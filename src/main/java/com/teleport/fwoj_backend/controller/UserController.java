@@ -1,12 +1,9 @@
 package com.teleport.fwoj_backend.controller;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.teleport.fwoj_backend.pojo.user;
 import com.teleport.fwoj_backend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import java.util.HashMap;
 
 @RestController
 public class userController {
@@ -72,7 +69,6 @@ public class userController {
     @RequestMapping(value = "/getUserDetailById",method = {RequestMethod.GET})
     @CrossOrigin
     public String getUserDetailById(@RequestParam("token") String token,@RequestParam("id") int id) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
         return userServiceObject.getUserDetailById(token,id);
     }
 
@@ -80,18 +76,18 @@ public class userController {
     @RequestMapping(value = "/updateUser",method = {RequestMethod.POST})
     @CrossOrigin
     public String updateUser(@RequestParam("token") String token, @RequestParam("email") String email, @RequestParam("username") String username,
-                             @RequestParam("type") String type, @RequestParam("des") String des, @RequestParam("passwd") String passwd,
+                             @RequestParam("type") String type, @RequestParam("passwd") String passwd,
                                 @RequestParam("id") int id) throws JsonProcessingException {
-        return userServiceObject.editUserDetail(token,email,username,type,des,passwd,id);
+        return userServiceObject.editUserDetail(token,email,username,type,passwd,id);
     }
 
     //更新用户信息不带密码Admin
     @RequestMapping(value = "/updateUserWithoutPasswd",method = {RequestMethod.POST})
     @CrossOrigin
     public String updateUserWithoutPasswd(@RequestParam("token") String token, @RequestParam("email") String email, @RequestParam("username") String username,
-                             @RequestParam("type") String type, @RequestParam("des") String des, @RequestParam("id") int id) throws JsonProcessingException {
+                             @RequestParam("type") String type, @RequestParam("id") int id) throws JsonProcessingException {
 
-        return userServiceObject.editUserDetailWithoutPasswd(token,email,username,type,des,id);
+        return userServiceObject.editUserDetailWithoutPasswd(token,email,username,type,id);
     }
 
     //通过id删除用户
@@ -136,6 +132,5 @@ public class userController {
     public String getUserCardInfo(@PathVariable("username") String username) throws JsonProcessingException {
         return userServiceObject.getUserCardInfo(username);
     }
-
 
 }

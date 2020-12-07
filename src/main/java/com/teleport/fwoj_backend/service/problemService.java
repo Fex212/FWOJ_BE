@@ -1,7 +1,5 @@
 package com.teleport.fwoj_backend.service;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
-
 
 public interface problemService {
     //查询列表(页数,每页几条),返回List

@@ -1,8 +1,5 @@
 package com.teleport.fwoj_backend.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.teleport.fwoj_backend.pojo.contest;
-import com.teleport.fwoj_backend.pojo.problem;
 import com.teleport.fwoj_backend.service.annService;
 import com.teleport.fwoj_backend.service.contestService;
 import com.teleport.fwoj_backend.service.problemService;
@@ -10,7 +7,6 @@ import com.teleport.fwoj_backend.service.userService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 @RestController
 public class adminContorller {
 
@@ -123,8 +119,6 @@ public class adminContorller {
                                 @RequestParam("input") String input,@RequestParam("output") String output,
                                 @RequestParam("inputExample") String inputExample,@RequestParam("outputExample") String outputExample,
                                 @RequestParam("hint") String hint,@RequestParam("id") int id) throws JsonProcessingException {
-        //error
-        //0 正常 1 越权 2 失败
         return problemServiceObject.editProblem(token,title,des,input,output,inputExample,outputExample,hint,id);
     }
 

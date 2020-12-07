@@ -7,7 +7,6 @@ import com.teleport.fwoj_backend.mapper.userMapper;
 import com.teleport.fwoj_backend.pojo.ann;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -59,7 +58,7 @@ public class annServiceImpl implements annService{
         //0 正常 1 越权 2 失败
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(userMapperObject.getUserTypeByToken(token).equals("admin"))
+        if(userMapperObject.getUserTypeByToken(token) != null &&  userMapperObject.getUserTypeByToken(token).equals("admin"))
         {
             ann annObject = annMapperObject.getAnnDetailByIdAdmin(id);
             if(annObject != null)
@@ -82,7 +81,7 @@ public class annServiceImpl implements annService{
         //0 正常 1 越权 2 删除失败
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(userMapperObject.getUserTypeByToken(token).equals("admin"))
+        if(userMapperObject.getUserTypeByToken(token) != null &&  userMapperObject.getUserTypeByToken(token).equals("admin"))
         {
             if(annMapperObject.deleteAnnById(id) == 1)
                 s.put("error","0");
@@ -99,7 +98,7 @@ public class annServiceImpl implements annService{
             throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(userMapperObject.getUserTypeByToken(token).equals("admin"))
+        if(userMapperObject.getUserTypeByToken(token) != null &&  userMapperObject.getUserTypeByToken(token).equals("admin"))
         {
             int start = pre * (page - 1);
             int num = pre;
@@ -127,7 +126,7 @@ public class annServiceImpl implements annService{
         //0 正常 1 越权 2 删除失败
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(userMapperObject.getUserTypeByToken(token).equals("admin"))
+        if(userMapperObject.getUserTypeByToken(token) != null &&  userMapperObject.getUserTypeByToken(token).equals("admin"))
         {
             if(annMapperObject.getAnnVisibleById(id) == 1)
                 if(annMapperObject.setAnnVisibleById(id,false) == 1)
@@ -173,7 +172,7 @@ public class annServiceImpl implements annService{
         //0 正常 1 越权 2 删除失败
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(userMapperObject.getUserTypeByToken(token).equals("admin"))
+        if(userMapperObject.getUserTypeByToken(token) != null &&  userMapperObject.getUserTypeByToken(token).equals("admin"))
         {
             if(annMapperObject.updateAnn(id,title,content) == 1)
                 s.put("error","0");

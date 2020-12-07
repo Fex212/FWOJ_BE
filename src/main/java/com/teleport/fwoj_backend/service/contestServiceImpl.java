@@ -1,5 +1,4 @@
 package com.teleport.fwoj_backend.service;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.teleport.fwoj_backend.mapper.contestMapper;
@@ -7,7 +6,6 @@ import com.teleport.fwoj_backend.mapper.userMapper;
 import com.teleport.fwoj_backend.pojo.contest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -53,7 +51,7 @@ public class contestServiceImpl implements contestService{
 
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(userMapperObject.getUserTypeByToken(token).equals("admin"))
+        if(userMapperObject.getUserTypeByToken(token) != null &&  userMapperObject.getUserTypeByToken(token).equals("admin"))
         {
             int start = pre * (page - 1);
             int num = pre;
@@ -97,7 +95,7 @@ public class contestServiceImpl implements contestService{
         //0 正常 1 越权 2 失败
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if (userMapperObject.getUserTypeByToken(token).equals("admin")) {
+        if (userMapperObject.getUserTypeByToken(token) != null &&  userMapperObject.getUserTypeByToken(token).equals("admin")) {
             contest contestObject = contestMapperObject.getContestDetailByIdAdmin(id);
             if (contestObject != null) {
                 s.put("data", contestObject);
@@ -114,7 +112,7 @@ public class contestServiceImpl implements contestService{
 
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(userMapperObject.getUserTypeByToken(token).equals("admin"))
+        if(userMapperObject.getUserTypeByToken(token) != null &&  userMapperObject.getUserTypeByToken(token).equals("admin"))
         {
             if (contestMapperObject.getContestVisibleById(id) == 1)
             {
@@ -140,7 +138,7 @@ public class contestServiceImpl implements contestService{
         //0 正常 1 越权 2 删除失败
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(userMapperObject.getUserTypeByToken(token).equals("admin"))
+        if(userMapperObject.getUserTypeByToken(token) != null &&  userMapperObject.getUserTypeByToken(token).equals("admin"))
         {
             if(contestMapperObject.deleteContestById(id) == 1)
                 s.put("error","0");
@@ -158,7 +156,7 @@ public class contestServiceImpl implements contestService{
         //0 正常 1 越权 2 失败
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(userMapperObject.getUserTypeByToken(token).equals("admin"))
+        if(userMapperObject.getUserTypeByToken(token) != null &&  userMapperObject.getUserTypeByToken(token).equals("admin"))
         {
             if(contestMapperObject.createContest(title,des,problemList,startTime,endTime,false,userMapperObject.getUserNameByToken(token)) == 1)
                 s.put("error","0");
@@ -174,7 +172,7 @@ public class contestServiceImpl implements contestService{
     public String editContestById(String token,String title, String des, String problemList, String startTime, String endTime,int id) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(userMapperObject.getUserTypeByToken(token).equals("admin"))
+        if(userMapperObject.getUserTypeByToken(token) != null &&  userMapperObject.getUserTypeByToken(token).equals("admin"))
         {
             if(contestMapperObject.editContestById(title,des,problemList,startTime,endTime,id) == 1)
                 s.put("error","0");

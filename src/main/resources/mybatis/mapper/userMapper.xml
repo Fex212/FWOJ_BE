@@ -81,15 +81,15 @@
     </select>
 <!--    根据用户id查找详细信息-->
     <select id="getUserDetailById" resultType="user">
-        select id,username,email,type,des from user where id=#{id}
+        select id,username,email,type from user where id=#{id}
     </select>
     <!--    更新用户信息email username type des passwd-->
     <update id="editUserDetail" parameterType="user">
-        update user set email=#{email},username=#{username},type=#{type},des=#{des},passwd=#{passwd} where id=#{id}
+        update user set email=#{email},username=#{username},type=#{type},passwd=#{passwd} where id=#{id}
     </update>
     <!--    更新用户信息email username type des -->
     <update id="editUserDetailWithoutPasswd" parameterType="user">
-        update user set email=#{email},username=#{username},type=#{type},des=#{des} where id=#{id}
+        update user set email=#{email},username=#{username},type=#{type} where id=#{id}
     </update>
     <!--    根据id删除用户-->
     <delete id="deleteUser" parameterType="int">
@@ -120,7 +120,10 @@
     <select id="getUserSolvedListByUsername" resultType="String">
         select solvedList from user where username=#{username}
     </select>
-
+<!--    通过token查找密码-->
+    <select id="getUserPasswdByUsername" resultType="String">
+        select passwd from user where username=#{username}
+    </select>
 
     <!--    根据token更新sign-->
     <update id="updateUserSignByToken" parameterType="user">

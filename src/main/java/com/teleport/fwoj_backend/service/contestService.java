@@ -1,10 +1,7 @@
 package com.teleport.fwoj_backend.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.teleport.fwoj_backend.pojo.contest;
-
 import java.text.ParseException;
-import java.util.List;
 
 public interface contestService {
     //查询比赛列表(user)
