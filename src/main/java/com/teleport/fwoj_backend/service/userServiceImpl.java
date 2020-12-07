@@ -16,6 +16,33 @@ public class userServiceImpl implements userService{
 
     @Autowired
     private userMapper userMapperObject;
+
+    @Override
+    public String login(String username, String passwd) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        //error 0 成功 -1 用户名或密码不正确 -2 账号封禁
+        if(userMapperObject.loginCheck(username,passwd) == 1)
+            if(userMapperObject.getAvailableByUsername(username) == 1)
+            {
+                s.put("error","0");
+                byte[] lock = new byte[0];
+                long w = 100000000;
+                long r = 0;
+                synchronized (lock) {
+                    r = (long) ((Math.random() + 1) * w);
+                }
+                String token = System.currentTimeMillis() + String.valueOf(r).substring(1);
+                userMapperObject.createToken(username,token);
+                s.put("token",token);
+            }
+            else
+                s.put("error","-2");
+        else
+            s.put("error","-1");
+        return mapper.writeValueAsString(s);
+    }
+
     @Override
     public boolean loginCheck(String username, String passwd)
     {

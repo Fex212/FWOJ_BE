@@ -27,6 +27,9 @@ public interface userMapper {
     String getUserType(@Param("token") String token);
     //根据token查找用户邮箱
     String getUserEmail(@Param("token") String token);
+//    通过token查找用户soledList
+    String getUserSolvedList(@Param("token") String token);
+
 
     //通过username查找个人签名
     String getUserSignByUsername(@Param("username") String username);
@@ -36,6 +39,8 @@ public interface userMapper {
     String getUserGithubByUsername(@Param("username") String username);
     //通过username查找type
     String getUserTypeByUsername(@Param("username") String username);
+    //通过username查找solvedList
+    String getUserSolvedListByUsername(@Param("username") String username);
 
 
     //    根据token更新个人签名

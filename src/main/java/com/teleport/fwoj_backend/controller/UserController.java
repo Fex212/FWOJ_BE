@@ -14,28 +14,16 @@ import java.util.List;
 public class userController {
     @Autowired
     private userService userServiceObject;
-    //验证登陆是否成功
+
+    //登陆
     @RequestMapping(value = "/login",method = {RequestMethod.POST})
     @CrossOrigin
     public String login(@RequestParam("username") String username,
                         @RequestParam("passwd") String passwd) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        HashMap s = new HashMap();
-        //status 1 登录成功 0 用户名或密码不正确 -1 被封号
-        if(userServiceObject.loginCheck(username,passwd))
-        {
-            if(userServiceObject.getAvailableByUsername(username)) {
-                s.put("status", "1");
-                s.put("token", userServiceObject.createToken(username));
-            }
-            else
-                s.put("status","-1");
-        }
-        else
-            s.put("status","0");
-        return mapper.writeValueAsString(s);
+        return userServiceObject.login(username,passwd);
     }
 
+    
     //根据token查询用户名
     @RequestMapping(value = "/getUserName",method = {RequestMethod.POST})
     @CrossOrigin
@@ -48,6 +36,7 @@ public class userController {
         s.put("username",userServiceObject.getUserName(token));
         return mapper.writeValueAsString(s);
     }
+
     //根据token查询用户Id
     @RequestMapping(value = "/getUserId",method = {RequestMethod.POST})
     @CrossOrigin

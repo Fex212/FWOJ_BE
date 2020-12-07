@@ -8,6 +8,7 @@ import java.util.List;
 public interface userService {
 
     //登录
+    String login(String username,String passwd) throws JsonProcessingException;
     boolean loginCheck(String username,String passwd);
     //根据用户名查找available是否为true
     boolean getAvailableByUsername(String username);

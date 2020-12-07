@@ -22,22 +22,29 @@
       update onlinejudge.user
        set token=#{token} where username=#{username}
    </insert>
-    <!--    根据传入的token查询用户的用户名-->
+
+
+    <!--    根据token查询用户的用户名-->
     <select id="getUserName" resultType="String">
     select username from onlinejudge.user where token=#{token}
    </select>
-    <!--    根据传入的token查询用户的Id-->
+    <!--    根据token查询用户的Id-->
     <select id="getUserId" resultType="int">
     select id from onlinejudge.user where token=#{token}
    </select>
-    <!--    根据传入的token查询用户的Type-->
+    <!--    根据token查询用户的Type-->
     <select id="getUserType" resultType="String">
     select type from onlinejudge.user where token=#{token}
    </select>
-    <!--    根据传入的token查询用户的email-->
+    <!--    根据token查询用户的email-->
     <select id="getUserEmail" resultType="String">
     select email from onlinejudge.user where token=#{token}
    </select>
+<!--    通过token查找用户solvedList-->
+    <select id="getUserSolvedList" resultType="String">
+        select solvedList from user where token=#{token};
+    </select>
+
 
     <!--    根据email查询用户数量-->
     <select id="emailExist" resultType="int">
@@ -109,6 +116,11 @@
     <select id="getUserTypeByUsername" resultType="String">
         select type from user where username=#{username}
     </select>
+<!--   根据username查找solvedList-->
+    <select id="getUserSolvedListByUsername" resultType="String">
+        select solvedList from user where username=#{username}
+    </select>
+
 
     <!--    根据token更新sign-->
     <update id="updateUserSignByToken" parameterType="user">
