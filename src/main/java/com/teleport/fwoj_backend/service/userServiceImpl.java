@@ -10,7 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -221,11 +220,22 @@ public class userServiceImpl implements userService{
 
 
     @Override
-    public List<user> getUserList(Integer page, Integer pre,String key) {
+    public String getUserList(Integer page, Integer pre, String key, String token) throws JsonProcessingException {
 
-        int start = pre * (page - 1);
-        int num = pre;
-        return userMapperObject.getUserList(start,num,key);
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if (userMapperObject.getUserTypeByToken(token) != null
+            && userMapperObject.getUserTypeByToken(token).equals("admin")) {
+            int start = pre * (page - 1);
+            int num = pre;
+            List<user> list = userMapperObject.getUserList(start, num, key);
+            int userNum = userMapperObject.getUserNum();
+            s.put("data", list);
+            s.put("num", userNum);
+            s.put("error", "0");
+        } else
+            s.put("error", "1");
+        return mapper.writeValueAsString(s);
     }
 
     @Override

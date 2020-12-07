@@ -2,12 +2,9 @@ package com.teleport.fwoj_backend.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.teleport.fwoj_backend.pojo.user;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
 
 public interface userService {
 
@@ -47,7 +44,8 @@ public interface userService {
     int getUsernameNumExpect(String username,int id);
 
     //获取用户列表(页数,每页几条)
-    List<user> getUserList(Integer page, Integer pre,String key);
+    String getUserList(Integer page, Integer pre, String key, String token) throws JsonProcessingException;
+
     //获取用户总数
     int getUserNum();
     //查询token是否是管理员

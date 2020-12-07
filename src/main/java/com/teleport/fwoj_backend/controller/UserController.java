@@ -60,20 +60,9 @@ public class userController {
     @RequestMapping(value = "/getUserList",method = {RequestMethod.GET})
     @CrossOrigin
     public String getUserList(@RequestParam("page") int page,@RequestParam("pre") int pre,@RequestParam("token") String token,@RequestParam("key") String key) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        HashMap s = new HashMap();
-        if(userServiceObject.tokenIsAdmin(token))
-        {
-            List<user> list = userServiceObject.getUserList(page,pre,key);
-            int num = userServiceObject.getUserNum();
-            s.put("data",list);
-            s.put("num",num);
-            s.put("status",1);
-        }
-        else
-            s.put("status",0);
-        return  mapper.writeValueAsString(s);
+        return userServiceObject.getUserList(page,pre,key,token);
     }
+
     //根据token查询是否为管理员
     @RequestMapping(value = "/tokenIsAdmin",method = {RequestMethod.GET})
     @CrossOrigin
