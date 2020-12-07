@@ -133,84 +133,29 @@ public class adminContorller {
     @RequestMapping(value = "/getContestListAdmin",method = {RequestMethod.GET})
     @CrossOrigin
     public String getContestListAdmin(@RequestParam("page") int page, @RequestParam("pre") int pre,@RequestParam("token") String token,@RequestParam("key") String key)throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        HashMap s = new HashMap();
-        if(userServiceObject.tokenIsAdmin(token))
-        {
-            s.put("data",contestServiceObject.getContestListAdmin(page,pre,key));
-            s.put("num",contestServiceObject.getContestSumAdmin());
-            s.put("error",0);
-        }
-        else
-            s.put("error",1);
-        return  mapper.writeValueAsString(s);
+        return contestServiceObject.getContestListAdmin(token,page,pre,key);
     }
 
     //更改比赛可见性
     @RequestMapping(value = "/changeContestVisible",method = {RequestMethod.POST})
     @CrossOrigin
     public String changeContestVisible(@RequestParam("token") String token,@RequestParam("id") int id)throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        HashMap s = new HashMap();
-        if(userServiceObject.tokenIsAdmin(token))
-        {
-            if(contestServiceObject.contestVisibleChanged(id))
-                s.put("error","0");
-            else
-                s.put("error","2");
-        }
-        else
-            s.put("error","1");
-        return  mapper.writeValueAsString(s);
+        return contestServiceObject.contestVisibleChanged(token,id);
     }
 
     //根据id删除比赛
     @RequestMapping(value = "/deleteContestById",method = {RequestMethod.DELETE})
     @CrossOrigin
     public String deleteContestById(@RequestParam("token") String token,@RequestParam("id") int id) throws JsonProcessingException {
-
-        //error
-        //0 正常 1 越权 2 删除失败
-        ObjectMapper mapper = new ObjectMapper();
-        HashMap s = new HashMap();
-        if(userServiceObject.tokenIsAdmin(token))
-        {
-            if(contestServiceObject.deleteContestById(id))
-                s.put("error","0");
-            else
-                s.put("error","2");
-        }
-        else
-            s.put("error","1");
-
-        return mapper.writeValueAsString(s);
+        return contestServiceObject.deleteContestById(token,id);
     }
 
     // 按id查询比赛详情(Admin) id,title,des,problemList,startTime,endTime
     @RequestMapping(value = "/getContestDetailByIdAdmin",method = {RequestMethod.GET})
     @CrossOrigin
     public String getContestDetailByIdAdmin(@RequestParam("token") String token,@RequestParam("id") int id) throws JsonProcessingException {
-        //error
-        //0 正常 1 越权 2 失败
-        ObjectMapper mapper = new ObjectMapper();
-        HashMap s = new HashMap();
-        if(userServiceObject.tokenIsAdmin(token))
-        {
-            contest contestObject = contestServiceObject.getContestDetailByIdAdmin(id);
-            if(contestObject != null)
-            {
-                s.put("data",contestObject);
-                s.put("error","0");
-            }
-            else
-                s.put("error","2");
-        }
-        else
-            s.put("error","1");
-
-        return mapper.writeValueAsString(s);
+        return contestServiceObject.getContestDetailByIdAdmin(token, id);
     }
-
 
     //创建比赛 title des problemList startTime endTime  authorName
     @RequestMapping(value = "/createContest",method = {RequestMethod.POST})
@@ -218,47 +163,16 @@ public class adminContorller {
     public String createContest(@RequestParam("token") String token,
                                 @RequestParam("title") String title,@RequestParam("des") String des, @RequestParam("problemList") String problemList,
                                 @RequestParam("startTime") String startTime,@RequestParam("endTime") String endTime) throws JsonProcessingException {
-        //error
-        //0 正常 1 越权 2 失败
-        ObjectMapper mapper = new ObjectMapper();
-        HashMap s = new HashMap();
-        if(userServiceObject.tokenIsAdmin(token))
-        {
-            if(contestServiceObject.createContest(title,des,problemList,startTime,endTime,false,userServiceObject.getUserNameByToken(token)))
-                s.put("error","0");
-            else
-                s.put("error","2");
-        }
-        else
-            s.put("error","1");
-
-        return mapper.writeValueAsString(s);
+        return contestServiceObject.createContest(token,title,des,problemList,startTime,endTime,false,userServiceObject.getUserNameByToken(token));
     }
 
     //根据id更新比赛信息 title title startTime endTime
-    //按id更新题目信息
     @RequestMapping(value = "/editContestById",method = {RequestMethod.POST})
     @CrossOrigin
     public String editContestById(@RequestParam("token") String token,@RequestParam("title") String title,@RequestParam("des") String des,
                               @RequestParam("problemList") String problemList,@RequestParam("startTime") String startTime,
                                   @RequestParam("endTime") String endTime, @RequestParam("id") int id) throws JsonProcessingException {
-
-        // System.out.println(token+"\n"+title+"\n"+des+"\n"+problemList+"\n"+startTime+"\n"+endTime+"\n"+id+"\n");
-        //error
-        //0 正常 1 越权 2 失败
-        ObjectMapper mapper = new ObjectMapper();
-        HashMap s = new HashMap();
-        if(userServiceObject.tokenIsAdmin(token))
-        {
-            if(contestServiceObject.editContestById(title,des,problemList,startTime,endTime,id))
-                s.put("error","0");
-            else
-                s.put("error","2");
-        }
-        else
-            s.put("error","1");
-
-        return mapper.writeValueAsString(s);
+        return contestServiceObject.editContestById(token,title,des,problemList,startTime,endTime,id);
     }
 
 }

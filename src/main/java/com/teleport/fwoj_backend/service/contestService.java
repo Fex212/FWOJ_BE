@@ -1,30 +1,27 @@
 package com.teleport.fwoj_backend.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.teleport.fwoj_backend.pojo.contest;
 
 import java.text.ParseException;
 import java.util.List;
 
 public interface contestService {
-    //方法数为多个时，要加入@Param注解
-    List<contest> getContestList(int page, int pre) throws ParseException;
+    //查询比赛列表(user)
+    String getContestList(int page, int pre) throws ParseException, JsonProcessingException;
     //查询比赛列表(admin)
-    List<contest> getContestListAdmin(int page, int pre,String key);
-    //获取比赛总数
-    int getContestSum();
-    //获取比赛总数(admin)
-    int getContestSumAdmin();
+    String getContestListAdmin(String token,int page, int pre,String key) throws JsonProcessingException;
     //按id查询比赛详情
-    contest getContestDetail(int id) throws ParseException;
+    String getContestDetail(int id) throws ParseException, JsonProcessingException;
     //按id查询详情(Admin)
-    contest getContestDetailByIdAdmin(int id);
+    String getContestDetailByIdAdmin(String token,int id) throws JsonProcessingException;
     //改变比赛可见性
-    boolean contestVisibleChanged(int id);
+    String contestVisibleChanged(String token,int id) throws JsonProcessingException;
     //根据id删除比赛
-    boolean deleteContestById(int id);
+    String deleteContestById(String token,int id) throws JsonProcessingException;
     //创建比赛 title des problemList startTime endTime visible authorName
-    boolean createContest(String title,String des,String problemList,String startTime,String endTime,boolean visible,String authorName);
+    String createContest(String token,String title,String des,String problemList,String startTime,String endTime,boolean visible,String authorName) throws JsonProcessingException;
     //  update title des problemList startTime endTime
-    boolean editContestById(String title,String des,String problemList,String startTime,String endTime,int id);
+    String editContestById(String token,String title,String des,String problemList,String startTime,String endTime,int id) throws JsonProcessingException;
 
 }

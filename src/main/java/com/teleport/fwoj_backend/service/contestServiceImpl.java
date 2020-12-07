@@ -1,6 +1,9 @@
 package com.teleport.fwoj_backend.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.teleport.fwoj_backend.mapper.contestMapper;
+import com.teleport.fwoj_backend.mapper.userMapper;
 import com.teleport.fwoj_backend.pojo.contest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,14 +11,18 @@ import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
 public class contestServiceImpl implements contestService{
     @Autowired
     private contestMapper contestMapperObject;
+    @Autowired
+    private userMapper userMapperObject;
     @Override
-    public List<contest> getContestList(int page, int pre) throws ParseException {
+    public String getContestList(int page, int pre) throws ParseException, JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
         int start = pre * (page - 1);
         int num = pre;
         List<contest> list = contestMapperObject.getContestList(start,num);
@@ -33,28 +40,36 @@ public class contestServiceImpl implements contestService{
             if(endTime.getTime() <= currentTime.getTime())
                 list.get(i).setState("已结束");
         }
-        return list;
+        int total = contestMapperObject.getContestSum();
+        HashMap s = new HashMap();
+        s.put("data", list);
+        s.put("total", total);
+        s.put("status", 200);
+        return mapper.writeValueAsString(s);
     }
 
     @Override
-    public List<contest> getContestListAdmin(int page, int pre,String key) {
-        int start = pre * (page - 1);
-        int num = pre;
-        return contestMapperObject.getContestListAdmin(start,num,key);
+    public String getContestListAdmin(String token,int page, int pre,String key) throws JsonProcessingException {
+
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(userMapperObject.getUserTypeByToken(token).equals("admin"))
+        {
+            int start = pre * (page - 1);
+            int num = pre;
+            s.put("data",contestMapperObject.getContestListAdmin(start,num,key));
+            s.put("num",contestMapperObject.getContestSumAdmin());
+            s.put("error",0);
+        }
+        else
+            s.put("error",1);
+        return  mapper.writeValueAsString(s);
     }
 
     @Override
-    public int getContestSum() {
-        return contestMapperObject.getContestSum();
-    }
-
-    @Override
-    public int getContestSumAdmin() {
-        return contestMapperObject.getContestSumAdmin();
-    }
-
-    @Override
-    public contest getContestDetail(int id) throws ParseException {
+    public String getContestDetail(int id) throws ParseException, JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
         contest ct = contestMapperObject.getContestDetail(id);
         if(ct != null)
         {
@@ -69,52 +84,106 @@ public class contestServiceImpl implements contestService{
             if(endTime.getTime() <= currentTime.getTime())
                 ct.setState("已结束");
         }
-        return ct;
+        s.put("data", ct);
+        if (ct != null)
+            s.put("error", "0");
+        return mapper.writeValueAsString(s);
     }
 
     @Override
-    public contest getContestDetailByIdAdmin(int id) {
-        return contestMapperObject.getContestDetailByIdAdmin(id);
+    public String getContestDetailByIdAdmin(String token,int id) throws JsonProcessingException {
+
+        //error
+        //0 正常 1 越权 2 失败
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if (userMapperObject.getUserTypeByToken(token).equals("admin")) {
+            contest contestObject = contestMapperObject.getContestDetailByIdAdmin(id);
+            if (contestObject != null) {
+                s.put("data", contestObject);
+                s.put("error", "0");
+            } else
+                s.put("error", "2");
+        } else
+            s.put("error", "1");
+        return mapper.writeValueAsString(s);
     }
 
     @Override
-    public boolean contestVisibleChanged(int id) {
-        if (contestMapperObject.getContestVisibleById(id) == 1)
+    public String contestVisibleChanged(String token,int id) throws JsonProcessingException {
+
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(userMapperObject.getUserTypeByToken(token).equals("admin"))
         {
-            if(contestMapperObject.setContestVisibleById(id, false) == 1)
-                return true;
+            if (contestMapperObject.getContestVisibleById(id) == 1)
+            {
+                if(contestMapperObject.setContestVisibleById(id, false) == 1)
+                    s.put("error","0");
+                else
+                    s.put("error","2");
+            }
             else
-                return false;
+                if(contestMapperObject.setContestVisibleById(id, true) == 1)
+                    s.put("error","0");
+                else
+                    s.put("error","2");
         }
         else
-            if(contestMapperObject.setContestVisibleById(id, true) == 1)
-                return true;
+            s.put("error","1");
+        return  mapper.writeValueAsString(s);
+    }
+
+    @Override
+    public String deleteContestById(String token,int id) throws JsonProcessingException {
+        //error
+        //0 正常 1 越权 2 删除失败
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(userMapperObject.getUserTypeByToken(token).equals("admin"))
+        {
+            if(contestMapperObject.deleteContestById(id) == 1)
+                s.put("error","0");
             else
-                return false;
+                s.put("error","2");
+        }
+        else
+            s.put("error","1");
+        return mapper.writeValueAsString(s);
     }
 
     @Override
-    public boolean deleteContestById(int id) {
-        if(contestMapperObject.deleteContestById(id) == 1)
-            return true;
+    public String createContest(String token,String title, String des, String problemList, String startTime, String endTime, boolean visible, String authorName) throws JsonProcessingException {
+        //error
+        //0 正常 1 越权 2 失败
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(userMapperObject.getUserTypeByToken(token).equals("admin"))
+        {
+            if(contestMapperObject.createContest(title,des,problemList,startTime,endTime,false,userMapperObject.getUserNameByToken(token)) == 1)
+                s.put("error","0");
+            else
+                s.put("error","2");
+        }
         else
-            return false;
+            s.put("error","1");
+        return mapper.writeValueAsString(s);
     }
 
     @Override
-    public boolean createContest(String title, String des, String problemList, String startTime, String endTime, boolean visible, String authorName) {
-        if(contestMapperObject.createContest(title,des,problemList,startTime,endTime,visible,authorName) == 1)
-            return true;
+    public String editContestById(String token,String title, String des, String problemList, String startTime, String endTime,int id) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(userMapperObject.getUserTypeByToken(token).equals("admin"))
+        {
+            if(contestMapperObject.editContestById(title,des,problemList,startTime,endTime,id) == 1)
+                s.put("error","0");
+            else
+                s.put("error","2");
+        }
         else
-            return false;
-    }
-
-    @Override
-    public boolean editContestById(String title, String des, String problemList, String startTime, String endTime,int id) {
-        if(contestMapperObject.editContestById(title,des,problemList,startTime,endTime,id) == 1)
-            return true;
-        else
-            return false;
+            s.put("error","1");
+        return mapper.writeValueAsString(s);
     }
 
 }

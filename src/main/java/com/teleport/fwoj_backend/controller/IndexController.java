@@ -79,28 +79,14 @@ public class indexController {
     @RequestMapping(value = "/getContestList", method = {RequestMethod.GET})
     @CrossOrigin
     public String getContestList(@RequestParam("page") int page, @RequestParam("pre") int pre) throws JsonProcessingException, ParseException {
-        ObjectMapper mapper = new ObjectMapper();
-
-        List<contest> list = contestServiceObject.getContestList(page, pre);
-        int total = contestServiceObject.getContestSum();
-        HashMap s = new HashMap();
-        s.put("data", list);
-        s.put("total", total);
-        s.put("status", 200);
-        return mapper.writeValueAsString(s);
+        return contestServiceObject.getContestList(page,pre);
     }
 
     //获取比赛详情
     @RequestMapping(value = "/getContestDetail", method = {RequestMethod.GET})
     @CrossOrigin
     public String getContestDetail(@RequestParam("id") int id) throws JsonProcessingException, ParseException {
-        ObjectMapper mapper = new ObjectMapper();
-        HashMap s = new HashMap();
-        contest contestObject = contestServiceObject.getContestDetail(id);
-        s.put("data", contestObject);
-        if (contestObject != null)
-            s.put("error", "0");
-        return mapper.writeValueAsString(s);
+        return contestServiceObject.getContestDetail(id);
     }
 
     //获取状态列表
