@@ -138,27 +138,38 @@ public class userServiceImpl implements userService{
     }
 
     @Override
-    public String updateUserPersonInfo(String token, String sign, String site, String github) throws JsonProcessingException {
+    public String updateUserPersonInfo(String token,String username, String sign, String site, String github) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if(userMapperObject.updateUserSiteByToken(token,site) == 1 &&
-            userMapperObject.updateUserGithubByToken(token,github) == 1 &&
-            userMapperObject.updateUserSignByToken(token,sign) == 1)
-            s.put("error","0");
-        else
+
+        //error 1 用户名已被注册 2 更新失败
+        int id = userMapperObject.getUserIdByToken(token);
+        int usernameNumExcept = userMapperObject.getUsernameNumExpect(username,id);
+
+        if(usernameNumExcept != 0)
             s.put("error","1");
+        else
+        {
+            if(userMapperObject.updateUserSiteByToken(token,site) == 1 &&
+                    userMapperObject.updateUserGithubByToken(token,github) == 1 &&
+                    userMapperObject.updateUserSignByToken(token,sign) == 1 &&
+                    userMapperObject.updateUserNameByToken(token,username) == 1)
+                s.put("error","0");
+            else
+                s.put("error","2");
+        }
         return mapper.writeValueAsString(s);
     }
 
     @Override
-    public String getUserCardInfo(String username) throws JsonProcessingException {
+    public String getUserCardInfo(int id) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
         //type,sign,site,github
-        String type = userMapperObject.getUserTypeByUsername(username);
-        String sign = userMapperObject.getUserSignByUsername(username);
-        String site = userMapperObject.getUserSiteByUsername(username);
-        String github = userMapperObject.getUserGithubByUsername(username);
+        String type = userMapperObject.getUserTypeById(id);
+        String sign = userMapperObject.getUserSignById(id);
+        String site = userMapperObject.getUserSiteById(id);
+        String github = userMapperObject.getUserGithubById(id);
         if(type != null)
         {
             s.put("error","0");
@@ -173,21 +184,30 @@ public class userServiceImpl implements userService{
     }
 
     @Override
-    public String changeUserAvailable(String token, String username) throws JsonProcessingException {
+    public String changeUserAvailable(String token,int id) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
         if(userMapperObject.getUserTypeByToken(token) != null &&  userMapperObject.getUserTypeByToken(token).equals("admin"))
         {
             //可用
-            if(userMapperObject.getAvailableByUsername(username) == 1)
-                userMapperObject.setAvailableByUsername(username,false);
-                //不可用
+            if(userMapperObject.getUserAvailableById(id) == 1)
+            {
+                if(userMapperObject.setAvailableById(id,false) == 1)
+                    s.put("error","0");
+                else
+                    s.put("error","1");
+            }
+            //不可用
             else
-                userMapperObject.setAvailableByUsername(username,true);
-            s.put("error","0");
+            {
+                if(userMapperObject.setAvailableById(id,true) == 1)
+                    s.put("error","0");
+                else
+                    s.put("error","1");
+            }
         }
         else
-            s.put("error","1");
+            s.put("error","2");
 
         return mapper.writeValueAsString(s);
     }
@@ -225,7 +245,7 @@ public class userServiceImpl implements userService{
     }
 
     @Override
-    public String getUserDetailById(String token,int id) throws JsonProcessingException {
+    public String  getUserDetailById(String token,int id) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
         if(userMapperObject.getUserTypeByToken(token) != null &&  userMapperObject.getUserTypeByToken(token).equals("admin"))
@@ -262,11 +282,11 @@ public class userServiceImpl implements userService{
             {
                 //如果更新了密码，创建新的token
                 int f = 0;
-                if(userMapperObject.getUserPasswdByUsername(username) != null && !userMapperObject.getUserPasswdByUsername(username).equals(passwd))
-                    f = 1;
                 if(userMapperObject.editUserDetail(email,username,type,passwd,id) == 1)
                 {
                     s.put("error","0");
+                    if(userMapperObject.getUserPasswdByUsername(username) != null && !userMapperObject.getUserPasswdByUsername(username).equals(passwd))
+                        f = 1;
                     if(f == 1)
                     {
                         byte[] lock = new byte[0];
@@ -361,8 +381,8 @@ public class userServiceImpl implements userService{
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
         String UPLOAD_FOLDER = "./uploadFolder/avatar/";
-        String username = userMapperObject.getUserNameByToken(token);
-        if (username != null) {
+        int id = userMapperObject.getUserIdByToken(token);
+        if (id != 0) {
             String kzm = ".jpg";
             if (Objects.isNull(file)) {
                 s.put("error", "-1");
@@ -370,7 +390,7 @@ public class userServiceImpl implements userService{
             }
             try {
                 byte[] bytes = file.getBytes();
-                Path path = Paths.get(UPLOAD_FOLDER + username + kzm);
+                Path path = Paths.get(UPLOAD_FOLDER + id + kzm);
                 if (!Files.isWritable(path)) {
                     Files.createDirectories(Paths.get(UPLOAD_FOLDER));
                 }
@@ -386,13 +406,13 @@ public class userServiceImpl implements userService{
     }
 
     @Override
-    public byte[] getAvatarUrl(String username) throws IOException {
+    public byte[] getAvatarUrl(int id) throws IOException {
         byte[] bytes;
         FileInputStream inputStream;
-        if (username != null)
+        if (userMapperObject.getUserNameById(id) != null)
         {
             boolean flag = true;
-            File avatarFile = new File("./uploadFolder/avatar/" + username + ".jpg");
+            File avatarFile = new File("./uploadFolder/avatar/" + id + ".jpg");
             if (!avatarFile.exists()) {
                 flag = false;
             }

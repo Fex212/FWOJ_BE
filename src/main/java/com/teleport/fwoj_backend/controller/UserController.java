@@ -1,9 +1,12 @@
 package com.teleport.fwoj_backend.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.teleport.fwoj_backend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 public class userController {
@@ -27,7 +30,7 @@ public class userController {
     }
 
     //根据token查询用户Id
-    @RequestMapping(value = "/getUserId",method = {RequestMethod.POST})
+    @RequestMapping(value = "/getUserIdByToken",method = {RequestMethod.POST})
     @CrossOrigin
     public String getUserIdByToken(@RequestParam("token") String token) throws JsonProcessingException
     {
@@ -97,11 +100,11 @@ public class userController {
         return userServiceObject.deleteUser(token,id);
     }
 
-    //更改用户的available
+    //通过id更改用户的available
     @RequestMapping(value = "/changeUserAvailable",method = {RequestMethod.POST})
     @CrossOrigin
-    public String changeUserAvailable (@RequestParam("token") String token,@RequestParam("username") String username) throws JsonProcessingException {
-        return userServiceObject.changeUserAvailable(token,username);
+    public String changeUserAvailable (@RequestParam("token") String token,@RequestParam("id") int id) throws JsonProcessingException {
+        return userServiceObject.changeUserAvailable(token,id);
     }
 
     //根据token获取个人信息设置所需数据
@@ -114,8 +117,8 @@ public class userController {
     //更新个人设置中的sign,site,github
     @RequestMapping(value = "/updateUserPersonInfo", method = {RequestMethod.POST})
     @CrossOrigin
-    public String updateUserPersonInfo(@RequestParam("token") String token,@RequestParam("sign") String sign,@RequestParam("site") String site,@RequestParam("github") String github) throws JsonProcessingException {
-        return userServiceObject.updateUserPersonInfo(token,sign,site,github);
+    public String updateUserPersonInfo(@RequestParam("token") String token,@RequestParam("username") String username,@RequestParam("sign") String sign,@RequestParam("site") String site,@RequestParam("github") String github) throws JsonProcessingException {
+        return userServiceObject.updateUserPersonInfo(token,username,sign,site,github);
     }
 
     //个人设置更新密码
@@ -126,11 +129,26 @@ public class userController {
         return userServiceObject.updatePasswordByPrePassword(token,oldpasswd,passwd);
     }
 
-    //根据username获取个人资料卡所需数据
-    @RequestMapping(value = "/getUserCardInfo/{username}",method = {RequestMethod.GET})
+    //根据id获取个人资料卡所需数据
+    @RequestMapping(value = "/getUserCardInfo/{id}",method = {RequestMethod.GET})
     @CrossOrigin
-    public String getUserCardInfo(@PathVariable("username") String username) throws JsonProcessingException {
-        return userServiceObject.getUserCardInfo(username);
+    public String getUserCardInfo(@PathVariable("id") int id) throws JsonProcessingException {
+        return userServiceObject.getUserCardInfo(id);
     }
+    //error -1 文件为空 -2 后端异常
+    @RequestMapping("/uploadAvatar")
+    @CrossOrigin
+    public String uploadAvatar(@RequestParam("avatar") MultipartFile file, @RequestParam("token") String token) throws JsonProcessingException {
+        return userServiceObject.uploadAvatar(file,token);
+    }
+
+    //error -1 用户不存在
+    @RequestMapping(value = "/getAvatar",produces = MediaType.IMAGE_JPEG_VALUE)
+    @ResponseBody
+    @CrossOrigin
+    public  byte[] getAvatarUrl(@RequestParam("id") int id) throws IOException {
+        return userServiceObject.getAvatarUrl(id);
+    }
+
 
 }

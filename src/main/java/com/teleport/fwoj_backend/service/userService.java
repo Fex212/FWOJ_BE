@@ -18,9 +18,9 @@ public interface userService {
     //根据token获取用户名，id，用户类型,邮箱,sign,site,github
     String getUserPersonInfo(String token) throws JsonProcessingException;
     //根据token更新sign,site,github
-    String updateUserPersonInfo(String token,String sign,String site,String github)throws JsonProcessingException;
-    //根据username获取type,sign,site,github
-    String getUserCardInfo(String username) throws JsonProcessingException;
+    String updateUserPersonInfo(String token,String username,String sign,String site,String github)throws JsonProcessingException;
+    //根据id获取type,sign,site,github
+    String getUserCardInfo(int id) throws JsonProcessingException;
 
     //获取用户列表(页数,每页几条)
     String getUserList(Integer page, Integer pre, String key, String token) throws JsonProcessingException;
@@ -36,7 +36,7 @@ public interface userService {
     String editUserDetailWithoutPasswd(String token,String email,String username,String type,int id) throws JsonProcessingException;
 
     //更改用户的available
-    String changeUserAvailable(String token,String username) throws JsonProcessingException;
+    String changeUserAvailable(String token,int id) throws JsonProcessingException;
     //根据id删除用户
     String deleteUser(String token,int id) throws JsonProcessingException;
 
@@ -47,7 +47,7 @@ public interface userService {
     //更新用户头像
     String uploadAvatar(MultipartFile file,String token) throws JsonProcessingException;
     //获取用户头像
-    byte[] getAvatarUrl(String username) throws IOException;
+    byte[] getAvatarUrl(int id) throws IOException;
 
     //获取系统信息面板
     String getSystemInfo(String token) throws JsonProcessingException;

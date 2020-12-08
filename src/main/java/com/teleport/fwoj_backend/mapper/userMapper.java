@@ -15,6 +15,10 @@ public interface userMapper {
     int getAvailableByUsername(@Param("username") String username);
     //根据用户名设置available
     int setAvailableByUsername(@Param("username") String username,@Param("available") boolean available);
+
+    //根据id设置available
+    int setAvailableById(@Param("id") int id,@Param("available") boolean available);
+
     //token存到数据库并返回对象:
     int createToken(@Param("username") String username,@Param("token") String token);
 
@@ -31,8 +35,20 @@ public interface userMapper {
 //    通过token查找用户soledList
     String getUserSolvedListByToken(@Param("token") String token);
 
-    //根据id查看
-
+    //根据id查看姓名
+    String getUserNameById(@Param("id") int id);
+    //根据id查看签名档
+    String getUserSignById(@Param("id") int id);
+    //根据id查看个人站点
+    String getUserSiteById(@Param("id") int id);
+    //根据id查看github
+    String getUserGithubById(@Param("id") int id);
+    //根据id查看type
+    String getUserTypeById(@Param("id") int id);
+    //根据id查看available
+    int getUserAvailableById(@Param("id") int id);
+    //根据id查看solvedList
+    String getUserSolvedListById(@Param("id") int id);
 
     //通过username查找个人签名
     String getUserSignByUsername(@Param("username") String username);
@@ -45,7 +61,8 @@ public interface userMapper {
     //通过username查找solvedList
     String getUserSolvedListByUsername(@Param("username") String username);
 
-
+    //根据token更新用户名
+    int updateUserNameByToken(@Param("token") String token,@Param("username") String username);
     //    根据token更新个人签名
     int updateUserSignByToken(@Param("token") String token,@Param("sign") String sign);
     //    根据token更新site
@@ -59,7 +76,7 @@ public interface userMapper {
     int usernameExist(@Param("username") String username);
 //  根据email查询除自己之外的用户数量
     int getEmailNumExpect(@Param("email") String email,@Param("id") int id);
-//  根据email查询除自己之外的用户数量
+//  根据username查询除自己之外的用户数量
     int getUsernameNumExpect(@Param("username") String username,@Param("id") int id);
     //传入email username passwd写入
     int register(@Param("email") String email,@Param("username") String username,@Param("passwd") String passwd);

@@ -6,13 +6,10 @@ import com.teleport.fwoj_backend.service.problemService;
 import com.teleport.fwoj_backend.service.stateService;
 import com.teleport.fwoj_backend.service.userService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-import java.io.IOException;
 
 @RestController
 public class indexController {
@@ -96,21 +93,6 @@ public class indexController {
     public String submitProblemCode(@RequestParam("code") String code, @RequestParam("problemId") int problemId,
                                     @RequestParam("token") String token, @RequestParam("language") String language) throws JsonProcessingException {
         return stateServiceObject.addState(code,problemId,token,language);
-    }
-
-    //error -1 文件为空 -2 后端异常
-    @RequestMapping("/uploadAvatar")
-    @CrossOrigin
-    public String uploadAvatar(@RequestParam("avatar") MultipartFile file, @RequestParam("token") String token) throws JsonProcessingException {
-        return userServiceObject.uploadAvatar(file,token);
-    }
-
-    //error -1 用户不存在
-    @RequestMapping(value = "/getAvatar",produces = MediaType.IMAGE_JPEG_VALUE)
-    @ResponseBody
-    @CrossOrigin
-    public  byte[] getAvatarUrl(@RequestParam("username") String username) throws IOException {
-        return userServiceObject.getAvatarUrl(username);
     }
 
 }
