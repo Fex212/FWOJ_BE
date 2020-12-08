@@ -149,6 +149,4 @@ public class userController {
     public  byte[] getAvatarUrl(@RequestParam("id") int id) throws IOException {
         return userServiceObject.getAvatarUrl(id);
     }
-
-
 }

@@ -170,6 +170,7 @@ public class userServiceImpl implements userService{
         String sign = userMapperObject.getUserSignById(id);
         String site = userMapperObject.getUserSiteById(id);
         String github = userMapperObject.getUserGithubById(id);
+        String username = userMapperObject.getUserNameById(id);
         if(type != null)
         {
             s.put("error","0");
@@ -177,6 +178,7 @@ public class userServiceImpl implements userService{
             s.put("site",site);
             s.put("sign",sign);
             s.put("github",github);
+            s.put("username",username);
         }
         else
             s.put("error","1");
