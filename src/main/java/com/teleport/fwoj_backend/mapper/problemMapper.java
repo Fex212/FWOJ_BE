@@ -29,8 +29,8 @@ public interface problemMapper {
     int deleteProblemById(int id);
     //创建问题
     int createProblem(String title,String des,String input,String output,String inputExample,String outputExample,
-                      String hint,int acSubmit,int totalSubmit,String createTime, String authorName,boolean visible);
-    //根据id编辑问题id
+                      String hint,int acSubmit,int totalSubmit,String createTime, int authorId,boolean visible);
+    //根据id编辑问题
     int editProblem(String title,String des,String input,String output,String inputExample,String outputExample,
                     String hint,int id);
 }

@@ -158,7 +158,7 @@ public class contestServiceImpl implements contestService{
         HashMap s = new HashMap();
         if(userMapperObject.getUserTypeByToken(token) != null &&  userMapperObject.getUserTypeByToken(token).equals("admin"))
         {
-            if(contestMapperObject.createContest(title,des,problemList,startTime,endTime,false,userMapperObject.getUserNameByToken(token)) == 1)
+            if(contestMapperObject.createContest(title,des,problemList,startTime,endTime,false,userMapperObject.getUserIdByToken(token)) == 1)
                 s.put("error","0");
             else
                 s.put("error","2");

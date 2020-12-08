@@ -1,10 +1,8 @@
 package com.teleport.fwoj_backend.mapper;
-
 import com.teleport.fwoj_backend.pojo.user;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
 @Mapper
@@ -32,6 +30,8 @@ public interface userMapper {
     String getUserEmailByToken(@Param("token") String token);
 //    通过token查找用户soledList
     String getUserSolvedListByToken(@Param("token") String token);
+
+    //根据id查看
 
 
     //通过username查找个人签名

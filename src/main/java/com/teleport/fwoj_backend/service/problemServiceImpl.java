@@ -143,7 +143,7 @@ public class problemServiceImpl implements problemService{
             DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String dateTime = simpleDateFormat.format(new Date());
             if(problemMapperObject.createProblem(title,des,input,output,inputExample,outputExample,hint,
-                    0,0,dateTime,userMapperObject.getUserNameByToken(token),false) == 1)
+                    0,0,dateTime,userMapperObject.getUserIdByToken(token),false) == 1)
                 s.put("error","0");
             else
                 s.put("error","2");

@@ -12,7 +12,8 @@
    </select>
 <!--    查询比赛列表(admin)-->
     <select id="getContestListAdmin" resultType="contest">
-    select id,title,startTime,endTime,visible,authorName from onlinejudge.contest where title like "%"#{key}"%"
+    select contest.id,title,startTime,endTime,visible,username as authorName
+     from contest,user where title like "%"#{key}"%" and authorId=user.id
     order by id desc limit #{start},#{num}
    </select>
 <!--    查询比赛数量-->
@@ -45,13 +46,13 @@
     </delete>
 
 <!--    创建比赛 title des problemList startTime endTime visible authorName-->
-    <insert id="createContest" parameterType="problem">
-        insert into contest(title, des, problemList, startTime, endTime,visible,authorName)
-        values(#{title},#{des},#{problemList},#{startTime},#{endTime},#{visible},#{authorName})
+    <insert id="createContest" parameterType="contest">
+        insert into contest(title, des, problemList, startTime, endTime,visible,authorId)
+        values(#{title},#{des},#{problemList},#{startTime},#{endTime},#{visible},#{authorId})
     </insert>
 
 <!--    update title des problemList startTime endTime-->
-    <update id="editContestById" parameterType="problem">
+    <update id="editContestById" parameterType="contest">
         update contest set title=#{title},des=#{des},problemList=#{problemList},startTime=#{startTime},
         endTime=#{endTime} where id=#{id}
     </update>

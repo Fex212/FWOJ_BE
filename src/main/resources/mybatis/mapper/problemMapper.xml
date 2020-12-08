@@ -28,7 +28,8 @@
 
 <!--    //获取问题列表(Admin) id title createTime visible authorName-->
     <select id="getProblemListAdmin" resultType="problem">
-    select id,title,createTime,visible,authorName from problem where title like "%"#{key}"%" order by id desc limit #{start},#{num}
+    select problem.id,title,createTime,visible,username as authorName from problem,user where title like "%"#{key}"%"
+        and problem.authorId=user.id order by id desc limit #{start},#{num}
    </select>
 
     <!--    根据id查询问题visibile-->
@@ -48,8 +49,8 @@
     <!--    添加问题-->
     <!--   title input output inputExample outputExample hint authorName -->
     <insert id="createProblem" parameterType="problem">
-        insert into problem(title, des, input, output, inputExample, outputExample, hint, acSubmit, totalSubmit,createTime,authorName,visible)
-        values(#{title},#{des},#{input},#{output},#{inputExample},#{outputExample},#{hint},#{acSubmit},#{totalSubmit},#{createTime},#{authorName},#{visible});
+        insert into problem(title, des, input, output, inputExample, outputExample, hint, acSubmit, totalSubmit,createTime,authorId,visible)
+        values(#{title},#{des},#{input},#{output},#{inputExample},#{outputExample},#{hint},#{acSubmit},#{totalSubmit},#{createTime},#{authorId},#{visible});
     </insert>
 
 <!--   根据id更新问题信息-->

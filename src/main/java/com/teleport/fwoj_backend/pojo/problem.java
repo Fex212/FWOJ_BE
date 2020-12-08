@@ -17,6 +17,7 @@ public class problem {
     private String inputExample;
     private String outputExample;
     private String hint;
+    private int authorId;
     private String authorName;
     private String createTime;
     private int acSubmit;

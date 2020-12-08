@@ -15,5 +15,5 @@ public class contest {
     String state;
     boolean visible;
     String authorName;
-
+    int authorId;
 }

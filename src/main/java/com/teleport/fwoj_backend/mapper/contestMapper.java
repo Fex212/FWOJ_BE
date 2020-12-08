@@ -28,7 +28,7 @@ public interface contestMapper {
     //根据id删除比赛
     int deleteContestById(int id);
     //创建比赛 title des problemList startTime endTime visible authorName
-    int createContest(String title,String des,String problemList,String startTime,String endTime,boolean visible,String authorName);
+    int createContest(String title,String des,String problemList,String startTime,String endTime,boolean visible,int authorId);
 //  update title des problemList startTime endTime
     int editContestById(String title,String des,String problemList,String startTime,String endTime,int id);
 }
