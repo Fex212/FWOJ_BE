@@ -12,7 +12,7 @@ public interface userMapper {
     //提供用户名密码查找是否有这个人
     int loginCheck(@Param("username") String username, @Param("passwd") String passwd);
     //根据用户名查找available是否为1
-    int getAvailableByUsername(@Param("username") String username);
+    Integer getAvailableByUsername(@Param("username") String username);
     //根据用户名设置available
     int setAvailableByUsername(@Param("username") String username,@Param("available") boolean available);
 
@@ -46,7 +46,7 @@ public interface userMapper {
     //根据id查看type
     String getUserTypeById(@Param("id") int id);
     //根据id查看available
-    int getUserAvailableById(@Param("id") int id);
+    Integer getUserAvailableById(@Param("id") int id);
     //根据id查看solvedList
     String getUserSolvedListById(@Param("id") int id);
 

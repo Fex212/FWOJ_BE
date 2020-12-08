@@ -12,7 +12,7 @@ public interface problemMapper {
     //查询问题列表(页数,每页几条)
     List<problem> getProblemList(@Param("start") int start,@Param("num") int num);
     //查询问题总记录数
-    Integer getProblemSum();
+    int getProblemSum();
     //查询总数(admin)
     int getProblemSumAdmin();
     //查询问题详情
@@ -22,7 +22,7 @@ public interface problemMapper {
     //获取问题列表(Admin) id title createTime visible authorName
     List<problem> getProblemListAdmin(@Param("start") int start,@Param("num") int num,@Param("key") String key);
     //根据id获取问题的visible
-    int getProblemVisibleById(int id);
+    Integer getProblemVisibleById(int id);
     //根据id设置问题的visible
     int setProblemVisibleById(int id,boolean visible);
     //根据id删除问题

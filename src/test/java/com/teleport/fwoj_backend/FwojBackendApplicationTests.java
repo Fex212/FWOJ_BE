@@ -17,11 +17,11 @@ import java.util.List;
 class FwojBackendApplicationTests {
 
     @Autowired
-    contestMapper contestMapperO;
+    userMapper userMapperO;
 
     @Test
     void contextLoads() {
-        System.out.println(contestMapperO.getContestVisibleById(100));
+        System.out.println(userMapperO.emailExist("12ijoijioasd"));
     }
 
 }
