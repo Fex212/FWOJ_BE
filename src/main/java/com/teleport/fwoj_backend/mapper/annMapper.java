@@ -25,7 +25,7 @@ public interface annMapper {
     //根据id删除公告
     int deleteAnnById(int id);
     //根据id查询公告visible
-    int getAnnVisibleById(int id);
+    Integer getAnnVisibleById(int id);
     //根据id设置公告visible
     int setAnnVisibleById(int id,boolean visible);
     //创建公告 date title content authorId

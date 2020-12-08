@@ -1,5 +1,6 @@
 package com.teleport.fwoj_backend;
 
+import com.teleport.fwoj_backend.mapper.annMapper;
 import com.teleport.fwoj_backend.mapper.contestMapper;
 import com.teleport.fwoj_backend.mapper.problemMapper;
 import com.teleport.fwoj_backend.mapper.userMapper;
@@ -16,16 +17,12 @@ import java.util.List;
 class FwojBackendApplicationTests {
 
     @Autowired
-    userMapper userMapperObject;
-    @Autowired
-    problemService problemServiceObject;
-    @Autowired
-    problemMapper problemMapperObject;
-    @Autowired
-    contestMapper contestMapperObject;
+    annMapper annMapperO;
     @Test
     void contextLoads() {
-         System.out.println(contestMapperObject.getContestList(1,10));
+//        System.out.println(annMapperO.deleteAnnById(22));
+//        System.out.println(annMapperO.getAnnVisibleById(22));
+        System.out.println(annMapperO.updateAnn(22,"@","2"));
     }
 
 }

@@ -41,7 +41,7 @@
         delete from announcement where id=#{id}
     </delete>
 <!--    根据id查询公告visible-->
-    <select id="getAnnVisibleById" resultType="int">
+    <select id="getAnnVisibleById" resultType="java.lang.Integer">
         select visible from announcement where id=#{id}
     </select>
 <!--    根据id设置公告visible-->
