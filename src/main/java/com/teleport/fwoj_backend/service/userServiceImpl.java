@@ -93,10 +93,17 @@ public class userServiceImpl implements userService{
     @Override
     public String getUserIdByToken(String token) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-        if(token == null)
-            return null;
         HashMap s = new HashMap();
-        s.put("userId",userMapperObject.getUserIdByToken(token));
+        if(token != null)
+        {
+            if(userMapperObject.getUserIdByToken(token) != null)
+            {
+                s.put("error","0");
+                s.put("userId",userMapperObject.getUserIdByToken(token));
+            }
+        }
+        else
+            s.put("error","1");
         return mapper.writeValueAsString(s);
     }
 

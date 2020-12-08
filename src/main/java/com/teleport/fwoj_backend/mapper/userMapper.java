@@ -27,7 +27,7 @@ public interface userMapper {
     //通过token查找密码
     String getUserPasswdByUsername(@Param("username") String username);
     //通过token查找用户Id
-    int getUserIdByToken(@Param("token") String token);
+    Integer getUserIdByToken(@Param("token") String token);
     //通过token查找type
     String getUserTypeByToken(@Param("token") String token);
     //根据token查找用户邮箱
@@ -36,7 +36,7 @@ public interface userMapper {
     String getUserSolvedListByToken(@Param("token") String token);
 
     //根据id查看姓名
-    String getUserNameById(@Param("id") int id);
+    String getUserNameById(@Param("id") Integer id);
     //根据id查看签名档
     String getUserSignById(@Param("id") int id);
     //根据id查看个人站点

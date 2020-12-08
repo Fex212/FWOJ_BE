@@ -135,6 +135,7 @@ public class userController {
     public String getUserCardInfo(@PathVariable("id") int id) throws JsonProcessingException {
         return userServiceObject.getUserCardInfo(id);
     }
+
     //error -1 文件为空 -2 后端异常
     @RequestMapping("/uploadAvatar")
     @CrossOrigin

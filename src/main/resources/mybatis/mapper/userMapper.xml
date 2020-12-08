@@ -33,7 +33,7 @@
     select username from onlinejudge.user where token=#{token}
    </select>
     <!--    根据token查询用户的Id-->
-    <select id="getUserIdByToken" resultType="int">
+    <select id="getUserIdByToken" resultType="java.lang.Integer">
     select id from onlinejudge.user where token=#{token}
    </select>
     <!--    根据token查询用户的Type-->
