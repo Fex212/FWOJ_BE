@@ -22,7 +22,7 @@ public interface contestMapper {
     //按id查询详情(Admin)
     contest getContestDetailByIdAdmin(int id);
     //按id查询比赛可见性
-    int getContestVisibleById(int id);
+    Integer getContestVisibleById(int id);
     //根据id更改比赛可见性
     int setContestVisibleById(int id,boolean visible);
     //根据id删除比赛

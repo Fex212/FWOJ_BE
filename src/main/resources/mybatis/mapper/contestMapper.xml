@@ -33,7 +33,7 @@
         select id,title,des,problemList,startTime,endTime from contest where id=#{id}
     </select>
     <!--    按id查询比赛可见性-->
-    <select id="getContestVisibleById" resultType="int">
+    <select id="getContestVisibleById" resultType="java.lang.Integer">
         select visible from onlinejudge.contest where id=#{id}
     </select>
     <!--    根据id更新比赛的visible属性-->

@@ -17,12 +17,11 @@ import java.util.List;
 class FwojBackendApplicationTests {
 
     @Autowired
-    annMapper annMapperO;
+    contestMapper contestMapperO;
+
     @Test
     void contextLoads() {
-//        System.out.println(annMapperO.deleteAnnById(22));
-//        System.out.println(annMapperO.getAnnVisibleById(22));
-        System.out.println(annMapperO.updateAnn(22,"@","2"));
+        System.out.println(contestMapperO.getContestVisibleById(100));
     }
 
 }
