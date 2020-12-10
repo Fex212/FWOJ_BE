@@ -155,7 +155,7 @@
     </select>
 <!--    根据id查看solvedList-->
     <select id="getUserSolvedListById" resultType="String">
-        select solovedList from user where id=#{id}
+        select solvedList from user where id=#{id}
     </select>
 
 <!--    根据token更新用户名-->

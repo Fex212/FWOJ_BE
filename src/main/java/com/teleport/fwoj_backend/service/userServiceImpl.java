@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -178,6 +179,10 @@ public class userServiceImpl implements userService{
         String site = userMapperObject.getUserSiteById(id);
         String github = userMapperObject.getUserGithubById(id);
         String username = userMapperObject.getUserNameById(id);
+        String solvedListString = userMapperObject.getUserSolvedListById(id);
+
+        String tmp[] = solvedListString.split(",");
+        int len  = tmp.length;
         if(type != null)
         {
             s.put("error","0");
@@ -186,6 +191,7 @@ public class userServiceImpl implements userService{
             s.put("sign",sign);
             s.put("github",github);
             s.put("username",username);
+            s.put("solvedNumber",len);
         }
         else
             s.put("error","1");
