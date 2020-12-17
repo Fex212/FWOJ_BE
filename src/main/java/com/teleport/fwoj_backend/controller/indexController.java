@@ -4,7 +4,6 @@ import com.teleport.fwoj_backend.service.annService;
 import com.teleport.fwoj_backend.service.contestService;
 import com.teleport.fwoj_backend.service.problemService;
 import com.teleport.fwoj_backend.service.stateService;
-import com.teleport.fwoj_backend.service.userService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
@@ -22,8 +21,7 @@ public class indexController {
     private contestService contestServiceObject;
     @Autowired
     private stateService stateServiceObject;
-    @Autowired
-    private userService userServiceObject;
+
 
 
     @RequestMapping("/hello")
