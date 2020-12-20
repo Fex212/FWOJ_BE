@@ -51,7 +51,7 @@ public class adminContorller {
     }
 
     //根据id改变公告的visible
-    @RequestMapping(value = "/changeAnnVisibleById",method = {RequestMethod.POST})
+    @RequestMapping(value = "/changeAnnVisibleById",method = {RequestMethod.PUT})
     @CrossOrigin
     public String changeAnnVisibleById(@RequestParam("token") String token,@RequestParam("id") int id) throws JsonProcessingException {
         return annServiceObject.changeAnnVisible(token,id);
@@ -66,7 +66,7 @@ public class adminContorller {
     }
 
     //修改公告 id title content token
-    @RequestMapping(value = "/updateAnn",method = {RequestMethod.POST})
+    @RequestMapping(value = "/updateAnn",method = {RequestMethod.PUT})
     @CrossOrigin
     public String updateAnn(@RequestParam("token") String token,@RequestParam("id") int id,
                             @RequestParam("title") String title,@RequestParam("content") String content) throws JsonProcessingException {
@@ -82,7 +82,7 @@ public class adminContorller {
     }
 
     //更改题目的visible
-    @RequestMapping(value = "/changeProblemVisible",method = {RequestMethod.POST})
+    @RequestMapping(value = "/changeProblemVisible",method = {RequestMethod.PUT})
     @CrossOrigin
     public String changeProblemVisible(@RequestParam("token") String token,@RequestParam("id") int id) throws JsonProcessingException {
         return problemServiceObject.changeProblemVisible(token,id);
@@ -113,7 +113,7 @@ public class adminContorller {
     }
 
     //按id更新题目信息
-    @RequestMapping(value = "/editProblem",method = {RequestMethod.POST})
+    @RequestMapping(value = "/editProblem",method = {RequestMethod.PUT})
     @CrossOrigin
     public String editProblem(@RequestParam("token") String token,@RequestParam("title") String title,@RequestParam("des") String des,
                                 @RequestParam("input") String input,@RequestParam("output") String output,
@@ -131,7 +131,7 @@ public class adminContorller {
     }
 
     //更改比赛可见性
-    @RequestMapping(value = "/changeContestVisible",method = {RequestMethod.POST})
+    @RequestMapping(value = "/changeContestVisible",method = {RequestMethod.PUT})
     @CrossOrigin
     public String changeContestVisible(@RequestParam("token") String token,@RequestParam("id") int id)throws JsonProcessingException {
         return contestServiceObject.contestVisibleChanged(token,id);
@@ -161,7 +161,7 @@ public class adminContorller {
     }
 
     //根据id更新比赛信息 title title startTime endTime
-    @RequestMapping(value = "/editContestById",method = {RequestMethod.POST})
+    @RequestMapping(value = "/editContestById",method = {RequestMethod.PUT})
     @CrossOrigin
     public String editContestById(@RequestParam("token") String token,@RequestParam("title") String title,@RequestParam("des") String des,
                               @RequestParam("problemList") String problemList,@RequestParam("startTime") String startTime,

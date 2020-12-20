@@ -76,7 +76,7 @@ public class userController {
     }
 
     //更新用户Admin
-    @RequestMapping(value = "/updateUser",method = {RequestMethod.POST})
+    @RequestMapping(value = "/updateUser",method = {RequestMethod.PUT})
     @CrossOrigin
     public String updateUser(@RequestParam("token") String token, @RequestParam("email") String email, @RequestParam("username") String username,
                              @RequestParam("type") String type, @RequestParam("passwd") String passwd,
@@ -85,7 +85,7 @@ public class userController {
     }
 
     //更新用户信息不带密码Admin
-    @RequestMapping(value = "/updateUserWithoutPasswd",method = {RequestMethod.POST})
+    @RequestMapping(value = "/updateUserWithoutPasswd",method = {RequestMethod.PUT})
     @CrossOrigin
     public String updateUserWithoutPasswd(@RequestParam("token") String token, @RequestParam("email") String email, @RequestParam("username") String username,
                              @RequestParam("type") String type, @RequestParam("id") int id) throws JsonProcessingException {
@@ -101,7 +101,7 @@ public class userController {
     }
 
     //通过id更改用户的available
-    @RequestMapping(value = "/changeUserAvailable",method = {RequestMethod.POST})
+    @RequestMapping(value = "/changeUserAvailable",method = {RequestMethod.PUT})
     @CrossOrigin
     public String changeUserAvailable (@RequestParam("token") String token,@RequestParam("id") int id) throws JsonProcessingException {
         return userServiceObject.changeUserAvailable(token,id);
@@ -115,14 +115,14 @@ public class userController {
     }
 
     //更新个人设置中的sign,site,github
-    @RequestMapping(value = "/updateUserPersonInfo", method = {RequestMethod.POST})
+    @RequestMapping(value = "/updateUserPersonInfo", method = {RequestMethod.PUT})
     @CrossOrigin
     public String updateUserPersonInfo(@RequestParam("token") String token,@RequestParam("username") String username,@RequestParam("sign") String sign,@RequestParam("site") String site,@RequestParam("github") String github) throws JsonProcessingException {
         return userServiceObject.updateUserPersonInfo(token,username,sign,site,github);
     }
 
     //个人设置更新密码
-    @RequestMapping(value = "updatePasswordByPrePasswd",method = {RequestMethod.POST})
+    @RequestMapping(value = "updatePasswordByPrePasswd",method = {RequestMethod.PUT})
     @CrossOrigin
     public String updatePasswordByPrePassword(@RequestParam("token") String token ,
                                               @RequestParam("oldpasswd") String oldpasswd,@RequestParam("passwd") String passwd) throws JsonProcessingException {
@@ -137,7 +137,7 @@ public class userController {
     }
 
     //error -1 文件为空 -2 后端异常
-    @RequestMapping("/uploadAvatar")
+    @RequestMapping(value = "/uploadAvatar",method = {RequestMethod.PUT})
     @CrossOrigin
     public String uploadAvatar(@RequestParam("avatar") MultipartFile file, @RequestParam("token") String token) throws JsonProcessingException {
         return userServiceObject.uploadAvatar(file,token);
