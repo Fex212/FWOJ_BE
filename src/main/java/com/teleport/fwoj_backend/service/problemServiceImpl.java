@@ -73,11 +73,6 @@ public class problemServiceImpl implements problemService{
             }
 
         }
-        else
-        {
-            for(int i = 0 ; i < len ; i ++)
-                list.get(i).setIsAccept(-1);
-        }
         int total = problemMapperObject.getProblemSum();
         HashMap s = new HashMap();
         s.put("data", list);
