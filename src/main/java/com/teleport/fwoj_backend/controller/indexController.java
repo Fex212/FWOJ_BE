@@ -1,17 +1,17 @@
 package com.teleport.fwoj_backend.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.teleport.fwoj_backend.service.annService;
-import com.teleport.fwoj_backend.service.contestService;
-import com.teleport.fwoj_backend.service.problemService;
-import com.teleport.fwoj_backend.service.stateService;
+import com.teleport.fwoj_backend.pojo.rank;
+import com.teleport.fwoj_backend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
+import java.util.List;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class indexController {
+public class indexController{
 
     @Autowired
     private annService annServiceObject;
@@ -21,6 +21,8 @@ public class indexController {
     private contestService contestServiceObject;
     @Autowired
     private stateService stateServiceObject;
+    @Autowired
+    private rankService rankServiceObject;
 
 
 
@@ -91,6 +93,20 @@ public class indexController {
     public String submitProblemCode(@RequestParam("code") String code, @RequestParam("problemId") int problemId,
                                     @RequestParam("token") String token, @RequestParam("language") String language) throws JsonProcessingException {
         return stateServiceObject.addState(code,problemId,token,language);
+    }
+
+    //获取rank
+    @RequestMapping(value = "/getRank", method = {RequestMethod.GET})
+    @CrossOrigin
+    public String getRand(@RequestParam("page") int page, @RequestParam("pre") int pre) throws JsonProcessingException {
+        return rankServiceObject.getRank(page,pre);
+    }
+
+    //获取rank图标数据(最多十个人的姓名，解题数量)
+    @RequestMapping(value = "/getRankChartData", method = {RequestMethod.GET})
+    @CrossOrigin
+    public String getRandChartData() throws JsonProcessingException {
+        return rankServiceObject.getRankChartData();
     }
 
 }
