@@ -46,8 +46,8 @@ public class indexController {
     //获取问题列表
     @RequestMapping(value = "/getProblemList", method = {RequestMethod.GET})
     @CrossOrigin
-    public String getProblemList(@RequestParam("page") int page, @RequestParam("pre") int pre) throws JsonProcessingException {
-        return problemServiceObject.getProblemList(page,pre);
+    public String getProblemList(@RequestParam("page") int page, @RequestParam("pre") int pre ,@RequestParam("token") String token) throws JsonProcessingException {
+        return problemServiceObject.getProblemList(page,pre,token);
     }
 
     //获取问题详情

@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : test
+ Source Server         : Main
  Source Server Type    : MySQL
- Source Server Version : 50717
+ Source Server Version : 50728
  Source Host           : localhost:3306
  Source Schema         : onlinejudge
 
  Target Server Type    : MySQL
- Target Server Version : 50717
+ Target Server Version : 50728
  File Encoding         : 65001
 
- Date: 08/12/2020 12:55:37
+ Date: 23/12/2020 16:56:04
 */
 
 SET NAMES utf8mb4;
@@ -43,9 +43,9 @@ INSERT INTO `announcement` VALUES (6, '2020-11-12 16:51:18', 'onlineJudge网站�
 INSERT INTO `announcement` VALUES (7, '2020-11-12 16:51:20', '校赛奖品领取通知', '第七届ACM-ICPC 校赛奖品已经到位，请凭有效证件或获奖证书到信息楼315西领取\n获奖名单见群文件\n奖项如下： \n一等奖：键盘 / 小米手环4二选一\n二等奖：鼠标 / 耳机 二选一\n三等奖：充电宝 / U盘 二选一\n一血：纪念书签\n参与奖：凡是参与本次比赛的大一新生，且 \n在此次比赛中解出一道以上题目的同 \n学，均可以领取鼠标垫一张', 1, 0);
 INSERT INTO `announcement` VALUES (8, '2020-11-12 16:51:19', '奖状领取须知', '因为校团委的老师比较忙，奖状盖章延后，领取奖状时间延后，奖状盖好章后会在群里通知。\n', 1, 0);
 INSERT INTO `announcement` VALUES (9, '2020-12-08 10:39:07', '校赛榜单2', '校赛榜单在http://724vector.cn:82/比赛列表中“第七届校赛”查看，另外闭幕式短片在这看：https://www.bilibili.com/video/av77653838/', 1, 1);
-INSERT INTO `announcement` VALUES (10, '2020-12-08 10:39:07', '参赛须知', '明天信息楼206有考试，大家来的时候安静一点，不要打扰到考试的人。\n', 1, 1);
-INSERT INTO `announcement` VALUES (11, '2020-12-08 10:39:10', '关于gets()', '使用C/C++答题的同学请注意，使用gets()函数会导致编译错误，请使用其他替代方法，例如c++中的cin.get()，C中的fgets(不是)', 1, 1);
-INSERT INTO `announcement` VALUES (12, '2020-12-08 10:39:08', '赛事通告q', '我们的国庆新生训练即将开始，题目已经就绪，希望同学们多多参与，这个对编程学习有帮助。\n做题中碰到的问题，都可以找管理询问。\n希望同学们可以在班里啥的帮着宣传一下哈，争取更多人的参与。\n祝同学们做题顺利，假期快乐。\n(附此次训练赛网址：\nhttp://724vector.cn:82/contest/45\n)', 1, 1);
+INSERT INTO `announcement` VALUES (10, '2020-12-08 10:39:07', '参赛须知1', '明天信息楼206有考试，大家来的时候安静一点，不要打扰到考试的人。\n', 1, 0);
+INSERT INTO `announcement` VALUES (11, '2020-12-08 10:39:10', '关于gets()', '使用C/C++答题的同学请注意，使用gets()函数会导致编译错误，请使用其他替代方法，例如c++中的cin.get()，C中的fgets(不是)\n', 1, 1);
+INSERT INTO `announcement` VALUES (12, '2020-12-08 10:39:08', '赛事通告q', '我们的国庆新生训练即将开始，题目已经就绪，希望同学们多多参与，这个对编程学习有帮助。\n做题中碰到的问题，都可以找管理询问。\n希望同学们可以在班里啥的帮着宣传一下哈，争取更多人的参与。\n\n祝同学们做题顺利，假期快乐。\n(附此次训练赛网址：\nhttp://724vector.cn:82/contest/45\n)', 1, 1);
 INSERT INTO `announcement` VALUES (15, '2020-12-08 11:32:24', 'test', 'success', 1, 1);
 COMMIT;
 
@@ -77,8 +77,8 @@ INSERT INTO `contest` VALUES (5, '第十九届山东建筑大学ICPC校赛', '1.
 INSERT INTO `contest` VALUES (6, '第二十届山东建筑大学ICPC校赛热身赛', '1.比赛不能访问除比赛之外的网站，不能用手机，不能和其他人交流\n\n2.比赛可以使用任何纸质版材料，不可以使用电子版\n\n3.需要安装比赛环境请于http://10.17.18.20:81/自取（热身赛应该已经准备好了吧）\n\n4.比赛将于结束前一小时封榜，比赛结束后揭榜\n\n5.还是那句话，有什么问题随时使唤工作人员\n\n（提示：比赛期间以前自己注册的账号是无法登录的哦）', NULL, '2020-10-07 09:00:00', '2020-10-07 14:00:00', 1, 1);
 INSERT INTO `contest` VALUES (7, '123', '', '', '2020-11-03 00:00:00', '2020-11-12 00:00:00', 0, 4);
 INSERT INTO `contest` VALUES (9, 'test', 't', '1,2', '2020-12-07 00:00:00', '2020-12-16 00:00:00', 1, 4);
-INSERT INTO `contest` VALUES (10, 'test2', 's', 'aa', '2020-12-11 00:00:00', '2020-12-19 00:00:00', 0, 1);
-INSERT INTO `contest` VALUES (11, 'test3', '1231', '123123', '2020-12-08 00:00:00', '2020-12-23 00:00:00', 0, 4);
+INSERT INTO `contest` VALUES (10, 'test2', 's', 'aa', '2020-12-11 00:00:00', '2020-12-19 00:00:00', 1, 1);
+INSERT INTO `contest` VALUES (11, 'test33', '1231', '123122', '2020-12-08 00:00:00', '2020-12-23 00:00:00', 0, 4);
 COMMIT;
 
 -- ----------------------------
@@ -115,9 +115,9 @@ INSERT INTO `problem` VALUES (6, 'A+B for Input-Output Practice (4)', '三个人
 INSERT INTO `problem` VALUES (7, 'A+B for Input-Output Practice (5)', 'The first line integer means the number of input integer a and b. Your task is to Calculate a + b', 'Your task is to Calculate a + b. The first line integer means the numbers of pairs of input integers.', 'For each pair of input integers a and b you should output the sum of a and b in one line, and with one line of output for each line in input.', '2\n1 5\n10 20', '6\n30', '（google翻译？看数据猜题目？）', 40, 45, '2020-11-04 13:58:32', 1, 1);
 INSERT INTO `problem` VALUES (8, 'A+B for Input-Output Practice (6)', '三个人，竖着站成一排。有五个帽子，三个蓝色，两个红色，每人带一个，各自不准看自己的颜色。\n\n然后问第一个人带的什么颜色的帽子，他说不知道，然后又问第二个人带的什么颜色的帽子，同样说不知道，又问第三个人带的是什么颜色的帽子，他说我知道。\n\n问第三个人带的是什么色帽子?\n\n（第一个人站在排的最后,他可以看见前二个人的帽子的颜色)', 's', '如果红色输出“red”，如果蓝色输出“blue”', '无', '输出样例不见了\n', '无', 12, 221, '2020-11-04 13:58:32', 1, 1);
 INSERT INTO `problem` VALUES (9, 'A+B for Input-Output Practice (7)', 'The first line integer means the number of input integer a and b. Your task is to Calculate a + b', 'Your task is to Calculate a + b. The first line integer means the numbers of pairs of input integers.', 'For each pair of input integers a and b you should output the sum of a and b in one line, and with one line of output for each line in input.', '2\n1 5\n10 20', '6\n30', '（google翻译？看数据猜题目？）', 40, 45, '2020-11-04 13:58:32', 1, 1);
-INSERT INTO `problem` VALUES (10, 'A+B for Input-Output Practice (8)', '三个人，竖着站成一排。有五个帽子，三个蓝色，两个红色，每人带一个，各自不准看自己的颜色。\n\n然后问第一个人带的什么颜色的帽子，他说不知道，然后又问第二个人带的什么颜色的帽子，同样说不知道，又问第三个人带的是什么颜色的帽子，他说我知道。\n\n问第三个人带的是什么色帽子?\n\n（第一个人站在排的最后,他可以看见前二个人的帽子的颜色)', '无', '如果红色输出“red”，如果蓝色输出“blue”', '无', '输出样例不见了\n', '无', 12, 311, '2020-11-04 13:58:32', 1, 1);
-INSERT INTO `problem` VALUES (11, 'A+B for Input-Output Practice (9)', 'The first line integer means the number of input integer a and b. Your task is to Calculate a + b', 'Your task is to Calculate a + b. The first line integer means the numbers of pairs of input integers.', 'For each pair of input integers a and b you should output the sum of a and b in one line, and with one line of output for each line in input.', '2\n1 5\n10 20', '6\n30', '（google翻译？看数据猜题目？）', 40, 45, '2020-11-04 13:58:32', 4, 1);
-INSERT INTO `problem` VALUES (13, 'A+B for Input-Output Practice (11)', 'The first line integer means the number of input integer a and b. Your task is to Calculate a + b', 'Your task is to Calculate a + b. The first line integer means the numbers of pairs of input integers.', 'For each pair of input integers a and b you should output the sum of a and b in one line, and with one line of output for each line in input.', '2\n1 5\n10 20', '6\n30', '（google翻译？看数据猜题目？）', 40, 45, '2020-11-04 13:58:32', 4, 1);
+INSERT INTO `problem` VALUES (10, 'A+B for Input-Output Practice (8)', '三个人，竖着站成一排。有五个帽子，三个蓝色，两个红色，每人带一个，各自不准看自己的颜色。\n\n然后问第一个人带的什么颜色的帽子，他说不知道，然后又问第二个人带的什么颜色的帽子，同样说不知道，又问第三个人带的是什么颜色的帽子，他说我知道。\n\n问第三个人带的是什么色帽子?\n\n（第一个人站在排的最后,他可以看见前二个人的帽子的颜色)', '无', '如果红色输出“red”，如果蓝色输出“blue”', '无', '输出样例不见了\n', '无', 12, 311, '2020-11-04 13:58:32', 1, 0);
+INSERT INTO `problem` VALUES (11, 'A+B for Input-Output Practice (9)', 'The first line integer means the number of input integer a and b. Your task is to Calculate a + b', 'Your task is to Calculate a + b. The first line integer means the numbers of pairs of input integers.', 'For each pair of input integers a and b you should output the sum of a and b in one line, and with one line of output for each line in input.', '2\n1 5\n10 20', '6\n30', '（google翻译？看数据猜题目？）', 40, 45, '2020-11-04 13:58:32', 4, 0);
+INSERT INTO `problem` VALUES (13, 'A+B for Input-Output Practice (100)', 'The first line integer means the number of input integer a and b. Your task is to Calculate a + b', 'Your task is to Calculate a + b. The first line integer means the numbers of pairs of input integers.', 'For each pair of input integers a and b you should output the sum of a and b in one line, and with one line of output for each line in input.', '2\n1 5\n10 20', '6\n30', '（google翻译？看数据猜题目？）', 40, 45, '2020-11-04 13:58:32', 4, 1);
 COMMIT;
 
 -- ----------------------------
@@ -196,7 +196,7 @@ CREATE TABLE `user` (
   `site` varchar(255) DEFAULT NULL,
   `github` varchar(255) DEFAULT NULL,
   `sign` varchar(255) DEFAULT NULL,
-  `slovedList` varchar(255) DEFAULT NULL,
+  `solvedList` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
 
@@ -204,14 +204,14 @@ CREATE TABLE `user` (
 -- Records of user
 -- ----------------------------
 BEGIN;
-INSERT INTO `user` VALUES (1, 'root', 'f5bb0c8de146c67b44babbf4e6584cc0', 'admin123123', NULL, 'admin', '1@q.com1', 1, '160735433349552823221', 'http://k423.tech', 'https://github.com/teleport-10032', '「我将坠入苦痛 , 换你留在红莲」', '1,2,7,8');
+INSERT INTO `user` VALUES (1, 'root', '4297f44b13955235245b2497399d7a93', 'admin123123', NULL, 'admin', '1@q.com1', 1, '160846806342219870124', 'http://k423.tech', 'https://github.com/teleport-10032', '「我将坠入苦痛 , 换你留在红莲」', '1,2,7,8');
 INSERT INTO `user` VALUES (2, 'user1', '96e79218965eb72c92a549dd5a330112', '这是一个测试账户(user1)。', NULL, 'user', '2@q.com', 1, '160735430069647216918', 'about:blank', 'test', 'test', '1');
 INSERT INTO `user` VALUES (3, 'user2', '4297f44b13955235245b2497399d7a93', '这是一个测试账户(user2)。11', NULL, 'user', '3@q.com', 1, '160377279468058589669', 'about:blank', 'about:blank', '这里没有签名档', '2');
-INSERT INTO `user` VALUES (4, 'root1', '4297f44b13955235245b2497399d7a93', 'user', NULL, 'admin', '1111@q.com', 1, '160740275203750529963', 'about:blank', 'about:blank', '这里没有签名档', '1');
+INSERT INTO `user` VALUES (4, 'root1', '96e79218965eb72c92a549dd5a330112', 'user', NULL, 'admin', '1111@q.com', 1, '160846803849302423437', 'about:blank', 'about:blank', '这里没有签名档', '1');
 INSERT INTO `user` VALUES (6, '123123', '4297f44b13955235245b2497399d7a93', '这是一个测试账户(user2)。', NULL, 'user', '1asd@qq.com', 1, '160370562155412856482', 'about:blank', 'about:blank', '这里没有签名档', '3');
-INSERT INTO `user` VALUES (8, 'root22', 'f5bb0c8de146c67b44babbf4e6584cc0', '这是一个测试账户(user2)。', NULL, 'admin', 'asdklj@qq.com', 1, '160704796884597835405', 'about:blank', 'about:blank', '这里没有签名档', '1,2');
+INSERT INTO `user` VALUES (8, 'root2', 'f5bb0c8de146c67b44babbf4e6584cc0', '这是一个测试账户(user2)。', NULL, 'admin', 'asdklj@qq.com', 1, '160704796884597835405', 'about:blank', 'about:blank', '这里没有签名档', '1,2');
 INSERT INTO `user` VALUES (15, '123', '96e79218965eb72c92a549dd5a330112', '签名', NULL, 'user', '123@q.com', 1, '160441634776886510589', 'about:blank', 'about:blank', '这里没有签名档', '2,3');
-INSERT INTO `user` VALUES (21, 'root31', '4297f44b13955235245b2497399d7a93', '', NULL, 'admin', '1021822981@QQ.COM', 1, '160717099931144582616', 'about:blank', 'about:blank', '这里没有签名档', '2,3');
+INSERT INTO `user` VALUES (21, 'root3', '4297f44b13955235245b2497399d7a93', '', NULL, 'admin', '1021822981@QQ.COM', 1, '160717099931144582616', 'about:blank', 'about:blank', '这里没有签名档', '2,3');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

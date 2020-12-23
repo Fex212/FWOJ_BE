@@ -21,11 +21,24 @@ public class problemServiceImpl implements problemService{
     private userMapper userMapperObject;
 
     @Override
-    public String getProblemList(int page,int pre) throws JsonProcessingException {
+    public String getProblemList(int page,int pre,String token) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         int start = pre * (page - 1);
         int num = pre;
         List<problem> list = problemMapperObject.getProblemList(start,num);
+        int len =list.size();
+        //list存储了问题列表。
+        //需要判断是否登陆，若已登陆，则对list中每一个problem对象进行isSolved的设置
+        //1 解决 0 未解决
+        if(userMapperObject.getUserTypeByToken(token) != null)
+        {
+
+        }
+        else
+        {
+            for(int i = 0 ; i < len ; i ++)
+                list.get(i).setIsSolved(-1);
+        }
         int total = problemMapperObject.getProblemSum();
         HashMap s = new HashMap();
         s.put("data", list);

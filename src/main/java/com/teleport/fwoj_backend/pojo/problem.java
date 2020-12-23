@@ -25,4 +25,7 @@ public class problem {
     private boolean visible;
     private double acRate;
 
+    private int isSolved;
+
+
 }

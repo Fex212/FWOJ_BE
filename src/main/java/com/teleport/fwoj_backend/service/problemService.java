@@ -3,7 +3,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 public interface problemService {
     //查询列表(页数,每页几条),返回List
-    String getProblemList(int page,int pre) throws JsonProcessingException;
+    String getProblemList(int page,int pre,String token) throws JsonProcessingException;
     //查询问题详情
     String getProblemDetailById(int id) throws JsonProcessingException;
 
