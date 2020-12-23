@@ -32,8 +32,10 @@ public interface userMapper {
     String getUserTypeByToken(@Param("token") String token);
     //根据token查找用户邮箱
     String getUserEmailByToken(@Param("token") String token);
-//    通过token查找用户soledList
+    //通过token查找用户soledList
     String getUserSolvedListByToken(@Param("token") String token);
+    //通过token查找用户attemptList
+    String getUserAttemptListByToken(@Param("token") String token);
 
     //根据id查看姓名
     String getUserNameById(@Param("id") Integer id);

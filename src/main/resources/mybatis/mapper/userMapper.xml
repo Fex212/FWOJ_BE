@@ -48,6 +48,10 @@
     <select id="getUserSolvedListByToken" resultType="String">
         select solvedList from user where token=#{token};
     </select>
+<!--    /通过token查找用户attemptList-->
+    <select id="getUserAttemptListByToken" resultType="String">
+        select attemptList from user where token=#{token};
+    </select>
 
 
     <!--    根据email查询用户数量-->

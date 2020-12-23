@@ -25,7 +25,8 @@ public class problem {
     private boolean visible;
     private double acRate;
 
-    private int isSolved;
+    private int isAccept;
+    private int isAttempt;
 
 
 }

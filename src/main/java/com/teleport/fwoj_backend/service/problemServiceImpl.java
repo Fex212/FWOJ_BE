@@ -28,16 +28,55 @@ public class problemServiceImpl implements problemService{
         List<problem> list = problemMapperObject.getProblemList(start,num);
         int len =list.size();
         //list存储了问题列表。
-        //需要判断是否登陆，若已登陆，则对list中每一个problem对象进行isSolved的设置
-        //1 解决 0 未解决
+        //需要判断是否登陆，若已登陆，则对list中每一个problem对象进行isSolved isAttempt的设置
+        // 1 is
         if(userMapperObject.getUserTypeByToken(token) != null)
         {
+            String attemptListString = userMapperObject.getUserAttemptListByToken(token);
+            String attemptList[] = attemptListString.split(",");
+            int attemptSize = attemptList.length;
+
+            String solvedListString = userMapperObject.getUserSolvedListByToken(token);
+            String solvedList[] = solvedListString.split(",");
+            int solvedSize = solvedList.length;
+
+            //若user的attemptList中有则SetAttempt(1)
+            for(int i = 0 ; i < len ; i ++)
+            {
+                int flag = 0;
+                for(int j = 0 ; j < attemptSize ; j ++)
+                {
+                    if(String.valueOf(list.get(i).getId()).equals(attemptList[j]))
+                    {
+                        list.get(i).setIsAttempt(1);
+                        flag = 1 ;
+                    }
+                }
+                if(flag == 0)
+                    list.get(i).setIsAttempt(0);
+            }
+
+            //若user的solvedList中有则setAccept(1)
+            for(int i = 0 ; i < len ; i ++)
+            {
+                int flag = 0;
+                for(int j = 0 ; j < solvedSize ; j ++)
+                {
+                    if(String.valueOf(list.get(i).getId()).equals(solvedList[j]))
+                    {
+                        list.get(i).setIsAccept(1);
+                        flag = 1 ;
+                    }
+                }
+                if(flag == 0)
+                    list.get(i).setIsAccept(0);
+            }
 
         }
         else
         {
             for(int i = 0 ; i < len ; i ++)
-                list.get(i).setIsSolved(-1);
+                list.get(i).setIsAccept(-1);
         }
         int total = problemMapperObject.getProblemSum();
         HashMap s = new HashMap();
