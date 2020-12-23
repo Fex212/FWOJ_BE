@@ -11,7 +11,7 @@
  Target Server Version : 50728
  File Encoding         : 65001
 
- Date: 23/12/2020 18:45:37
+ Date: 23/12/2020 22:15:58
 */
 
 SET NAMES utf8mb4;
@@ -29,7 +29,7 @@ CREATE TABLE `announcement` (
   `authorId` int(11) DEFAULT '0',
   `visible` int(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of announcement
@@ -48,6 +48,7 @@ INSERT INTO `announcement` VALUES (11, '2020-12-08 10:39:10', '关于gets()', '�
 INSERT INTO `announcement` VALUES (12, '2020-12-08 10:39:08', '赛事通告q', '我们的国庆新生训练即将开始，题目已经就绪，希望同学们多多参与，这个对编程学习有帮助。\n做题中碰到的问题，都可以找管理询问。\n希望同学们可以在班里啥的帮着宣传一下哈，争取更多人的参与。\n\n祝同学们做题顺利，假期快乐。\n(附此次训练赛网址：\nhttp://724vector.cn:82/contest/45\n)', 1, 1);
 INSERT INTO `announcement` VALUES (15, '2020-12-08 11:32:24', 'test', 'success', 1, 1);
 INSERT INTO `announcement` VALUES (16, '2020-12-23 18:45:04', 't', 'test', 0, 0);
+INSERT INTO `announcement` VALUES (17, '2020-12-23 18:46:42', '', '', 0, 0);
 COMMIT;
 
 -- ----------------------------
@@ -201,20 +202,21 @@ CREATE TABLE `user` (
   `attemptList` varchar(255) DEFAULT '',
   `solvedNum` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
 BEGIN;
-INSERT INTO `user` VALUES (1, 'root', '4297f44b13955235245b2497399d7a93', 'admin123123', NULL, 'admin', '1@q.com1', 1, '160871607523221619351', 'http://k423.tech', 'https://github.com/teleport-10032', '「我将坠入苦痛 , 换你留在红莲」', '1,2,7,8', '1,3,5', NULL);
-INSERT INTO `user` VALUES (2, 'user1', '96e79218965eb72c92a549dd5a330112', '这是一个测试账户(user1)。', NULL, 'user', '2@q.com', 1, '160735430069647216918', 'about:blank', 'test', 'test', '1', ' ', NULL);
-INSERT INTO `user` VALUES (3, 'user2', '4297f44b13955235245b2497399d7a93', '这是一个测试账户(user2)。11', NULL, 'user', '3@q.com', 1, '160377279468058589669', 'about:blank', 'about:blank', '这里没有签名档', '2', ' ', NULL);
-INSERT INTO `user` VALUES (4, 'root1', '4297f44b13955235245b2497399d7a93', 'user', NULL, 'admin', '1111@q.com', 1, '160871958310498213237', 'about:blank', 'about:blank', '这里没有签名档', '1', '', NULL);
-INSERT INTO `user` VALUES (6, '123123', '4297f44b13955235245b2497399d7a93', '这是一个测试账户(user2)。', NULL, 'user', '1asd@qq.com', 1, '160370562155412856482', 'about:blank', 'about:blank', '这里没有签名档', '3', '', NULL);
-INSERT INTO `user` VALUES (8, 'root2', 'f5bb0c8de146c67b44babbf4e6584cc0', '这是一个测试账户(user2)。', NULL, 'admin', 'asdklj@qq.com', 1, '160704796884597835405', 'about:blank', 'about:blank', '这里没有签名档', '1,2', '', NULL);
-INSERT INTO `user` VALUES (15, '123', '96e79218965eb72c92a549dd5a330112', '签名', NULL, 'user', '123@q.com', 1, '160441634776886510589', 'about:blank', 'about:blank', '这里没有签名档', '2,3', '', NULL);
-INSERT INTO `user` VALUES (21, 'root3', '4297f44b13955235245b2497399d7a93', '', NULL, 'admin', '1021822981@QQ.COM', 1, '160717099931144582616', 'about:blank', 'about:blank', '这里没有签名档', '2,3', '', NULL);
+INSERT INTO `user` VALUES (1, 'root', '4297f44b13955235245b2497399d7a93', 'admin123123', '', 'admin', '1@q.com1', 1, '160871607523221619351', 'http://k423.tech', 'https://github.com/teleport-10032', '「我将坠入苦痛 , 换你留在红莲」', '1,2,7,8', '1,3,5', 4);
+INSERT INTO `user` VALUES (2, 'user1', '96e79218965eb72c92a549dd5a330112', '这是一个测试账户(user1)。', '', 'user', '2@q.com', 1, '160735430069647216918', 'about:blank', 'test', 'test', '1', ' ', 1);
+INSERT INTO `user` VALUES (3, 'user2', '4297f44b13955235245b2497399d7a93', '这是一个测试账户(user2)。11', '', 'user', '3@q.com', 1, '160377279468058589669', 'about:blank', 'about:blank', '这里没有签名档', '2', ' ', 1);
+INSERT INTO `user` VALUES (4, 'root1', '4297f44b13955235245b2497399d7a93', 'user', '', 'admin', '1111@q.com', 1, '160871958310498213237', 'about:blank', 'about:blank', '这里没有签名档', '1', '', 1);
+INSERT INTO `user` VALUES (6, '123123', '4297f44b13955235245b2497399d7a93', '这是一个测试账户(user2)。', '', 'user', '1asd@qq.com', 1, '160370562155412856482', 'about:blank', 'about:blank', '这里没有签名档', '', '', 0);
+INSERT INTO `user` VALUES (8, 'root2', 'f5bb0c8de146c67b44babbf4e6584cc0', '这是一个测试账户(user2)。', '', 'admin', 'asdklj@qq.com', 1, '160704796884597835405', 'about:blank', 'about:blank', '这里没有签名档', '1,2', '', 2);
+INSERT INTO `user` VALUES (15, '123', '96e79218965eb72c92a549dd5a330112', '签名', '', 'user', '123@q.com', 1, '160441634776886510589', 'about:blank', 'about:blank', '这里没有签名档', '2,3', '', 2);
+INSERT INTO `user` VALUES (21, 'root3', '4297f44b13955235245b2497399d7a93', '', '', 'admin', '1021822981@QQ.COM', 1, '160717099931144582616', 'about:blank', 'about:blank', '这里没有签名档', '2,3', '', 2);
+INSERT INTO `user` VALUES (22, 'test', '4297f44b13955235245b2497399d7a93', '', '', 'user', 'test@qq.com', 1, '160873294480683217934', 'about:blank', 'about:blank', '这里没有签名档', '', '', 0);
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
