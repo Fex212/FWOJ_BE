@@ -6,4 +6,6 @@
 
 前端地址：https://github.com/teleport-10032/FWOJ_FE
 
+判题机地址：https://github.com/teleport-10032/FWOJ_Judger
+
 注：FW = Flame Wielder 
