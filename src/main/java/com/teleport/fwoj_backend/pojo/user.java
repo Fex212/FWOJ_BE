@@ -10,7 +10,6 @@ public class user {
     int id;
     String username;
     String passwd;
-    String des;
     String avatar;
     String type;
     String email;
