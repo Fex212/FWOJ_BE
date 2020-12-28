@@ -5,13 +5,13 @@
  Source Server Type    : MySQL
  Source Server Version : 50728
  Source Host           : localhost:3306
- Source Schema         : onlinejudge
+ Source Schema         : onlineJudge
 
  Target Server Type    : MySQL
  Target Server Version : 50728
  File Encoding         : 65001
 
- Date: 23/12/2020 22:15:58
+ Date: 28/12/2020 15:32:08
 */
 
 SET NAMES utf8mb4;
@@ -137,7 +137,7 @@ CREATE TABLE `state` (
   `timeCost` int(11) DEFAULT '0',
   `code` varchar(5005) DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1049 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1050 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of state
@@ -179,6 +179,7 @@ INSERT INTO `state` VALUES (1045, 1, 1, '2020-11-12 08:42:19', 'C  ', 'Pending',
 INSERT INTO `state` VALUES (1046, 13, 1, '2020-12-07 14:23:14', 'C++', 'Pending', 0, 0, 'problem13');
 INSERT INTO `state` VALUES (1047, 13, 2, '2020-12-07 15:14:24', 'C++', 'Pending', 0, 0, '1');
 INSERT INTO `state` VALUES (1048, 11, 2, '2020-12-07 15:17:43', 'C++', 'Pending', 0, 0, '12');
+INSERT INTO `state` VALUES (1049, 13, 22, '2020-12-23 14:25:10', 'C++', 'Pending', 0, 0, '1');
 COMMIT;
 
 -- ----------------------------
@@ -216,7 +217,7 @@ INSERT INTO `user` VALUES (6, '123123', '4297f44b13955235245b2497399d7a93', '这
 INSERT INTO `user` VALUES (8, 'root2', 'f5bb0c8de146c67b44babbf4e6584cc0', '这是一个测试账户(user2)。', '', 'admin', 'asdklj@qq.com', 1, '160704796884597835405', 'about:blank', 'about:blank', '这里没有签名档', '1,2', '', 2);
 INSERT INTO `user` VALUES (15, '123', '96e79218965eb72c92a549dd5a330112', '签名', '', 'user', '123@q.com', 1, '160441634776886510589', 'about:blank', 'about:blank', '这里没有签名档', '2,3', '', 2);
 INSERT INTO `user` VALUES (21, 'root3', '4297f44b13955235245b2497399d7a93', '', '', 'admin', '1021822981@QQ.COM', 1, '160717099931144582616', 'about:blank', 'about:blank', '这里没有签名档', '2,3', '', 2);
-INSERT INTO `user` VALUES (22, 'test', '4297f44b13955235245b2497399d7a93', '', '', 'user', 'test@qq.com', 1, '160873294480683217934', 'about:blank', 'about:blank', '这里没有签名档', '', '', 0);
+INSERT INTO `user` VALUES (22, 'test', '4297f44b13955235245b2497399d7a93', '', '', 'user', 'test@qq.com', 1, '160873294480683217934', 'about:blank', 'about:blank', '这里没有签名档', '13', '', 1);
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
