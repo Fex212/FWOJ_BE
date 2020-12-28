@@ -11,7 +11,7 @@
  Target Server Version : 50728
  File Encoding         : 65001
 
- Date: 28/12/2020 15:32:08
+ Date: 28/12/2020 16:54:01
 */
 
 SET NAMES utf8mb4;
@@ -190,7 +190,6 @@ CREATE TABLE `user` (
   `id` int(255) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) DEFAULT '',
   `passwd` varchar(255) DEFAULT '',
-  `des` varchar(255) DEFAULT '',
   `avatar` varchar(255) DEFAULT '',
   `type` varchar(255) DEFAULT '',
   `email` varchar(255) DEFAULT '',
@@ -209,15 +208,15 @@ CREATE TABLE `user` (
 -- Records of user
 -- ----------------------------
 BEGIN;
-INSERT INTO `user` VALUES (1, 'root', '4297f44b13955235245b2497399d7a93', 'admin123123', '', 'admin', '1@q.com1', 1, '160871607523221619351', 'http://k423.tech', 'https://github.com/teleport-10032', '「我将坠入苦痛 , 换你留在红莲」', '1,2,7,8', '1,3,5', 4);
-INSERT INTO `user` VALUES (2, 'user1', '96e79218965eb72c92a549dd5a330112', '这是一个测试账户(user1)。', '', 'user', '2@q.com', 1, '160735430069647216918', 'about:blank', 'test', 'test', '1', ' ', 1);
-INSERT INTO `user` VALUES (3, 'user2', '4297f44b13955235245b2497399d7a93', '这是一个测试账户(user2)。11', '', 'user', '3@q.com', 1, '160377279468058589669', 'about:blank', 'about:blank', '这里没有签名档', '2', ' ', 1);
-INSERT INTO `user` VALUES (4, 'root1', '4297f44b13955235245b2497399d7a93', 'user', '', 'admin', '1111@q.com', 1, '160871958310498213237', 'about:blank', 'about:blank', '这里没有签名档', '1', '', 1);
-INSERT INTO `user` VALUES (6, '123123', '4297f44b13955235245b2497399d7a93', '这是一个测试账户(user2)。', '', 'user', '1asd@qq.com', 1, '160370562155412856482', 'about:blank', 'about:blank', '这里没有签名档', '', '', 0);
-INSERT INTO `user` VALUES (8, 'root2', 'f5bb0c8de146c67b44babbf4e6584cc0', '这是一个测试账户(user2)。', '', 'admin', 'asdklj@qq.com', 1, '160704796884597835405', 'about:blank', 'about:blank', '这里没有签名档', '1,2', '', 2);
-INSERT INTO `user` VALUES (15, '123', '96e79218965eb72c92a549dd5a330112', '签名', '', 'user', '123@q.com', 1, '160441634776886510589', 'about:blank', 'about:blank', '这里没有签名档', '2,3', '', 2);
-INSERT INTO `user` VALUES (21, 'root3', '4297f44b13955235245b2497399d7a93', '', '', 'admin', '1021822981@QQ.COM', 1, '160717099931144582616', 'about:blank', 'about:blank', '这里没有签名档', '2,3', '', 2);
-INSERT INTO `user` VALUES (22, 'test', '4297f44b13955235245b2497399d7a93', '', '', 'user', 'test@qq.com', 1, '160873294480683217934', 'about:blank', 'about:blank', '这里没有签名档', '13', '', 1);
+INSERT INTO `user` VALUES (1, 'root', '4297f44b13955235245b2497399d7a93', '', 'admin', '1@q.com1', 1, '160914536136198286986', 'http://k423.tech', 'https://github.com/teleport-10032', '「我将坠入苦痛 , 换你留在红莲」', '1,2,7,8', '1,3,5', 4);
+INSERT INTO `user` VALUES (2, 'user1', '4297f44b13955235245b2497399d7a93', '', 'user', '2@q.com', 1, '160914538124477634192', 'about:blank', 'test', 'test', '1', ' ', 1);
+INSERT INTO `user` VALUES (3, 'user2', '4297f44b13955235245b2497399d7a93', '', 'user', '3@q.com', 1, '160377279468058589669', 'about:blank', 'about:blank', '这里没有签名档', '2', ' ', 1);
+INSERT INTO `user` VALUES (4, 'root1', '4297f44b13955235245b2497399d7a93', '', 'admin', '1111@q.com', 1, '160871958310498213237', 'about:blank', 'about:blank', '这里没有签名档', '1', '', 1);
+INSERT INTO `user` VALUES (6, '123123', '4297f44b13955235245b2497399d7a93', '', 'user', '1asd@qq.com', 1, '160370562155412856482', 'about:blank', 'about:blank', '这里没有签名档', '', '', 0);
+INSERT INTO `user` VALUES (8, 'root2', 'f5bb0c8de146c67b44babbf4e6584cc0', '', 'admin', 'asdklj@qq.com', 1, '160704796884597835405', 'about:blank', 'about:blank', '这里没有签名档', '1,2', '', 2);
+INSERT INTO `user` VALUES (15, '123', '96e79218965eb72c92a549dd5a330112', '', 'user', '123@q.com', 1, '160441634776886510589', 'about:blank', 'about:blank', '这里没有签名档', '2,3', '', 2);
+INSERT INTO `user` VALUES (21, 'root3', '4297f44b13955235245b2497399d7a93', '', 'admin', '1021822981@QQ.COM', 1, '160717099931144582616', 'about:blank', 'about:blank', '这里没有签名档', '2,3', '', 2);
+INSERT INTO `user` VALUES (22, 'test', '4297f44b13955235245b2497399d7a93', '', 'user', 'test@qq.com', 1, '160873294480683217934', 'about:blank', 'about:blank', '这里没有签名档', '13', '', 1);
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
