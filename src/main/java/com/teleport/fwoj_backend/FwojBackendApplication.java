@@ -10,5 +10,4 @@ public class FwojBackendApplication {
     public static void main(String[] args) {
         SpringApplication.run(FwojBackendApplication.class, args);
     }
-    //test
 }
