@@ -1,9 +1,10 @@
-package com.teleport.fwoj_backend.service;
+package com.teleport.fwoj_backend.service.Impl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.teleport.fwoj_backend.mapper.rankMapper;
 import com.teleport.fwoj_backend.mapper.userMapper;
 import com.teleport.fwoj_backend.pojo.rank;
+import com.teleport.fwoj_backend.service.rankService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

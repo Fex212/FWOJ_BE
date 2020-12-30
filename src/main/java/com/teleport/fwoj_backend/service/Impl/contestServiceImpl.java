@@ -1,9 +1,10 @@
-package com.teleport.fwoj_backend.service;
+package com.teleport.fwoj_backend.service.Impl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.teleport.fwoj_backend.mapper.contestMapper;
 import com.teleport.fwoj_backend.mapper.userMapper;
 import com.teleport.fwoj_backend.pojo.contest;
+import com.teleport.fwoj_backend.service.contestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.text.ParseException;
@@ -13,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Service
-public class contestServiceImpl implements contestService{
+public class contestServiceImpl implements contestService {
     @Autowired
     private contestMapper contestMapperObject;
     @Autowired
