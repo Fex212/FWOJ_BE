@@ -14,7 +14,9 @@ import java.util.HashMap;
 import java.util.List;
 
 @Service
-public class annServiceImpl implements annService {
+public class
+
+annServiceImpl implements annService {
 
     @Autowired
     private annMapper annMapperObject;
