@@ -32,7 +32,9 @@ public interface problemService {
     //按id上传题目测试样例
     String uploadTestCaseById(MultipartFile file, String token, int id) throws JsonProcessingException;
 
-
     //按id下载题目测试样例
-    String downloadTestCaseById(String token, int id, HttpServletResponse res) throws IOException;
+    void downloadTestCaseById(String token, int id, HttpServletResponse res) throws IOException;
+
+    //按id查询题目是否有测试样例
+    String isTestCaseExistById(String token,int id) throws JsonProcessingException;
 }

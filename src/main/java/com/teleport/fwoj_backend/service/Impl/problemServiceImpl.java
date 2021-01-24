@@ -306,11 +306,9 @@ public class problemServiceImpl implements problemService {
         return mapper.writeValueAsString(s);
     }
 
-    //0 正常 1 越权
+    //0 正常 1 越权 2 无数据
     @Override
-    public String downloadTestCaseById(String token, int id, HttpServletResponse res) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        HashMap s = new HashMap();
+    public void downloadTestCaseById(String token, int id, HttpServletResponse res) throws IOException {
         if(userMapperObject.getUserTypeByToken(token) != null &&  userMapperObject.getUserTypeByToken(token).equals("admin"))
         {
             byte[] bytes;
@@ -318,6 +316,10 @@ public class problemServiceImpl implements problemService {
 
             File dir = new File("./uploadFolder/test_case/" + id + "/" + "test_case_" +id + "/");
             String[] list = dir.list();
+            if(!dir.isDirectory())
+            {
+                return;
+            }
 
             //需要压缩的文件列表
             List<File> fileList = new ArrayList<>();
@@ -334,6 +336,7 @@ public class problemServiceImpl implements problemService {
             String target = "./uploadFolder/test_case/" + id + "/" + "test_case_" + id + ".zip";
             toZip(fileList,id,target);
             OutputStream outputStream = res.getOutputStream();
+            res.addHeader( "Content-Disposition", "attachment;filename=" + "test_case_" + id + ".zip");
             byte[] buff = new byte[1024];
             BufferedInputStream bis = null;
             bis = new BufferedInputStream(new FileInputStream(new File(target)));
@@ -343,9 +346,27 @@ public class problemServiceImpl implements problemService {
                 outputStream.flush();
                 i = bis.read(buff);
             }
-            s.put("error","0");
             outputStream.close();
             bis.close();
+        }
+        return ;
+    }
+
+
+    // 0 有样例 -1 越权 -2 无样例
+    @Override
+    public String isTestCaseExistById(String token, int id) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(userMapperObject.getUserTypeByToken(token) != null &&  userMapperObject.getUserTypeByToken(token).equals("admin"))
+        {
+            File dir = new File("./uploadFolder/test_case/" + id + "/" + "test_case_" +id + "/");
+            if(!dir.isDirectory())
+            {
+                s.put("error","-2");
+                return mapper.writeValueAsString(s);
+            }
+            s.put("error","0");
         }
         else
             s.put("error","-1");

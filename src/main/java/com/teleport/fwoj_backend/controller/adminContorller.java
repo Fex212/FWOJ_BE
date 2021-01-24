@@ -136,8 +136,15 @@ public class adminContorller {
     //按id下载题目测试样例
     @RequestMapping(value = "/downloadTestCaseById",method = {RequestMethod.GET},produces="application/zip")
     @CrossOrigin
-    public String uploadTestCaseById(@RequestParam("token") String token, @RequestParam("id") int id, HttpServletResponse res) throws IOException {
-         return problemServiceObject.downloadTestCaseById(token,id,res);
+    public void uploadTestCaseById(@RequestParam("token") String token, @RequestParam("id") int id, HttpServletResponse res) throws IOException {
+        problemServiceObject.downloadTestCaseById(token, id, res);
+    }
+
+    //按id查询题目是否有测试样例
+    @RequestMapping(value = "/isTestCaseExistById",method = {RequestMethod.GET})
+    @CrossOrigin
+    public String isTestCaseExistById(@RequestParam("token") String token, @RequestParam("id") int id) throws IOException {
+        return problemServiceObject.isTestCaseExistById(token,id);
     }
 
     //获取比赛列表(Admin)
