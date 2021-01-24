@@ -3,15 +3,15 @@
 
  Source Server         : Main
  Source Server Type    : MySQL
- Source Server Version : 50728
+ Source Server Version : 50717
  Source Host           : localhost:3306
  Source Schema         : onlineJudge
 
  Target Server Type    : MySQL
- Target Server Version : 50728
+ Target Server Version : 50717
  File Encoding         : 65001
 
- Date: 28/12/2020 16:54:01
+ Date: 24/01/2021 15:04:25
 */
 
 SET NAMES utf8mb4;
@@ -117,7 +117,7 @@ INSERT INTO `problem` VALUES (6, 'A+B for Input-Output Practice (4)', '三个人
 INSERT INTO `problem` VALUES (7, 'A+B for Input-Output Practice (5)', 'The first line integer means the number of input integer a and b. Your task is to Calculate a + b', 'Your task is to Calculate a + b. The first line integer means the numbers of pairs of input integers.', 'For each pair of input integers a and b you should output the sum of a and b in one line, and with one line of output for each line in input.', '2\n1 5\n10 20', '6\n30', '（google翻译？看数据猜题目？）', 40, 45, '2020-11-04 13:58:32', 1, 1);
 INSERT INTO `problem` VALUES (8, 'A+B for Input-Output Practice (6)', '三个人，竖着站成一排。有五个帽子，三个蓝色，两个红色，每人带一个，各自不准看自己的颜色。\n\n然后问第一个人带的什么颜色的帽子，他说不知道，然后又问第二个人带的什么颜色的帽子，同样说不知道，又问第三个人带的是什么颜色的帽子，他说我知道。\n\n问第三个人带的是什么色帽子?\n\n（第一个人站在排的最后,他可以看见前二个人的帽子的颜色)', 's', '如果红色输出“red”，如果蓝色输出“blue”', '无', '输出样例不见了\n', '无', 12, 221, '2020-11-04 13:58:32', 1, 1);
 INSERT INTO `problem` VALUES (9, 'A+B for Input-Output Practice (7)', 'The first line integer means the number of input integer a and b. Your task is to Calculate a + b', 'Your task is to Calculate a + b. The first line integer means the numbers of pairs of input integers.', 'For each pair of input integers a and b you should output the sum of a and b in one line, and with one line of output for each line in input.', '2\n1 5\n10 20', '6\n30', '（google翻译？看数据猜题目？）', 40, 45, '2020-11-04 13:58:32', 1, 1);
-INSERT INTO `problem` VALUES (10, 'A+B for Input-Output Practice (8)', '三个人，竖着站成一排。有五个帽子，三个蓝色，两个红色，每人带一个，各自不准看自己的颜色。\n\n然后问第一个人带的什么颜色的帽子，他说不知道，然后又问第二个人带的什么颜色的帽子，同样说不知道，又问第三个人带的是什么颜色的帽子，他说我知道。\n\n问第三个人带的是什么色帽子?\n\n（第一个人站在排的最后,他可以看见前二个人的帽子的颜色)', '无', '如果红色输出“red”，如果蓝色输出“blue”', '无', '输出样例不见了\n', '无', 12, 311, '2020-11-04 13:58:32', 1, 1);
+INSERT INTO `problem` VALUES (10, 'A+B for Input-Output Practice (8)', '三个人，竖着站成一排。有五个帽子，三个蓝色，两个红色，每人带一个，各自不准看自己的颜色。\n\n然后问第一个人带的什么颜色的帽子，他说不知道，然后又问第二个人带的什么颜色的帽子，同样说不知道，又问第三个人带的是什么颜色的帽子，他说我知道。\n\n问第三个人带的是什么色帽子?\n\n（第一个人站在排的最后,他可以看见前二个人的帽子的颜色)', '无', '如果红色输出“red”，如果蓝色输出“blue”', '无', '输出样例不见了\n', '无1', 12, 311, '2020-11-04 13:58:32', 1, 1);
 INSERT INTO `problem` VALUES (11, 'A+B for Input-Output Practice (9)', 'The first line integer means the number of input integer a and b. Your task is to Calculate a + b', 'Your task is to Calculate a + b. The first line integer means the numbers of pairs of input integers.', 'For each pair of input integers a and b you should output the sum of a and b in one line, and with one line of output for each line in input.', '2\n1 5\n10 20', '6\n30', '（google翻译？看数据猜题目？）', 40, 45, '2020-11-04 13:58:32', 4, 1);
 INSERT INTO `problem` VALUES (13, 'A+B for Input-Output Practice (100)', 'The first line integer means the number of input integer a and b. Your task is to Calculate a + b', 'Your task is to Calculate a + b. The first line integer means the numbers of pairs of input integers.', 'For each pair of input integers a and b you should output the sum of a and b in one line, and with one line of output for each line in input.', '2\n1 5\n10 20', '6\n30', '（google翻译？看数据猜题目？）', 40, 45, '2020-11-04 13:58:32', 4, 1);
 COMMIT;
@@ -190,7 +190,6 @@ CREATE TABLE `user` (
   `id` int(255) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) DEFAULT '',
   `passwd` varchar(255) DEFAULT '',
-  `avatar` varchar(255) DEFAULT '',
   `type` varchar(255) DEFAULT '',
   `email` varchar(255) DEFAULT '',
   `available` int(1) DEFAULT '0',
@@ -208,15 +207,15 @@ CREATE TABLE `user` (
 -- Records of user
 -- ----------------------------
 BEGIN;
-INSERT INTO `user` VALUES (1, 'root', '4297f44b13955235245b2497399d7a93', '', 'admin', '1@q.com1', 1, '160914536136198286986', 'http://k423.tech', 'https://github.com/teleport-10032', '「我将坠入苦痛 , 换你留在红莲」', '1,2,7,8', '1,3,5', 4);
-INSERT INTO `user` VALUES (2, 'user1', '4297f44b13955235245b2497399d7a93', '', 'user', '2@q.com', 1, '160914538124477634192', 'about:blank', 'test', 'test', '1', ' ', 1);
-INSERT INTO `user` VALUES (3, 'user2', '4297f44b13955235245b2497399d7a93', '', 'user', '3@q.com', 1, '160377279468058589669', 'about:blank', 'about:blank', '这里没有签名档', '2', ' ', 1);
-INSERT INTO `user` VALUES (4, 'root1', '4297f44b13955235245b2497399d7a93', '', 'admin', '1111@q.com', 1, '160871958310498213237', 'about:blank', 'about:blank', '这里没有签名档', '1', '', 1);
-INSERT INTO `user` VALUES (6, '123123', '4297f44b13955235245b2497399d7a93', '', 'user', '1asd@qq.com', 1, '160370562155412856482', 'about:blank', 'about:blank', '这里没有签名档', '', '', 0);
-INSERT INTO `user` VALUES (8, 'root2', 'f5bb0c8de146c67b44babbf4e6584cc0', '', 'admin', 'asdklj@qq.com', 1, '160704796884597835405', 'about:blank', 'about:blank', '这里没有签名档', '1,2', '', 2);
-INSERT INTO `user` VALUES (15, '123', '96e79218965eb72c92a549dd5a330112', '', 'user', '123@q.com', 1, '160441634776886510589', 'about:blank', 'about:blank', '这里没有签名档', '2,3', '', 2);
-INSERT INTO `user` VALUES (21, 'root3', '4297f44b13955235245b2497399d7a93', '', 'admin', '1021822981@QQ.COM', 1, '160717099931144582616', 'about:blank', 'about:blank', '这里没有签名档', '2,3', '', 2);
-INSERT INTO `user` VALUES (22, 'test', '4297f44b13955235245b2497399d7a93', '', 'user', 'test@qq.com', 1, '160873294480683217934', 'about:blank', 'about:blank', '这里没有签名档', '13', '', 1);
+INSERT INTO `user` VALUES (1, 'root', '4297f44b13955235245b2497399d7a93', 'admin', '1@q.com1', 1, '161103496604021156947', 'http://k423.tech', 'https://github.com/teleport-10032', '「我将坠入苦痛 , 换你留在红莲」', '1,2,7,8', '1,3,5', 4);
+INSERT INTO `user` VALUES (2, 'user1', '4297f44b13955235245b2497399d7a93', 'user', '2@q.com', 1, '160914538124477634192', 'about:blank', 'test', 'test', '1', ' ', 1);
+INSERT INTO `user` VALUES (3, 'user2', '4297f44b13955235245b2497399d7a93', 'user', '3@q.com', 1, '160377279468058589669', 'about:blank', 'about:blank', '这里没有签名档', '2', ' ', 1);
+INSERT INTO `user` VALUES (4, 'root1', '4297f44b13955235245b2497399d7a93', 'admin', '1111@q.com', 1, '160871958310498213237', 'about:blank', 'about:blank', '这里没有签名档', '1', '', 1);
+INSERT INTO `user` VALUES (6, '123123', '4297f44b13955235245b2497399d7a93', 'user', '1asd@qq.com', 1, '160370562155412856482', 'about:blank', 'about:blank', '这里没有签名档', '', '', 0);
+INSERT INTO `user` VALUES (8, 'root2', 'f5bb0c8de146c67b44babbf4e6584cc0', 'admin', 'asdklj@qq.com', 1, '160704796884597835405', 'about:blank', 'about:blank', '这里没有签名档', '1,2', '', 2);
+INSERT INTO `user` VALUES (15, '123', '96e79218965eb72c92a549dd5a330112', 'user', '123@q.com', 1, '160441634776886510589', 'about:blank', 'about:blank', '这里没有签名档', '2,3', '', 2);
+INSERT INTO `user` VALUES (21, 'root3', '4297f44b13955235245b2497399d7a93', 'admin', '1021822981@QQ.COM', 1, '160717099931144582616', 'about:blank', 'about:blank', '这里没有签名档', '2,3', '', 2);
+INSERT INTO `user` VALUES (22, 'test', '4297f44b13955235245b2497399d7a93', 'user', 'test@qq.com', 1, '160873294480683217934', 'about:blank', 'about:blank', '这里没有签名档', '13', '', 1);
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
