@@ -439,7 +439,7 @@ public class userServiceImpl implements userService {
             }
             //不存在,返回默认头像
             else {
-                inputStream = new FileInputStream("./uploadFolder/defaultAvatar.jpg");
+                inputStream = new FileInputStream("./uploadFolder/avatar/defaultAvatar.jpg");
                 bytes = new byte[inputStream.available()];
                 inputStream.read(bytes, 0, inputStream.available());
             }
@@ -447,7 +447,7 @@ public class userServiceImpl implements userService {
         }
         else
         {
-            inputStream = new FileInputStream("./uploadFolder/defaultAvatar.jpg");
+            inputStream = new FileInputStream("./uploadFolder/avatar/defaultAvatar.jpg");
             bytes = new byte[inputStream.available()];
             inputStream.read(bytes, 0, inputStream.available());
             return bytes;

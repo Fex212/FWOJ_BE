@@ -7,11 +7,20 @@ import com.teleport.fwoj_backend.pojo.problem;
 import com.teleport.fwoj_backend.service.problemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class problemServiceImpl implements problemService {
@@ -220,5 +229,51 @@ public class problemServiceImpl implements problemService {
         return mapper.writeValueAsString(s);
     }
 
+    @Override
+    public String uploadTestCaseById(@RequestParam("file") MultipartFile file, String token, int id) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if (Objects.isNull(file)) {
+            s.put("error", "-1");
+            return mapper.writeValueAsString(s);
+        }
+
+        //若不存在题目文件夹则创建
+        String UPLOAD_FOLDER = "./uploadFolder/test_case/" + id + "/";
+        File folder = new File(UPLOAD_FOLDER);
+        if (!folder.exists() && !folder.isDirectory())
+            folder.mkdirs();
+
+        //若存在test_case_id文件夹则删除
+        String TEST_CASE_FOLDER = "./uploadFolder/test_case/" + id + "/" + "test_case_" +id;
+        File folder2 = new File(TEST_CASE_FOLDER);
+        deleteDir(folder2);
+        try {
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(UPLOAD_FOLDER  + "test_case_"+ id +".zip");
+            if (!Files.isWritable(path)) {
+                Files.createDirectories(Paths.get(UPLOAD_FOLDER));
+            }
+            Files.write(path, bytes);
+            s.put("error", "0");
+        } catch (IOException e) {
+            s.put("error", "-2");
+        }
+
+        return mapper.writeValueAsString(s);
+    }
+
+    private static boolean deleteDir(File dir) {
+        if (dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i=0; i<children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
+        }
+        return dir.delete();
+    }
 
 }

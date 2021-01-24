@@ -1,5 +1,7 @@
 package com.teleport.fwoj_backend.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface problemService {
     //查询列表(页数,每页几条),返回List
@@ -11,8 +13,7 @@ public interface problemService {
     String getProblemListAdmin(int page,int pre,String key,String token) throws JsonProcessingException;
     //查询问题详情(Admin)
     String getProblemDetailAdmin(String token,int id) throws JsonProcessingException;
-
-
+    //更改问题可见性
     String changeProblemVisible(String token,int id) throws JsonProcessingException;
 
     //根据id删除问题
@@ -23,4 +24,7 @@ public interface problemService {
     //根据id编辑问题id
     String editProblem(String token,String title,String des,String input,String output,String inputExample,String outputExample,
                     String hint,int id) throws JsonProcessingException;
+
+    //按id上传题目测试样例
+    String uploadTestCaseById(@RequestParam("file") MultipartFile file, String token, int id) throws JsonProcessingException;
 }
