@@ -10,17 +10,26 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.math.BigInteger;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Enumeration;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
+import java.util.zip.ZipOutputStream;
 
 @Service
 public class problemServiceImpl implements problemService {
@@ -233,36 +242,117 @@ public class problemServiceImpl implements problemService {
     public String uploadTestCaseById(@RequestParam("file") MultipartFile file, String token, int id) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
-        if (Objects.isNull(file)) {
-            s.put("error", "-1");
-            return mapper.writeValueAsString(s);
-        }
 
-        //若不存在题目文件夹则创建
-        String UPLOAD_FOLDER = "./uploadFolder/test_case/" + id + "/";
-        File folder = new File(UPLOAD_FOLDER);
-        if (!folder.exists() && !folder.isDirectory())
-            folder.mkdirs();
-
-        //若存在test_case_id文件夹则删除
-        String TEST_CASE_FOLDER = "./uploadFolder/test_case/" + id + "/" + "test_case_" +id;
-        File folder2 = new File(TEST_CASE_FOLDER);
-        deleteDir(folder2);
-        try {
-            byte[] bytes = file.getBytes();
-            Path path = Paths.get(UPLOAD_FOLDER  + "test_case_"+ id +".zip");
-            if (!Files.isWritable(path)) {
-                Files.createDirectories(Paths.get(UPLOAD_FOLDER));
+        //0 正常 1 越权 2 失败 3 文件格式错误
+        if(userMapperObject.getUserTypeByToken(token) != null &&  userMapperObject.getUserTypeByToken(token).equals("admin")) {
+            if (Objects.isNull(file)) {
+                s.put("error", "-1");
+                return mapper.writeValueAsString(s);
             }
-            Files.write(path, bytes);
-            s.put("error", "0");
-        } catch (IOException e) {
-            s.put("error", "-2");
+
+            //若不存在题目文件夹则创建
+            String UPLOAD_FOLDER = "./uploadFolder/test_case/" + id + "/";
+            File folder = new File(UPLOAD_FOLDER);
+            if (!folder.exists() && !folder.isDirectory())
+                folder.mkdirs();
+
+            //若存在test_case_id文件夹则删除
+            String TEST_CASE_FOLDER = "./uploadFolder/test_case/" + id + "/" + "test_case_" +id + "/";
+            File folder2 = new File(TEST_CASE_FOLDER);
+            deleteDir(folder2);
+
+            //写入压缩包文件
+            try {
+                byte[] bytes = file.getBytes();
+                Path path = Paths.get(UPLOAD_FOLDER  + "test_case_"+ id +".zip");
+                if (!Files.isWritable(path)) {
+                    Files.createDirectories(Paths.get(UPLOAD_FOLDER));
+                }
+                Files.write(path, bytes);
+                //解压到同名文件夹
+                File f1 = new File(UPLOAD_FOLDER  + "test_case_"+ id +".zip");
+                unZip(f1,UPLOAD_FOLDER  + "test_case_"+ id);
+                //删除压缩包
+                if (f1.exists()) {
+                    f1.delete();
+                }
+                //删除__MACOSX文件夹
+//                System.out.println(UPLOAD_FOLDER+"__MACOSX");
+                File f2 = new File(UPLOAD_FOLDER  + "test_case_"+ id +"/__MACOSX");
+                if(f2.exists())
+                    f2.delete();
+
+                //检查是否是1.in 1.out 2.in 2.out这样排下去的
+                int cnt = 0;
+                for(int i = 1; i <= 1000 ; i ++)
+                {
+                    File f3 = new File(UPLOAD_FOLDER  + "test_case_"+ id +"/" + i + ".in");
+                    File f4 = new File(UPLOAD_FOLDER  + "test_case_"+ id +"/" + i + ".out");
+                    //如果都存在，cnt++
+                    if(f3.exists() && f4.exists())
+                        cnt ++;
+                    else
+                        break;
+                }
+
+                s.put("error", "0");
+            } catch (IOException e) {
+                s.put("error", "-2");
+            }
         }
+        else
+            s.put("error", "-1");
 
         return mapper.writeValueAsString(s);
     }
 
+    //0 正常 1 越权
+    @Override
+    public String downloadTestCaseById(String token, int id, HttpServletResponse res) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+        if(userMapperObject.getUserTypeByToken(token) != null &&  userMapperObject.getUserTypeByToken(token).equals("admin"))
+        {
+            byte[] bytes;
+            FileInputStream inputStream;
+
+            File dir = new File("./uploadFolder/test_case/" + id + "/" + "test_case_" +id + "/");
+            String[] list = dir.list();
+
+            //需要压缩的文件列表
+            List<File> fileList = new ArrayList<>();
+
+            for(String str : list)
+            {
+                File f = new File("./uploadFolder/test_case/" + id + "/" + "test_case_" +id + "/"+str);
+                if(str.charAt(0) != '.' && !f.isDirectory())
+                {
+                    fileList.add(f);
+//                    System.out.println(str);
+                }
+            }
+            String target = "./uploadFolder/test_case/" + id + "/" + "test_case_" + id + ".zip";
+            toZip(fileList,id,target);
+            OutputStream outputStream = res.getOutputStream();
+            byte[] buff = new byte[1024];
+            BufferedInputStream bis = null;
+            bis = new BufferedInputStream(new FileInputStream(new File(target)));
+            int i = bis.read(buff);
+            while (i != -1) {
+                outputStream.write(buff, 0, buff.length);
+                outputStream.flush();
+                i = bis.read(buff);
+            }
+            s.put("error","0");
+            outputStream.close();
+            bis.close();
+        }
+        else
+            s.put("error","-1");
+        return mapper.writeValueAsString(s);
+    }
+
+    //递归删除文件夹
     private static boolean deleteDir(File dir) {
         if (dir.isDirectory()) {
             String[] children = dir.list();
@@ -275,5 +365,103 @@ public class problemServiceImpl implements problemService {
         }
         return dir.delete();
     }
+    //解压缩
+    public static void unZip(File srcFile, String destDirPath) throws RuntimeException {
+        if (!srcFile.exists()) {
+            throw new RuntimeException(srcFile.getPath() + "所指文件不存在");
+        }
+        ZipFile zipFile = null;
+        try {
+            zipFile = new ZipFile(srcFile);
+            Enumeration<?> entries = zipFile.entries();
+            while (entries.hasMoreElements()) {
+                ZipEntry entry = (ZipEntry) entries.nextElement();
+                if (entry.isDirectory()) {
+                    String dirPath = destDirPath + "/" + entry.getName();
 
+                    File dir = new File(dirPath);
+
+                    dir.mkdirs();
+
+                } else {
+                    File targetFile = new File(destDirPath + "/" + entry.getName());
+                    if (!targetFile.getParentFile().exists())
+                        targetFile.getParentFile().mkdirs();
+                    targetFile.createNewFile();
+                    InputStream is = zipFile.getInputStream(entry);
+                    FileOutputStream fos = new FileOutputStream(targetFile);
+                    int len;
+                    byte[] buf = new byte[10240];
+                    while ((len = is.read(buf)) != -1) {
+                        fos.write(buf, 0, len);
+                    }
+                    fos.close();
+                    is.close();
+                }
+            }
+            long end = System.currentTimeMillis();
+//            System.out.println("解压完成，耗时：" + (end - start) +" ms");
+        } catch (Exception e) {
+            throw new RuntimeException("unzip error from ZipUtils", e);
+        }
+        finally {
+            if(zipFile != null){
+                try {
+                    zipFile.close();
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    //计算md5
+    private static String md5(String str) throws UnsupportedEncodingException {
+        String plainText = URLEncoder.encode(str,"utf-8");
+        byte[] secretBytes = null;
+        try {
+            secretBytes = MessageDigest.getInstance("md5").digest(
+                    plainText.getBytes());
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Error");
+        }
+        String md5code = new BigInteger(1, secretBytes).toString(16);
+        for (int i = 0; i < 32 - md5code.length(); i++) {
+            md5code = "0" + md5code;
+        }
+        return md5code;
+    }
+
+    //压缩
+    private static void toZip(List<File> srcFiles,int id,String target)throws RuntimeException {
+        long start = System.currentTimeMillis();
+        ZipOutputStream zos = null ;
+        try {
+            zos = new ZipOutputStream(new FileOutputStream(target));
+            for (File srcFile : srcFiles) {
+                byte[] buf = new byte[1024];
+                zos.putNextEntry(new ZipEntry(srcFile.getName()));
+                int len;
+                FileInputStream in = new FileInputStream(srcFile);
+                while ((len = in.read(buf)) != -1){
+                    zos.write(buf, 0, len);
+                }
+                zos.closeEntry();
+                in.close();
+            }
+            long end = System.currentTimeMillis();
+        } catch (Exception e) {
+            throw new RuntimeException("zip error from ZipUtils",e);
+        }finally{
+            if(zos != null){
+                try {
+                    zos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 }
+

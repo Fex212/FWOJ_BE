@@ -3,6 +3,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 public interface problemService {
     //查询列表(页数,每页几条),返回List
     String getProblemList(int page,int pre,String token) throws JsonProcessingException;
@@ -26,5 +30,9 @@ public interface problemService {
                     String hint,int id) throws JsonProcessingException;
 
     //按id上传题目测试样例
-    String uploadTestCaseById(@RequestParam("file") MultipartFile file, String token, int id) throws JsonProcessingException;
+    String uploadTestCaseById(MultipartFile file, String token, int id) throws JsonProcessingException;
+
+
+    //按id下载题目测试样例
+    String downloadTestCaseById(String token, int id, HttpServletResponse res) throws IOException;
 }

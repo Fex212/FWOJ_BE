@@ -7,6 +7,8 @@ import com.teleport.fwoj_backend.service.userService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 
 @RestController
 public class adminContorller {
@@ -128,6 +130,14 @@ public class adminContorller {
     @CrossOrigin
     public String uploadTestCaseById(@RequestParam("file") MultipartFile file,@RequestParam("token") String token, @RequestParam("id") int id) throws JsonProcessingException {
         return problemServiceObject.uploadTestCaseById(file,token,id);
+    }
+
+
+    //按id下载题目测试样例
+    @RequestMapping(value = "/downloadTestCaseById",method = {RequestMethod.GET},produces="application/zip")
+    @CrossOrigin
+    public String uploadTestCaseById(@RequestParam("token") String token, @RequestParam("id") int id, HttpServletResponse res) throws IOException {
+         return problemServiceObject.downloadTestCaseById(token,id,res);
     }
 
     //获取比赛列表(Admin)

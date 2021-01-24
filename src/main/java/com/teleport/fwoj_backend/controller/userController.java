@@ -144,6 +144,7 @@ public class userController {
     }
 
     //error -1 用户不存在
+//    produces = MediaType.IMAGE_JPEG_VALUE
     @RequestMapping(value = "/getAvatar",produces = MediaType.IMAGE_JPEG_VALUE)
     @ResponseBody
     @CrossOrigin
