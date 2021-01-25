@@ -250,16 +250,11 @@ public class problemServiceImpl implements problemService {
                 return mapper.writeValueAsString(s);
             }
 
-            //若不存在题目文件夹则创建
+            //若存在题目文件夹删除
             String UPLOAD_FOLDER = "./uploadFolder/test_case/" + id + "/";
             File folder = new File(UPLOAD_FOLDER);
-            if (!folder.exists() && !folder.isDirectory())
-                folder.mkdirs();
-
-            //若存在test_case_id文件夹则删除
-            String TEST_CASE_FOLDER = "./uploadFolder/test_case/" + id + "/" + "test_case_" +id + "/";
-            File folder2 = new File(TEST_CASE_FOLDER);
-            deleteDir(folder2);
+            if(folder.exists())
+                deleteDir(folder);
 
             //写入压缩包文件
             try {
@@ -271,14 +266,14 @@ public class problemServiceImpl implements problemService {
                 Files.write(path, bytes);
                 //解压到同名文件夹
                 File f1 = new File(UPLOAD_FOLDER  + "test_case_"+ id +".zip");
-                unZip(f1,UPLOAD_FOLDER  + "test_case_"+ id);
+                unZip(f1,UPLOAD_FOLDER);
                 //删除压缩包
                 if (f1.exists()) {
                     f1.delete();
                 }
                 //删除__MACOSX文件夹
 //                System.out.println(UPLOAD_FOLDER+"__MACOSX");
-                File f2 = new File(UPLOAD_FOLDER  + "test_case_"+ id +"/__MACOSX");
+                File f2 = new File(UPLOAD_FOLDER +"/__MACOSX");
                 if(f2.exists())
                     f2.delete();
 
@@ -286,8 +281,8 @@ public class problemServiceImpl implements problemService {
                 int cnt = 0;
                 for(int i = 1; i <= 1000 ; i ++)
                 {
-                    File f3 = new File(UPLOAD_FOLDER  + "test_case_"+ id +"/" + i + ".in");
-                    File f4 = new File(UPLOAD_FOLDER  + "test_case_"+ id +"/" + i + ".out");
+                    File f3 = new File(UPLOAD_FOLDER  +"/" + i + ".in");
+                    File f4 = new File(UPLOAD_FOLDER  +"/" + i + ".out");
                     //如果都存在，cnt++
                     if(f3.exists() && f4.exists())
                         cnt ++;
@@ -304,8 +299,8 @@ public class problemServiceImpl implements problemService {
                 {
                     info += "        \"" + i +"\": {\n";
                     //读入i.in和i.out
-                    String in = readFile(UPLOAD_FOLDER  + "test_case_"+ id +"/" + i + ".in");
-                    String out = readFile(UPLOAD_FOLDER  + "test_case_"+ id +"/" + i + ".out");
+                    String in = readFile(UPLOAD_FOLDER  + i + ".in");
+                    String out = readFile(UPLOAD_FOLDER + i + ".out");
 
                     int inSize = in.length();
                     int outSize = out.length();
@@ -330,16 +325,13 @@ public class problemServiceImpl implements problemService {
                 info += "    }\n}";
 
                 try {
-                    BufferedWriter out = new BufferedWriter(new FileWriter(UPLOAD_FOLDER  + "test_case_"+ id +"/info"));
+                    BufferedWriter out = new BufferedWriter(new FileWriter(UPLOAD_FOLDER +"/info"));
                     out.write(info);
                     out.close();
 //                    System.out.println("success");
                 } catch (IOException e) {
                 }
 
-                //构建已经解压的测试用例路径
-                String inPath = UPLOAD_FOLDER  + "test_case_"+ id +"/" + id + ".in";
-                String outputPath = UPLOAD_FOLDER  + "test_case_"+ id +"/" + id + ".out";
 
 
                 s.put("error", "0");
@@ -361,7 +353,7 @@ public class problemServiceImpl implements problemService {
             byte[] bytes;
             FileInputStream inputStream;
 
-            File dir = new File("./uploadFolder/test_case/" + id + "/" + "test_case_" +id + "/");
+            File dir = new File("./uploadFolder/test_case/" + id + "/" );
             String[] list = dir.list();
             if(!dir.isDirectory())
             {
@@ -373,11 +365,10 @@ public class problemServiceImpl implements problemService {
 
             for(String str : list)
             {
-                File f = new File("./uploadFolder/test_case/" + id + "/" + "test_case_" +id + "/"+str);
+                File f = new File("./uploadFolder/test_case/" + id + "/"+str);
                 if(str.charAt(0) != '.' && !f.isDirectory())
                 {
                     fileList.add(f);
-//                    System.out.println(str);
                 }
             }
             String target = "./uploadFolder/test_case/" + id + "/" + "test_case_" + id + ".zip";
@@ -407,7 +398,7 @@ public class problemServiceImpl implements problemService {
         HashMap s = new HashMap();
         if(userMapperObject.getUserTypeByToken(token) != null &&  userMapperObject.getUserTypeByToken(token).equals("admin"))
         {
-            File dir = new File("./uploadFolder/test_case/" + id + "/" + "test_case_" +id + "/");
+            File dir = new File("./uploadFolder/test_case/" + id + "/");
             if(!dir.isDirectory())
             {
                 s.put("error","-2");
