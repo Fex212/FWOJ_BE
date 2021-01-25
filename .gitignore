@@ -31,3 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
+*.log
+data/judge_server/log/judge_server.log
