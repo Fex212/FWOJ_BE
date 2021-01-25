@@ -5,3 +5,10 @@
 [2021-01-25 14:41:11 +0000] [19] [INFO] Booting worker with pid: 19
 [2021-01-25 14:41:11 +0000] [21] [INFO] Booting worker with pid: 21
 [2021-01-25 14:41:11 +0000] [22] [INFO] Booting worker with pid: 22
+[2021-01-25 15:01:49 +0000] [7] [INFO] Starting gunicorn 20.0.4
+[2021-01-25 15:01:49 +0000] [7] [INFO] Listening at: http://0.0.0.0:8080 (7)
+[2021-01-25 15:01:49 +0000] [7] [INFO] Using worker: threads
+[2021-01-25 15:01:49 +0000] [17] [INFO] Booting worker with pid: 17
+[2021-01-25 15:01:49 +0000] [19] [INFO] Booting worker with pid: 19
+[2021-01-25 15:01:49 +0000] [21] [INFO] Booting worker with pid: 21
+[2021-01-25 15:01:49 +0000] [22] [INFO] Booting worker with pid: 22

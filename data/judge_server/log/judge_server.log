@@ -1181,3 +1181,120 @@ Traceback (most recent call last):
   File "/usr/lib/python3.6/os.py", line 669, in __getitem__
     raise KeyError(key) from None
 KeyError: 'SERVICE_URL'
+2021-01-25 15:01:54,744 ERROR 'SERVICE_URL'
+Traceback (most recent call last):
+  File "/code/service.py", line 41, in <module>
+    service = JudgeService()
+  File "/code/service.py", line 12, in __init__
+    self.service_url = os.environ["SERVICE_URL"]
+  File "/usr/lib/python3.6/os.py", line 669, in __getitem__
+    raise KeyError(key) from None
+KeyError: 'SERVICE_URL'
+2021-01-25 15:02:00,491 ERROR 'SERVICE_URL'
+Traceback (most recent call last):
+  File "/code/service.py", line 41, in <module>
+    service = JudgeService()
+  File "/code/service.py", line 12, in __init__
+    self.service_url = os.environ["SERVICE_URL"]
+  File "/usr/lib/python3.6/os.py", line 669, in __getitem__
+    raise KeyError(key) from None
+KeyError: 'SERVICE_URL'
+2021-01-25 15:02:05,855 ERROR 'SERVICE_URL'
+Traceback (most recent call last):
+  File "/code/service.py", line 41, in <module>
+    service = JudgeService()
+  File "/code/service.py", line 12, in __init__
+    self.service_url = os.environ["SERVICE_URL"]
+  File "/usr/lib/python3.6/os.py", line 669, in __getitem__
+    raise KeyError(key) from None
+KeyError: 'SERVICE_URL'
+2021-01-25 15:02:11,196 ERROR 'SERVICE_URL'
+Traceback (most recent call last):
+  File "/code/service.py", line 41, in <module>
+    service = JudgeService()
+  File "/code/service.py", line 12, in __init__
+    self.service_url = os.environ["SERVICE_URL"]
+  File "/usr/lib/python3.6/os.py", line 669, in __getitem__
+    raise KeyError(key) from None
+KeyError: 'SERVICE_URL'
+2021-01-25 15:02:16,542 ERROR 'SERVICE_URL'
+Traceback (most recent call last):
+  File "/code/service.py", line 41, in <module>
+    service = JudgeService()
+  File "/code/service.py", line 12, in __init__
+    self.service_url = os.environ["SERVICE_URL"]
+  File "/usr/lib/python3.6/os.py", line 669, in __getitem__
+    raise KeyError(key) from None
+KeyError: 'SERVICE_URL'
+2021-01-25 15:02:22,051 ERROR 'SERVICE_URL'
+Traceback (most recent call last):
+  File "/code/service.py", line 41, in <module>
+    service = JudgeService()
+  File "/code/service.py", line 12, in __init__
+    self.service_url = os.environ["SERVICE_URL"]
+  File "/usr/lib/python3.6/os.py", line 669, in __getitem__
+    raise KeyError(key) from None
+KeyError: 'SERVICE_URL'
+2021-01-25 15:02:27,553 ERROR 'SERVICE_URL'
+Traceback (most recent call last):
+  File "/code/service.py", line 41, in <module>
+    service = JudgeService()
+  File "/code/service.py", line 12, in __init__
+    self.service_url = os.environ["SERVICE_URL"]
+  File "/usr/lib/python3.6/os.py", line 669, in __getitem__
+    raise KeyError(key) from None
+KeyError: 'SERVICE_URL'
+2021-01-25 15:02:32,892 ERROR 'SERVICE_URL'
+Traceback (most recent call last):
+  File "/code/service.py", line 41, in <module>
+    service = JudgeService()
+  File "/code/service.py", line 12, in __init__
+    self.service_url = os.environ["SERVICE_URL"]
+  File "/usr/lib/python3.6/os.py", line 669, in __getitem__
+    raise KeyError(key) from None
+KeyError: 'SERVICE_URL'
+2021-01-25 15:02:38,201 ERROR 'SERVICE_URL'
+Traceback (most recent call last):
+  File "/code/service.py", line 41, in <module>
+    service = JudgeService()
+  File "/code/service.py", line 12, in __init__
+    self.service_url = os.environ["SERVICE_URL"]
+  File "/usr/lib/python3.6/os.py", line 669, in __getitem__
+    raise KeyError(key) from None
+KeyError: 'SERVICE_URL'
+2021-01-25 15:02:43,588 ERROR 'SERVICE_URL'
+Traceback (most recent call last):
+  File "/code/service.py", line 41, in <module>
+    service = JudgeService()
+  File "/code/service.py", line 12, in __init__
+    self.service_url = os.environ["SERVICE_URL"]
+  File "/usr/lib/python3.6/os.py", line 669, in __getitem__
+    raise KeyError(key) from None
+KeyError: 'SERVICE_URL'
+2021-01-25 15:02:48,915 ERROR 'SERVICE_URL'
+Traceback (most recent call last):
+  File "/code/service.py", line 41, in <module>
+    service = JudgeService()
+  File "/code/service.py", line 12, in __init__
+    self.service_url = os.environ["SERVICE_URL"]
+  File "/usr/lib/python3.6/os.py", line 669, in __getitem__
+    raise KeyError(key) from None
+KeyError: 'SERVICE_URL'
+2021-01-25 15:02:54,229 ERROR 'SERVICE_URL'
+Traceback (most recent call last):
+  File "/code/service.py", line 41, in <module>
+    service = JudgeService()
+  File "/code/service.py", line 12, in __init__
+    self.service_url = os.environ["SERVICE_URL"]
+  File "/usr/lib/python3.6/os.py", line 669, in __getitem__
+    raise KeyError(key) from None
+KeyError: 'SERVICE_URL'
+2021-01-25 15:02:59,517 ERROR 'SERVICE_URL'
+Traceback (most recent call last):
+  File "/code/service.py", line 41, in <module>
+    service = JudgeService()
+  File "/code/service.py", line 12, in __init__
+    self.service_url = os.environ["SERVICE_URL"]
+  File "/usr/lib/python3.6/os.py", line 669, in __getitem__
+    raise KeyError(key) from None
+KeyError: 'SERVICE_URL'
