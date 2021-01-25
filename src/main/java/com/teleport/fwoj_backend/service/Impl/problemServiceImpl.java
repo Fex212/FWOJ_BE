@@ -243,7 +243,7 @@ public class problemServiceImpl implements problemService {
         ObjectMapper mapper = new ObjectMapper();
         HashMap s = new HashMap();
 
-        //0 正常 1 越权 2 失败 3 文件格式错误
+        //0 正常 -1 越权 -2 失败 -3 文件格式错误
         if(userMapperObject.getUserTypeByToken(token) != null &&  userMapperObject.getUserTypeByToken(token).equals("admin")) {
             if (Objects.isNull(file)) {
                 s.put("error", "-1");
@@ -294,6 +294,53 @@ public class problemServiceImpl implements problemService {
                     else
                         break;
                 }
+                //一切正常，添加info
+                String info = "";
+                info += "{\n";
+                info += "    \"spj\": false,\n";
+                info += "    \"test_cases\": {\n";
+
+                for(int i = 1 ; i <= cnt ; i ++)
+                {
+                    info += "        \"" + i +"\": {\n";
+                    //读入i.in和i.out
+                    String in = readFile(UPLOAD_FOLDER  + "test_case_"+ id +"/" + i + ".in");
+                    String out = readFile(UPLOAD_FOLDER  + "test_case_"+ id +"/" + i + ".out");
+
+                    int inSize = in.length();
+                    int outSize = out.length();
+                    if(out.charAt(outSize-1) == '\n')
+                    {
+                        out = out.substring(0,outSize-1);
+                    }
+                    String md5 = md5(out);
+
+                    info += "            \"stripped_output_md5\": \"" + md5 + "\",\n";
+
+                    info += "            \"input_size\": " + inSize + ",\n";
+                    info += "            \"output_size\": "+ outSize + ",\n";
+                    info += "            \"input_name\": \""+ i +".in\",\n";
+                    info += "            \"output_name\": \""+ i +".out\"\n";
+                    if(i == cnt)
+                        info += "        }\n";
+                    else
+                        info += "        },\n";
+                }
+
+                info += "    }\n}";
+
+                try {
+                    BufferedWriter out = new BufferedWriter(new FileWriter(UPLOAD_FOLDER  + "test_case_"+ id +"/info"));
+                    out.write(info);
+                    out.close();
+//                    System.out.println("success");
+                } catch (IOException e) {
+                }
+
+                //构建已经解压的测试用例路径
+                String inPath = UPLOAD_FOLDER  + "test_case_"+ id +"/" + id + ".in";
+                String outputPath = UPLOAD_FOLDER  + "test_case_"+ id +"/" + id + ".out";
+
 
                 s.put("error", "0");
             } catch (IOException e) {
@@ -436,22 +483,17 @@ public class problemServiceImpl implements problemService {
             }
         }
     }
-
-    //计算md5
-    private static String md5(String str) throws UnsupportedEncodingException {
-        String plainText = URLEncoder.encode(str,"utf-8");
-        byte[] secretBytes = null;
+    
+    private static String md5(String str) {
         try {
-            secretBytes = MessageDigest.getInstance("md5").digest(
-                    plainText.getBytes());
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("Error");
+//            String utf8Str = URLEncoder.encode(str,"UTF-8");
+
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(str.getBytes());
+            return new BigInteger(1, md.digest()).toString(16);
+        } catch (Exception e) {
         }
-        String md5code = new BigInteger(1, secretBytes).toString(16);
-        for (int i = 0; i < 32 - md5code.length(); i++) {
-            md5code = "0" + md5code;
-        }
-        return md5code;
+        return "";
     }
 
     //压缩
@@ -484,5 +526,50 @@ public class problemServiceImpl implements problemService {
             }
         }
     }
+
+    //读取文件内容
+    public static String readFile(String strFile){
+        try{
+            InputStream is = new FileInputStream(strFile);
+            int iAvail = is.available();
+            byte[] bytes = new byte[iAvail];
+            is.read(bytes);
+            String str = new String(bytes);
+            is.close();
+            return str;
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return "";
+    }
 }
+
+/*
+{
+    "spj": false,
+    "test_cases": {
+        "1": {
+            "stripped_output_md5": "e4da3b7fbbce2345d7772b0674a318d5",
+            "input_size": 4,
+            "output_size": 2,
+            "input_name": "1.in",
+            "output_name": "1.out"
+        },
+        "2": {
+            "stripped_output_md5": "d07e2b090a63d7496b086d61ec508131",
+            "input_size": 9,
+            "output_size": 5,
+            "input_name": "2.in",
+            "output_name": "2.out"
+        },
+        "3": {
+            "stripped_output_md5": "38913e1d6a7b94cb0f55994f679f5956",
+            "input_size": 7,
+            "output_size": 3,
+            "input_name": "3.in",
+            "output_name": "3.out"
+        }
+    }
+}
+ */
 
