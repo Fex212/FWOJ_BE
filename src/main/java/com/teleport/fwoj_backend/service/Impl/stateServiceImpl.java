@@ -62,7 +62,11 @@ public class stateServiceImpl implements stateService {
             if (isVisible == 1
                     &&
                     stateMapperObject.addState(problemId, authorId, date, language, code) == 1)
+            {
                 s.put("error", "0");
+                //已经提交state，开始判题
+
+            }
             else
                 s.put("error", "2");
         }
