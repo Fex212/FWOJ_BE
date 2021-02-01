@@ -26,4 +26,14 @@
         values (#{problemId},#{authorId},#{date},#{language},'Pending','0','0',#{code});
     </insert>
 
+<!--    查询Pending列表-->
+    <select id="getPendingList" resultType="state">
+    select id,problemId,authorId,code from state where state='Pending';
+   </select>
+
+<!--    updateState-->
+    <update id="updateState" parameterType="state">
+        update state set state=#{state} where id=#{id};
+    </update>
+
 </mapper>

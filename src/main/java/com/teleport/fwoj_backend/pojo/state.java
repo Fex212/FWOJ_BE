@@ -10,9 +10,9 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class state {
-    int id;
-    int problemId;
-    int authorId;
+    Integer id;
+    Integer problemId;
+    Integer authorId;
     String authorName;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     Date date;

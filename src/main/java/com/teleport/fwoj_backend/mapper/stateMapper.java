@@ -17,4 +17,11 @@ public interface stateMapper{
     state getStateDetail(int id);
     //插入一条
     int addState(int problemId, int authorId, Date date,String language,String code);
+
+    //查询Pending列表
+    List<state> getPendingList();
+
+    //更新state
+    int updateState(int id , String state);
+
 }

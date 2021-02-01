@@ -2,9 +2,16 @@ package com.teleport.fwoj_backend.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.teleport.fwoj_backend.pojo.rank;
 import com.teleport.fwoj_backend.service.*;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -107,6 +114,16 @@ public class indexController{
     @CrossOrigin
     public String getRandChartData() throws JsonProcessingException {
         return rankServiceObject.getRankChartData();
+    }
+
+    //定期执行判题轮询
+    @Configuration
+    @EnableScheduling
+    public class judgeServer{
+        @Scheduled(cron = "0/5 * * * * ?")
+        private void configureTasks() throws ParseException, IOException, JSONException {
+            stateServiceObject.judgeServer();
+        }
     }
 
 }
