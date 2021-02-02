@@ -18,8 +18,9 @@ public class state {
     Date date;
     String language;
     String state;
-    String memoryCost;
-    String timeCost;
+    String compileInfo;
+    int memoryCost;
+    int timeCost;
     String code;
 //    String problemTitle;
 }

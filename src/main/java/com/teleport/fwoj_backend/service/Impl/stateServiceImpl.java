@@ -1,4 +1,5 @@
 package com.teleport.fwoj_backend.service.Impl;
+import com.alibaba.fastjson.JSONArray;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.teleport.fwoj_backend.mapper.problemMapper;
@@ -133,21 +134,74 @@ public class stateServiceImpl implements stateService {
             String re = judge("http://localhost:8081/judge",jo);
 
             //解析json进行相关处理
-            JSONObject jsonObject = JSONObject.parseObject(re);
-            if(jsonObject.getString("err") != null)
+            JSONObject reJo = JSONObject.parseObject(re);
+            if(reJo.getString("err") != null)
             {
-                String err = jsonObject.getString("err");
+                //出错。写入数据库
+                String err = reJo.getString("err");
                 if(err.equals("CompileError"))
                 {
-                    //编译错误写入数据库
-                    stateMapperObject.updateState(stateId,"Compile Error");
+                    stateMapperObject.updateState(stateId,"ce",reJo.getString("data"));
                 }
+                else if(err.equals("JudgeClientError"))
+                {
+                    stateMapperObject.updateState(stateId,"se",reJo.getString("data"));
+                }
+                stateMapperObject.setTimeCost(stateId,0);
+                stateMapperObject.setMemoryCost(stateId,0);
             }
             else
             {
                 //编译成功
-                //AC 0 TLE 1 RE 4 WA -1 CE -2
-                System.out.println("buildSuccessful");
+                JSONArray data = reJo.getJSONArray("data");
+                int arrLen = data.size();
+                //综合所有的测试样例，判断出本题的判题结果
+                //AC 0 TLE 1 RE 4 WA -1
+                //一个RE则RE 一个TLE则TLE 一个WA则WA 全部AC则AC
+                String finalRe = "";
+                int flag = 1;
+                int maxTimeCost = -1;
+                int maxMemoryCost = -1;
+
+                for(int j = 0 ; j < arrLen ; j++)
+                {
+                    String result = data.getJSONObject(j).getString("result");
+                    int cpu_time = Integer.parseInt(data.getJSONObject(j).getString("cpu_time"));
+                    int memory = Integer.parseInt(data.getJSONObject(j).getString("memory"));
+
+                    if(maxTimeCost < cpu_time)
+                        maxTimeCost = cpu_time;
+                    if(maxMemoryCost < memory)
+                        maxMemoryCost = memory;
+
+                    if(result.equals("4"))
+                    {
+                        finalRe = "re";
+                        flag = 0;
+                        break;
+                    }
+                    else if(result.equals("1"))
+                    {
+                        finalRe = "tle";
+                        flag = 0;
+                        break;
+                    }
+                    else if(result.equals("-1"))
+                    {
+                        finalRe = "wa";
+                        flag = 0;
+                        break;
+                    }
+                }
+                if(flag == 1)
+                {
+                    finalRe = "ac";
+                }
+                //写入state timeCost memoryCost
+                stateMapperObject.updateState(stateId,finalRe,"");
+                stateMapperObject.setTimeCost(stateId,maxTimeCost);
+                stateMapperObject.setMemoryCost(stateId,maxMemoryCost);
+
             }
 
         }

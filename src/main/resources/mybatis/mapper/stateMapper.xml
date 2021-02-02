@@ -7,7 +7,7 @@
 
     <!--查询列表(页数,每页几条)-->
     <select id="getStateList" resultType="state">
-    select state.id,problemId,username as authorName,date,language,state,memoryCost,timeCost
+    select state.id,problemId,username as authorName,state.authorId,date,language,state,cast(memoryCost/1024/1024 as decimal(10,0)) as memoryCost,timeCost
     from state,user where authorId=user.id order by date desc limit #{start},#{num}
    </select>
     <!--查询总数-->
@@ -33,7 +33,17 @@
 
 <!--    updateState-->
     <update id="updateState" parameterType="state">
-        update state set state=#{state} where id=#{id};
+        update state set state=#{state},compileInfo=#{compileInfo} where id=#{id};
+    </update>
+
+<!--    setTimeCost-->
+    <update id="setTimeCost" parameterType="state">
+        update state set timeCost=#{timeCost} where id=#{id}
+    </update>
+
+<!--    setMemoryCost-->
+    <update id="setMemoryCost" parameterType="state">
+        update state set memoryCost=#{memoryCost} where id=#{id}
     </update>
 
 </mapper>

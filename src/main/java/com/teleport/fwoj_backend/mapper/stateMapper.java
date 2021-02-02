@@ -22,6 +22,13 @@ public interface stateMapper{
     List<state> getPendingList();
 
     //更新state
-    int updateState(int id , String state);
+    int updateState(int id , String state,String compileInfo);
+
+    //设置timeCost
+    int setTimeCost(int id , int timeCost);
+
+    //设置memoryCost
+    int setMemoryCost(int id,int memoryCost);
+
 
 }
