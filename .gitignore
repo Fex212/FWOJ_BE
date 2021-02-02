@@ -1,5 +1,6 @@
 HELP.md
 target/
+data/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
@@ -31,5 +32,3 @@ build/
 
 ### VS Code ###
 .vscode/
-*.log
-data/judge_server/*
