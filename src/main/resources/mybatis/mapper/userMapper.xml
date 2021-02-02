@@ -157,10 +157,37 @@
     <select id="getUserAvailableById" resultType="int">
         select available from user where id=#{id}
     </select>
+
+
+
 <!--    根据id查看solvedList-->
     <select id="getUserSolvedListById" resultType="String">
         select solvedList from user where id=#{id}
     </select>
+<!--    根据id查看attemptList-->
+    <select id="getUserAttemptListById" resultType="String">
+        select attemptList from user where id=#{id}
+    </select>
+
+    <!--    根据id设置solvedList-->
+    <update id="setUserSolvedListById" parameterType="user">
+        update user set solvedList=#{solvedList} where id=#{id}
+    </update>
+
+    <!--    根据id设置attemptList-->
+    <update id="setUserAttemptListById" parameterType="user">
+        update user set attemptList=#{attemptList} where id=#{id}
+    </update>
+
+<!--    使solvedNum++-->
+    <update id="setSolvedNumPlus" parameterType="int">
+        update user set solvedNum = solvedNum+1 where id=#{id}
+    </update>
+
+
+
+
+
 
 <!--    根据token更新用户名-->
     <update id="updateUserNameByToken" parameterType="user">

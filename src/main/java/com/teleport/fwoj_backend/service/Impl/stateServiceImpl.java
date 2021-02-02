@@ -135,6 +135,10 @@ public class stateServiceImpl implements stateService {
 
             //解析json进行相关处理
             JSONObject reJo = JSONObject.parseObject(re);
+
+            //标志本次提交是否ac
+            int acFlag = 0;
+
             if(reJo.getString("err") != null)
             {
                 //出错。写入数据库
@@ -193,19 +197,86 @@ public class stateServiceImpl implements stateService {
                         break;
                     }
                 }
+                //没有遇到不ac的情况
                 if(flag == 1)
                 {
                     finalRe = "ac";
+                    acFlag = 1;
                 }
                 //写入state timeCost memoryCost
                 stateMapperObject.updateState(stateId,finalRe,"");
                 stateMapperObject.setTimeCost(stateId,maxTimeCost);
                 stateMapperObject.setMemoryCost(stateId,maxMemoryCost);
-
             }
+            //判题完成。开始处理用户的solvedList,attemptList,solvedNum
+            String solvedList = "";
+            String attemptList = "";
+            if(userMapperObject.getUserSolvedListById(authorId) != null)
+                solvedList = userMapperObject.getUserSolvedListById(authorId);
+            if(userMapperObject.getUserAttemptListById(authorId) != null)
+                attemptList = userMapperObject.getUserAttemptListById(authorId);
 
+            //如果本题ac了，如果solved中没有则需要加入，而且num++
+            if(acFlag == 1)
+            {
+                String acList[] = solvedList.split(",");
+                int acLen = acList.length;
+                //标志solved中是否有该题目
+                int existFlag = 0;
+                if(!solvedList.equals(""))
+                {
+                    for(int j = 0 ; j < acLen ; j ++)
+                    {
+                        if(Integer.parseInt(acList[j]) == problemId)
+                        {
+                            existFlag = 1;
+                            break;
+                        }
+                    }
+                }
+                //solved中没有该题目,加入，num++
+                if(existFlag == 0)
+                {
+                    if(solvedList.equals(""))
+                        userMapperObject.setUserSolvedListById(authorId,String.valueOf(problemId));
+                    else
+                        userMapperObject.setUserSolvedListById(authorId,solvedList+","+ problemId);
+                    userMapperObject.setSolvedNumPlus(authorId);
+                    //题目的totalSubmit++ acSubmit++
+                    problemMapperObject.totalSubmitPlus(problemId);
+                    problemMapperObject.acSubmitPlus(problemId);
+                }
+            }
+            //若本题没ac，如果attempt中没有则需要加入
+            else
+            {
+                String attList[] = attemptList.split(",");
+                int attLen = attList.length;
+                //标志attempt中是否有该题目
+                int existFlag = 0;
+                if(!attemptList.equals(""))
+                {
+                    for(int j = 0 ; j < attLen ; j ++)
+                    {
+                        if(Integer.parseInt(attList[j]) == problemId)
+                        {
+                            existFlag =1;
+                            break;
+                        }
+                    }
+                }
+                //attempt中没有该题目,加入
+                if(existFlag == 0)
+                {
+                    if(attemptList.equals(""))
+                        userMapperObject.setUserAttemptListById(authorId,String.valueOf(problemId));
+                    else
+                        userMapperObject.setUserAttemptListById(authorId,attemptList+","+ problemId);
+                }
+                //题目的totalSubmit++
+                problemMapperObject.totalSubmitPlus(problemId);
+            }
         }
-
     }
 
     public static String judge(String url, JSONObject jsonObject) throws org.apache.http.ParseException, IOException {

@@ -16,7 +16,7 @@
    </select>
     <!--    按id查询详情-->
     <select id="getStateDetail" resultType="state">
-    select state.id,problemId,username as authorName,date,language,state,cast(memoryCost/1024/1024 as decimal(10,0)) as memoryCost,timeCost,code
+    select state.id,problemId,username as authorName,date,language,state,cast(memoryCost/1024/1024 as decimal(10,0)) as memoryCost,compileInfo,timeCost,code
     from state,user where authorId=user.id and state.id=#{id}
     </select>
 

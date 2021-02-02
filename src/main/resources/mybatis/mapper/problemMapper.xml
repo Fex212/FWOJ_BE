@@ -58,6 +58,14 @@
         update problem set title=#{title},des=#{des},input=#{input},output=#{output},inputExample=#{inputExample},outputExample=#{outputExample},hint=#{hint} where id=#{id};
     </update>
 
+<!--    totalSubmit++-->
+    <update id="totalSubmitPlus" parameterType="int">
+        update problem set totalSubmit=totalSubmit+1 where id=#{id}
+    </update>
 
+<!--    acSubmit++-->
+    <update id="acSubmitPlus" parameterType="int">
+        update problem set acSubmit=acSubmit+1 where id=#{id}
+    </update>
 
 </mapper>

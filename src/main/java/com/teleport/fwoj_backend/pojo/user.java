@@ -18,4 +18,7 @@ public class user {
     String github;
     String sign;
     String site;
+    String attemptList;
+    String solvedList;
+    int solvedNum;
 }

@@ -49,8 +49,19 @@ public interface userMapper {
     String getUserTypeById(@Param("id") int id);
     //根据id查看available
     Integer getUserAvailableById(@Param("id") int id);
+
     //根据id查看solvedList
     String getUserSolvedListById(@Param("id") int id);
+    //根据id查看attemptList
+    String getUserAttemptListById(@Param("id") int id);
+    //根据id设置solvedList
+    int setUserSolvedListById(@Param("id") int id,@Param("solvedList") String solvedList);
+    //根据id设置attemptList
+    int setUserAttemptListById(@Param("id") int id,@Param("attemptList") String attemptList);
+    //使solvedNum++
+    int setSolvedNumPlus(@Param("id") int id);
+
+
 
     //通过username查找个人签名
     String getUserSignByUsername(@Param("username") String username);

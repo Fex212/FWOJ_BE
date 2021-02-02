@@ -33,4 +33,11 @@ public interface problemMapper {
     //根据id编辑问题
     int editProblem(String title,String des,String input,String output,String inputExample,String outputExample,
                     String hint,int id);
+
+
+    //totalSubmit++
+    int totalSubmitPlus(int id);
+
+    //acSubmit++
+    int acSubmitPlus(int id);
 }
