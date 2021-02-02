@@ -7,7 +7,7 @@
 
     <!--查询公告列表 id,date,title,authorName-->
     <select id="getAnnList" resultType="ann">
-    select announcement.id,date,title,username as authorName from announcement,user
+    select announcement.id,date,title,authorId,username as authorName from announcement,user
      where authorId=user.id and visible='1' order by id desc limit #{start},#{num}
    </select>
 

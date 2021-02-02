@@ -30,10 +30,7 @@ public class rankServiceImpl implements rankService {
 
         int len = list.size();
         for(int i = 0 ; i < len ; i ++)
-        {
             list.get(i).setRank(i+1+pre*(page-1));
-            list.get(i).setUrl("userCard/"+list.get(i).getId());
-        }
 
         HashMap s = new HashMap();
         s.put("data", list);

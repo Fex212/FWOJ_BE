@@ -16,19 +16,19 @@
    </select>
     <!--    按id查询详情-->
     <select id="getStateDetail" resultType="state">
-    select state.id,problemId,username as authorName,date,language,state,memoryCost,timeCost,code
+    select state.id,problemId,username as authorName,date,language,state,cast(memoryCost/1024/1024 as decimal(10,0)) as memoryCost,timeCost,code
     from state,user where authorId=user.id and state.id=#{id}
     </select>
 
 <!--    插入一条state-->
     <insert id="addState" parameterType="state">
         insert into state (problemId, authorId, date, language, state, memoryCost, timeCost, code)
-        values (#{problemId},#{authorId},#{date},#{language},'Pending','0','0',#{code});
+        values (#{problemId},#{authorId},#{date},#{language},'pd','0','0',#{code});
     </insert>
 
 <!--    查询Pending列表-->
     <select id="getPendingList" resultType="state">
-    select id,problemId,authorId,code from state where state='Pending';
+    select id,problemId,authorId,code from state where state='pd';
    </select>
 
 <!--    updateState-->

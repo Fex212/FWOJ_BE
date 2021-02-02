@@ -13,5 +13,4 @@ public class rank {
     String username;
     String sign;
     int solvedNum;
-    String url;
 }
