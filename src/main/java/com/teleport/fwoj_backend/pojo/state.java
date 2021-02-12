@@ -14,7 +14,7 @@ public class state {
     Integer problemId;
     Integer authorId;
     String authorName;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     Date date;
     String language;
     String state;
