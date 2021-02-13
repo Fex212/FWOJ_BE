@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.teleport.fwoj_backend.mapper.userMapper">
+
+<!--提供用户名密码查找是否有这个人-->
+    <select id="loginCheck" resultType="int">
+    select count(*) from onlinejudge.user where username=#{username} and passwd=#{passwd}
+   </select>
+<!--    根据用户名查找available是否为1-->
+    <select id="getAvailableByUsername" resultType="int">
+        select available from user where username=#{username};
+    </select>
+    <!--    根据用户名设置available-->
+    <update id="setAvailableByUsername" parameterType="user">
+        update user set available = #{available} where username=#{username};
+    </update>
+    <!--    根据id设置available-->
+    <update id="setAvailableById" parameterType="user">
+        update user set available = #{available} where id=#{id};
+    </update>
+    <!--    传入用户名和token，将token写入数据库-->
+    <insert id="createToken" parameterType="user">
+      update onlinejudge.user
+       set token=#{token} where username=#{username}
+   </insert>
+
+
+    <!--    根据token查询用户的用户名-->
+    <select id="getUserNameByToken" resultType="String">
+    select username from onlinejudge.user where token=#{token}
+   </select>
+    <!--    根据token查询用户的Id-->
+    <select id="getUserIdByToken" resultType="java.lang.Integer">
+    select id from onlinejudge.user where token=#{token}
+   </select>
+    <!--    根据token查询用户的Type-->
+    <select id="getUserTypeByToken" resultType="String">
+    select type from onlinejudge.user where token=#{token}
+   </select>
+    <!--    根据token查询用户的email-->
+    <select id="getUserEmailByToken" resultType="String">
+    select email from onlinejudge.user where token=#{token}
+   </select>
+<!--    通过token查找用户solvedList-->
+    <select id="getUserSolvedListByToken" resultType="String">
+        select solvedList from user where token=#{token};
+    </select>
+<!--    /通过token查找用户attemptList-->
+    <select id="getUserAttemptListByToken" resultType="String">
+        select attemptList from user where token=#{token};
+    </select>
+
+
+    <!--    根据email查询用户数量-->
+    <select id="emailExist" resultType="int">
+    select count(id) from onlinejudge.user where email=#{email}
+   </select>
+    <!--    根据username查询用户数量-->
+    <select id="usernameExist" resultType="int">
+    select count(id) from onlinejudge.user where username=#{username}
+   </select>
+    <!--    根据email查询除自己之外的用户数量-->
+    <select id="getEmailNumExpect" resultType="int">
+    select count(id) from onlinejudge.user where email=#{email} and id!=#{id}
+   </select>
+    <!--    根据username查询除自己之外的用户数量-->
+    <select id="getUsernameNumExpect" resultType="int">
+    select count(id) from onlinejudge.user where username=#{username} and id!=#{id}
+   </select>
+    <!--    传入email username passwd，写入user表-->
+    <insert id="register" parameterType="user">
+    insert onlinejudge.user(email,username,passwd,type,available,sign,site,github)
+    values(#{email},#{username},#{passwd},'user','1','这里没有签名档','about:blank','about:blank')
+    </insert>
+<!--    获得用户列表-->
+    <select id="getUserList" resultType="user">
+    select id,username,email,type,available from user where username like "%"#{key}"%" or email like "%"#{key}"%" order by id desc limit #{start},#{num}
+   </select>
+<!--    获取用户总数-->
+    <select id="getUserNum" resultType="int">
+    select count(id) from user;
+   </select>
+<!--    查询token对应的type-->
+    <select id="getTypeByToken" resultType="String">
+        select type from user where token=#{token}
+    </select>
+<!--    根据用户id查找详细信息-->
+    <select id="getUserDetailById" resultType="user">
+        select id,username,email,type from user where id=#{id}
+    </select>
+    <!--    更新用户信息email username type des passwd-->
+    <update id="editUserDetail" parameterType="user">
+        update user set email=#{email},username=#{username},type=#{type},passwd=#{passwd} where id=#{id}
+    </update>
+    <!--    更新用户信息email username type des -->
+    <update id="editUserDetailWithoutPasswd" parameterType="user">
+        update user set email=#{email},username=#{username},type=#{type} where id=#{id}
+    </update>
+    <!--    根据id删除用户-->
+    <delete id="deleteUser" parameterType="int">
+        delete from user where id=#{id}
+    </delete>
+<!--    根据用户名更新密码-->
+    <update id="updatePassword" parameterType="user">
+        update user set passwd=#{passwd} where username=#{username}
+    </update>
+
+<!--    通过username查找个人签名-->
+    <select id="getUserSignByUsername" resultType="String">
+        select sign from user where username=#{username}
+    </select>
+<!--    通过username查找site-->
+    <select id="getUserSiteByUsername" resultType="String">
+        select site from user where username=#{username}
+    </select>
+<!--    通过username查找github-->
+    <select id="getUserGithubByUsername" resultType="String">
+        select github from user where username=#{username}
+    </select>
+    <!--    通过username查找type-->
+    <select id="getUserTypeByUsername" resultType="String">
+        select type from user where username=#{username}
+    </select>
+<!--   根据username查找solvedList-->
+    <select id="getUserSolvedListByUsername" resultType="String">
+        select solvedList from user where username=#{username}
+    </select>
+<!--    通过token查找密码-->
+    <select id="getUserPasswdByUsername" resultType="String">
+        select passwd from user where username=#{username}
+    </select>
+
+<!--    根据id查找username-->
+    <select id="getUserNameById" resultType="String">
+        select username from user where id=#{id}
+    </select>
+    <!--    根据id查看签名档-->
+    <select id="getUserSignById" resultType="String">
+        select sign from user where id=#{id}
+    </select>
+    <!--    根据id查看个人网站-->
+    <select id="getUserSiteById" resultType="String">
+        select site from user where id=#{id}
+    </select>
+<!--    根据id查看github-->
+    <select id="getUserGithubById" resultType="String">
+        select github from user where id=#{id}
+    </select>
+<!--    根据id查看type-->
+    <select id="getUserTypeById" resultType="String">
+        select type from user where id=#{id}
+    </select>
+<!--    根据id查看available-->
+    <select id="getUserAvailableById" resultType="int">
+        select available from user where id=#{id}
+    </select>
+
+
+
+<!--    根据id查看solvedList-->
+    <select id="getUserSolvedListById" resultType="String">
+        select solvedList from user where id=#{id}
+    </select>
+<!--    根据id查看attemptList-->
+    <select id="getUserAttemptListById" resultType="String">
+        select attemptList from user where id=#{id}
+    </select>
+
+    <!--    根据id设置solvedList-->
+    <update id="setUserSolvedListById" parameterType="user">
+        update user set solvedList=#{solvedList} where id=#{id}
+    </update>
+
+    <!--    根据id设置attemptList-->
+    <update id="setUserAttemptListById" parameterType="user">
+        update user set attemptList=#{attemptList} where id=#{id}
+    </update>
+
+<!--    使solvedNum++-->
+    <update id="setSolvedNumPlus" parameterType="int">
+        update user set solvedNum = solvedNum+1 where id=#{id}
+    </update>
+
+
+
+
+
+
+<!--    根据token更新用户名-->
+    <update id="updateUserNameByToken" parameterType="user">
+        update user set username=#{username} where token=#{token}
+    </update>
+
+    <!--    根据token更新sign-->
+    <update id="updateUserSignByToken" parameterType="user">
+        update user set sign=#{sign} where token=#{token}
+    </update>
+    <!--    根据token更新site-->
+    <update id="updateUserSiteByToken" parameterType="user">
+        update user set site=#{site} where token=#{token}
+    </update>
+    <!--    根据token更新github-->
+    <update id="updateUserGithubByToken" parameterType="user">
+        update user set github=#{github} where token=#{token}
+    </update>
+
+</mapper>
