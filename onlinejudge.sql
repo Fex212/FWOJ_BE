@@ -11,7 +11,7 @@
  Target Server Version : 50717
  File Encoding         : 65001
 
- Date: 02/02/2021 22:04:04
+ Date: 11/03/2021 15:51:49
 */
 
 SET NAMES utf8mb4;
@@ -29,7 +29,7 @@ CREATE TABLE `announcement` (
   `authorId` int(11) DEFAULT '0',
   `visible` int(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of announcement
@@ -48,7 +48,7 @@ INSERT INTO `announcement` VALUES (11, '2020-12-08 10:39:10', '关于gets()', '�
 INSERT INTO `announcement` VALUES (12, '2020-12-08 10:39:08', '赛事通告q', '我们的国庆新生训练即将开始，题目已经就绪，希望同学们多多参与，这个对编程学习有帮助。\n做题中碰到的问题，都可以找管理询问。\n希望同学们可以在班里啥的帮着宣传一下哈，争取更多人的参与。\n\n祝同学们做题顺利，假期快乐。\n(附此次训练赛网址：\nhttp://724vector.cn:82/contest/45\n)', 1, 1);
 INSERT INTO `announcement` VALUES (15, '2020-12-08 11:32:24', 'test', 'success', 1, 1);
 INSERT INTO `announcement` VALUES (16, '2020-12-23 18:45:04', 't', 'test', 0, 0);
-INSERT INTO `announcement` VALUES (17, '2020-12-23 18:46:42', '', '', 0, 0);
+INSERT INTO `announcement` VALUES (18, '2021-02-12 18:36:02', '111', '1111', 1, 1);
 COMMIT;
 
 -- ----------------------------
@@ -108,14 +108,14 @@ CREATE TABLE `problem` (
 -- Records of problem
 -- ----------------------------
 BEGIN;
-INSERT INTO `problem` VALUES (1, '奶牛排队', '奶牛排队', '这里是输入', '这里是输出', '无需输入', '这里是输出', '没有提示', 1, 3, '2020-11-04 13:58:32', 1, 1);
+INSERT INTO `problem` VALUES (1, '奶牛排队', '奶牛排队', '这里是输入', '这里是输出', '无需输入', '这里是输出', '没有提示', 1, 5, '2020-11-04 13:58:32', 1, 1);
 INSERT INTO `problem` VALUES (2, 'A+B for Input-Output Practice (1)', 'our task is to Calculate a + b. Too easy?! Of course! I specially designed the problem for acm beginners. You must have found that some problems have the same titles with this one, yes, all these problems were designed for the same aim', 'he input will consist of a series of pairs of integers a and b, separated by a space, one pair of integers per line.', 'For each pair of input integers a and b you should output the sum of a and b in one line, and with one line of output for each line in input.', '1 5\n10 20', '6\n30', '这是一个求两数之和的题目，输入多对用空格分开的两个数a b，输出a+b的和，每一对数据的和占一行。', 0, 0, '2020-11-04 13:58:32', 1, 0);
 INSERT INTO `problem` VALUES (3, 'A+B for Input-Output Practice (1)', 'The first line integer means the number of input integer a and b. Your task is to Calculate a + b', 'Your task is to Calculate a + b. The first line integer means the numbers of pairs of input integers.', 'For each pair of input integers a and b you should output the sum of a and b in one line, and with one line of output for each line in input.', '2\n1 5\n10 20', '6\n30', '（google翻译？看数据猜题目？）', 0, 0, '2020-11-04 13:58:32', 1, 0);
 INSERT INTO `problem` VALUES (4, '帽子戏法', '三个人，竖着站成一排。有五个帽子，三个蓝色，两个红色，每人带一个，各自不准看自己的颜色。\n\n然后问第一个人带的什么颜色的帽子，他说不知道，然后又问第二个人带的什么颜色的帽子，同样说不知道，又问第三个人带的是什么颜色的帽子，他说我知道。\n\n问第三个人带的是什么色帽子?\n\n（第一个人站在排的最后,他可以看见前二个人的帽子的颜色)', '无', '如果红色输出“red”，如果蓝色输出“blue”', '无', '输出样例不见了\n', '无', 0, 0, '2020-11-04 13:58:32', 4, 0);
 INSERT INTO `problem` VALUES (5, 'A+B for Input-Output Practice (1)', 'The first line integer means the number of input integer a and b. Your task is to Calculate a + b', 'Your task is to Calculate a + b. The first line integer means the numbers of pairs of input integers.', 'For each pair of input integers a and b you should output the sum of a and b in one line, and with one line of output for each line in input.', '2\n1 5\n10 20', '无\n30', '（google翻译？看数据猜题目？）', 0, 0, '2020-11-04 13:58:35', 4, 0);
 INSERT INTO `problem` VALUES (6, 'A+B for Input-Output Practice (4)', '三个人，竖着站成一排。有五个帽子，三个蓝色，两个红色，每人带一个，各自不准看自己的颜色。\n\n然后问第一个人带的什么颜色的帽子，他说不知道，然后又问第二个人带的什么颜色的帽子，同样说不知道，又问第三个人带的是什么颜色的帽子，他说我知道。\n\n问第三个人带的是什么色帽子?\n\n（第一个人站在排的最后,他可以看见前二个人的帽子的颜色)', '无', '如果红色输出“red”，如果蓝色输出“blue”', '无', '输出样例不见了\n', '无', 0, 0, '2020-11-04 13:58:32', 4, 0);
 INSERT INTO `problem` VALUES (7, 'A+B for Input-Output Practice (5)', 'The first line integer means the number of input integer a and b. Your task is to Calculate a + b', 'Your task is to Calculate a + b. The first line integer means the numbers of pairs of input integers.', 'For each pair of input integers a and b you should output the sum of a and b in one line, and with one line of output for each line in input.', '2\n1 5\n10 20', '6\n30', '（google翻译？看数据猜题目？）', 0, 0, '2020-11-04 13:58:32', 1, 0);
-INSERT INTO `problem` VALUES (8, 'A+B for Input-Output Practice (6)', '三个人，竖着站成一排。有五个帽子，三个蓝色，两个红色，每人带一个，各自不准看自己的颜色。\n\n然后问第一个人带的什么颜色的帽子，他说不知道，然后又问第二个人带的什么颜色的帽子，同样说不知道，又问第三个人带的是什么颜色的帽子，他说我知道。\n\n问第三个人带的是什么色帽子?\n\n（第一个人站在排的最后,他可以看见前二个人的帽子的颜色)', 's', '这里是输出2', '无', '这里是输出2', '无', 1, 2, '2020-11-04 13:58:32', 1, 1);
+INSERT INTO `problem` VALUES (8, 'A+B for Input-Output Practice (6)', '三个人，竖着站成一排。有五个帽子，三个蓝色，两个红色，每人带一个，各自不准看自己的颜色。\n\n然后问第一个人带的什么颜色的帽子，他说不知道，然后又问第二个人带的什么颜色的帽子，同样说不知道，又问第三个人带的是什么颜色的帽子，他说我知道。\n\n问第三个人带的是什么色帽子?\n\n（第一个人站在排的最后,他可以看见前二个人的帽子的颜色)', 's', '这里是输出2', '无', '这里是输出2', '无', 1, 13, '2020-11-04 13:58:32', 1, 1);
 INSERT INTO `problem` VALUES (9, 'A+B for Input-Output Practice (7)', 'The first line integer means the number of input integer a and b. Your task is to Calculate a + b', 'Your task is to Calculate a + b. The first line integer means the numbers of pairs of input integers.', 'For each pair of input integers a and b you should output the sum of a and b in one line, and with one line of output for each line in input.', '2\n1 5\n10 20', '6\n30', '（google翻译？看数据猜题目？）', 0, 0, '2020-11-04 13:58:32', 1, 0);
 INSERT INTO `problem` VALUES (10, 'A+B for Input-Output Practice (8)', '三个人，竖着站成一排。有五个帽子，三个蓝色，两个红色，每人带一个，各自不准看自己的颜色。\n\n然后问第一个人带的什么颜色的帽子，他说不知道，然后又问第二个人带的什么颜色的帽子，同样说不知道，又问第三个人带的是什么颜色的帽子，他说我知道。\n\n问第三个人带的是什么色帽子?\n\n（第一个人站在排的最后,他可以看见前二个人的帽子的颜色)', '无', '如果红色输出“red”，如果蓝色输出“blue”', '无', '输出样例不见了\n', '无1', 0, 0, '2020-11-04 13:58:32', 1, 0);
 INSERT INTO `problem` VALUES (11, 'A+B for Input-Output Practice (9)', 'The first line integer means the number of input integer a and b. Your task is to Calculate a + b', 'Your task is to Calculate a + b. The first line integer means the numbers of pairs of input integers.', 'For each pair of input integers a and b you should output the sum of a and b in one line, and with one line of output for each line in input.', '2\n1 5\n10 20', '6\n30', '（google翻译？看数据猜题目？）', 0, 0, '2020-11-04 13:58:32', 4, 0);
@@ -138,7 +138,7 @@ CREATE TABLE `state` (
   `timeCost` int(11) DEFAULT '0',
   `code` varchar(5005) DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1078 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1091 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of state
@@ -150,6 +150,19 @@ INSERT INTO `state` VALUES (1074, 1, 1, '2021-02-02 12:49:35', 'C++', 'ac', '', 
 INSERT INTO `state` VALUES (1075, 1, 1, '2021-02-02 12:50:00', 'C++', 'ac', '', 3497984, 1, '#include <iostream>\nusing namespace std;\nint main()\n{\n//    int a,b;\n//    while(cin >> a >> b)\n//        cout << a+b << endl;\n    cout << \"这里是输出\";\n    return 0;\n}\n');
 INSERT INTO `state` VALUES (1076, 8, 1, '2021-02-02 12:50:23', 'C++', 'ac', '', 3407872, 0, '#include <iostream>\nusing namespace std;\nint main()\n{\n//    int a,b;\n//    while(cin >> a >> b)\n//        cout << a+b << endl;\n    cout << \"这里是输出2\";\n    return 0;\n}\n');
 INSERT INTO `state` VALUES (1077, 8, 1, '2021-02-02 12:50:47', 'C++', 'wa', '', 3440640, 2, '#include <iostream>\nusing namespace std;\nint main()\n{\n//    int a,b;\n//    while(cin >> a >> b)\n//        cout << a+b asdasd<< endl;\n    cout << \"这里是输出\";\n    return 0;\n}\n');
+INSERT INTO `state` VALUES (1078, 8, 1, '2021-02-02 14:08:32', 'C++', 'se', 'failed to create runtime dir', 0, 0, '\n\n#include <iostream>\nusing namespace std;\nint main()\n{\n// int a,b;\n// while(cin >> a >> b)\n// cout << a+b asdasd<< endl;\ncout << \"这里是输出\";\nreturn 0;\n}\n\n');
+INSERT INTO `state` VALUES (1079, 8, 1, '2021-02-02 14:09:40', 'C++', 'wa', '', 3289088, 1, '\n\n#include <iostream>\nusing namespace std;\nint main()\n{\n// int a,b;\n// while(cin >> a >> b)\n// cout << a+b asdasd<< endl;\ncout << \"这里是输出\";\nreturn 0;\n}\n\n');
+INSERT INTO `state` VALUES (1080, 8, 1, '2021-02-02 14:10:09', 'C++', 'wa', '', 3440640, 0, '\n\n#include <iostream>\nusing namespace std;\nint main()\n{\n// int a,b;\n// while(cin >> a >> b)\n// cout << a+b asdasd<< endl;\ncout << \"这里是输出\";\nreturn 0;\n}\n\n');
+INSERT INTO `state` VALUES (1081, 8, 1, '2021-02-12 10:13:51', 'C++', 'ce', '/judger/run/28b57f88219a4a7aaa9d5ef2c7a7c561/main.c:1:1: error: expected unqualified-id before numeric constant\n 111\n ^~~', 0, 0, '111');
+INSERT INTO `state` VALUES (1082, 8, 1, '2021-02-12 10:21:56', 'C++', 'ce', '/judger/run/7c7ca998225f467d9737130e361421c8/main.c:1:1: error: expected unqualified-id before numeric constant\n 111\n ^~~', 0, 0, '111');
+INSERT INTO `state` VALUES (1083, 8, 1, '2021-02-12 10:23:07', 'C++', 'ce', '/judger/run/7c4c8ac4cd2a4a2b8e2bfa289822eae3/main.c:1:1: error: \'asdasd\' does not name a type\n asdasd\n ^~~~~~', 0, 0, 'asdasd');
+INSERT INTO `state` VALUES (1084, 1, 1, '2021-02-12 10:23:52', 'C++', 'ce', '/judger/run/3f6bcd571348464db81823f0cb46f914/main.c:1:1: error: expected unqualified-id before numeric constant\n 111\n ^~~', 0, 0, '111');
+INSERT INTO `state` VALUES (1085, 8, 1, '2021-02-12 10:25:00', 'C++', 'ce', '/judger/run/055cab3161034b3995bf41c05d56db1e/main.c:1:1: error: \'asdas\' does not name a type\n asdas\n ^~~~~', 0, 0, 'asdas');
+INSERT INTO `state` VALUES (1086, 1, 1, '2021-02-12 10:25:22', 'C++', 'ce', '/judger/run/8fd380bb2a854fa9b9e15b482e4c36dc/main.c:1:1: error: \'asdasd\' does not name a type\n asdasd\n ^~~~~~', 0, 0, 'asdasd');
+INSERT INTO `state` VALUES (1087, 8, 1, '2021-02-12 10:28:02', 'C++', 'ce', '/judger/run/288a3eefee9f4a74b584cb7c9c156d12/main.c:1:1: error: expected unqualified-id before numeric constant\n 123123\n ^~~~~~', 0, 0, '123123');
+INSERT INTO `state` VALUES (1088, 8, 1, '2021-02-12 18:31:07', 'C++', 'ce', '/judger/run/fee86ebe76de46b2bdc842af631a20ec/main.c:1:1: error: \'asdasd\' does not name a type\n asdasd\n ^~~~~~', 0, 0, 'asdasd');
+INSERT INTO `state` VALUES (1089, 8, 1, '2021-02-12 18:32:10', 'C++', 'ce', '/judger/run/b673f3ad31fc4304bbac0e61ea639204/main.c:1:1: error: \'aa\' does not name a type\n aa\n ^~', 0, 0, 'aa');
+INSERT INTO `state` VALUES (1090, 8, 1, '2021-02-12 18:41:41', 'C++', 'ce', '/judger/run/3f9af3da25064da4bf6da8d6ad4b3172/main.c:1:1: error: \'test\' does not name a type\n test\n ^~~~', 0, 0, 'test');
 COMMIT;
 
 -- ----------------------------
