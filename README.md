@@ -10,6 +10,7 @@
 
 请自行安装docker和docker-compose，在项目根目录运行docker-compose up -d即可启动判题服务，建议在Linux环境下运行。
 
+测试样例格式: 1.in 1.out 2.in 2.out 以此类推，打包成zip上传即可
 
 前端地址：https://github.com/teleport-10032/FWOJ_FE
 
