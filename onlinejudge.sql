@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : Main
+ Source Server         : test
  Source Server Type    : MySQL
  Source Server Version : 50717
  Source Host           : localhost:3306
- Source Schema         : onlineJudge
+ Source Schema         : onlinejudge
 
  Target Server Type    : MySQL
  Target Server Version : 50717
  File Encoding         : 65001
 
- Date: 11/03/2021 15:51:49
+ Date: 14/04/2021 21:06:39
 */
 
 SET NAMES utf8mb4;
@@ -133,7 +133,7 @@ CREATE TABLE `state` (
   `date` datetime DEFAULT NULL,
   `language` varchar(255) DEFAULT '',
   `state` varchar(255) DEFAULT '',
-  `compileInfo` varchar(1005) DEFAULT '',
+  `compileInfo` varchar(5005) DEFAULT '',
   `memoryCost` int(11) DEFAULT '0',
   `timeCost` int(11) DEFAULT '0',
   `code` varchar(5005) DEFAULT '',
