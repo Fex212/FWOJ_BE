@@ -6,7 +6,9 @@
 
 也可以在根目录使用`mvn spring-boot:run`命令运行。
 
-判题服务默认使用QDU的judge-server(https://github.com/QingdaoU/JudgeServer)，若想使用FWOJ_Judger(https://github.com/teleport-10032/FWOJ_Judger)则需要在stateServiceImpl中将fWOJ_Judger的judgeServer()函数注释删掉，顺手注释QDU的judgeServer函数。
+判题服务默认使用QDU的judge-server(https://github.com/QingdaoU/JudgeServer)。
+若想使用FWOJ_Judger(https://github.com/teleport-10032/FWOJ_Judger)
+则需要在stateServiceImpl中将fWOJ_Judger的judgeServer()函数注释删掉，顺手注释QDU的judgeServer函数。
 
 请自行安装docker和docker-compose，在项目根目录运行docker-compose up -d即可启动判题服务，建议在Linux环境下运行。
 
