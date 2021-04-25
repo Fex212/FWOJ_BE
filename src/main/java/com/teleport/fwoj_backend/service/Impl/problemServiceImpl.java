@@ -238,6 +238,7 @@ public class problemServiceImpl implements problemService {
         return mapper.writeValueAsString(s);
     }
 
+    //QDU Judger
     @Override
     public String uploadTestCaseById(@RequestParam("file") MultipartFile file, String token, int id) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
@@ -291,6 +292,7 @@ public class problemServiceImpl implements problemService {
                 }
                 //一切正常，添加info
                 String info = "";
+                String infoData = "";
                 info += "{\n";
                 info += "    \"spj\": false,\n";
                 info += "    \"test_cases\": {\n";
@@ -323,12 +325,15 @@ public class problemServiceImpl implements problemService {
                 }
 
                 info += "    }\n}";
+                infoData += cnt;
 
                 try {
                     BufferedWriter out = new BufferedWriter(new FileWriter(UPLOAD_FOLDER +"/info"));
                     out.write(info);
                     out.close();
-//                    System.out.println("success");
+                    BufferedWriter out2 = new BufferedWriter(new FileWriter(UPLOAD_FOLDER +"/info.data"));
+                    out2.write(infoData);
+                    out2.close();
                 } catch (IOException e) {
                 }
 
@@ -344,6 +349,81 @@ public class problemServiceImpl implements problemService {
 
         return mapper.writeValueAsString(s);
     }
+
+    //FWOJ_Judger
+    /*
+    @Override
+    public String uploadTestCaseById(@RequestParam("file") MultipartFile file, String token, int id) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap s = new HashMap();
+
+        //0 正常 -1 越权 -2 失败 -3 文件格式错误
+        if(userMapperObject.getUserTypeByToken(token) != null &&  userMapperObject.getUserTypeByToken(token).equals("admin")) {
+            if (Objects.isNull(file)) {
+                s.put("error", "-1");
+                return mapper.writeValueAsString(s);
+            }
+
+            //若存在题目文件夹删除
+            String UPLOAD_FOLDER = "./uploadFolder/test_case/" + id + "/";
+            File folder = new File(UPLOAD_FOLDER);
+            if(folder.exists())
+                deleteDir(folder);
+
+            //写入压缩包文件
+            try {
+                byte[] bytes = file.getBytes();
+                Path path = Paths.get(UPLOAD_FOLDER  + "test_case_"+ id +".zip");
+                if (!Files.isWritable(path)) {
+                    Files.createDirectories(Paths.get(UPLOAD_FOLDER));
+                }
+                Files.write(path, bytes);
+                //解压到同名文件夹
+                File f1 = new File(UPLOAD_FOLDER  + "test_case_"+ id +".zip");
+                unZip(f1,UPLOAD_FOLDER);
+                //删除压缩包
+                if (f1.exists()) {
+                    f1.delete();
+                }
+                //删除__MACOSX文件夹
+//                System.out.println(UPLOAD_FOLDER+"__MACOSX");
+                File f2 = new File(UPLOAD_FOLDER +"/__MACOSX");
+                if(f2.exists())
+                    f2.delete();
+
+                //检查是否是1.in 1.out 2.in 2.out这样排下去的
+                int cnt = 0;
+                for(int i = 1; i <= 1000 ; i ++)
+                {
+                    File f3 = new File(UPLOAD_FOLDER  +"/" + i + ".in");
+                    File f4 = new File(UPLOAD_FOLDER  +"/" + i + ".out");
+                    //如果都存在，cnt++
+                    if(f3.exists() && f4.exists())
+                        cnt ++;
+                    else
+                        break;
+                }
+                //一切正常，添加info
+                String info = "";
+                info += cnt;
+                try {
+                    BufferedWriter out = new BufferedWriter(new FileWriter(UPLOAD_FOLDER +"/info.data"));
+                    out.write(info);
+                    out.close();
+//                    System.out.println("success");
+                } catch (IOException e) {
+                }
+                s.put("error", "0");
+            } catch (IOException e) {
+                s.put("error", "-2");
+            }
+        }
+        else
+            s.put("error", "-1");
+
+        return mapper.writeValueAsString(s);
+    }
+    */
 
     //0 正常 1 越权 2 无数据
     @Override

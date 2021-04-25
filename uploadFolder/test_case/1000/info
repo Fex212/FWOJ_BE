@@ -2,9 +2,9 @@
     "spj": false,
     "test_cases": {
         "1": {
-            "stripped_output_md5": "de2daec6999b8f819f0c000a2031c6f6",
+            "stripped_output_md5": "51a9a6bbb3df511d396911003bfc399b",
             "input_size": 0,
-            "output_size": 6,
+            "output_size": 12,
             "input_name": "1.in",
             "output_name": "1.out"
         }

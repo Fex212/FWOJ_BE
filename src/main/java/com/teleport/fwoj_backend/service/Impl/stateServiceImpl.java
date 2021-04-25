@@ -79,7 +79,7 @@ public class stateServiceImpl implements stateService {
             int isVisible = problemMapperObject.getProblemVisibleById(problemId);
             if (isVisible == 1
                     &&
-                    stateMapperObject.addState(problemId, authorId, date, language, code) == 1)
+                    stateMapperObject.addState(problemId, authorId, date, language, code.trim()) == 1)
             {
                 s.put("error", "0");
             }
@@ -89,6 +89,7 @@ public class stateServiceImpl implements stateService {
         return mapper.writeValueAsString(s);
     }
 
+    //QDU_Judger
     @Override
     public void judgeServer() throws JSONException, IOException, ParseException {
 
@@ -278,6 +279,224 @@ public class stateServiceImpl implements stateService {
             }
         }
     }
+
+    /*
+    //FWOJ_Judger
+    @Override
+    public void judgeServer() throws JSONException, IOException, ParseException {
+
+        List<state> list = stateMapperObject.getPendingList();
+
+        int len = list.size();
+        for(int i = 0 ; i < len ; i ++)
+        {
+            int stateId = list.get(i).getId();
+            int problemId = list.get(i).getProblemId();
+            int authorId = list.get(i).getAuthorId();
+            String code = list.get(i).getCode();
+
+            String re = "";
+            String url = "http://localhost:8081";
+            CloseableHttpClient client = HttpClients.createDefault();
+            HttpPost httpPost = new HttpPost(url);
+
+            String body = "1teleports" + code + "1teleporte2teleports" + problemId + "2teleporte";
+            StringEntity s = new StringEntity(body, "utf-8");
+            httpPost.setEntity(s);
+
+            CloseableHttpResponse response = client.execute(httpPost);
+            HttpEntity entity = response.getEntity();
+            if (entity != null) {
+                re = EntityUtils.toString(entity, "UTF-8");
+            }
+            EntityUtils.consume(entity);
+            response.close();
+            //标志本次提交是否ac
+            int acFlag = 0;
+
+            if(re.equals("") || re.length() < 7)
+            {
+                //testcase not found or system error
+                stateMapperObject.updateState(stateId,"se","systemError or testcase not found");
+                stateMapperObject.setTimeCost(stateId,0);
+                stateMapperObject.setMemoryCost(stateId,0);
+
+            }
+            else if(!(re.substring(0,6).equals("result")))
+            {
+                //ce。写入数据库
+                stateMapperObject.updateState(stateId,"ce",re);
+                stateMapperObject.setTimeCost(stateId,0);
+                stateMapperObject.setMemoryCost(stateId,0);
+            }
+            else
+            {
+                LinkedList<LinkedList<String>> reList = new LinkedList<>();
+                String row[] = re.split("\n");
+                int rowLen = row.length;
+
+                for(int j = 0 ; j < rowLen ; j++)
+                {
+                    String mapp[] = row[j].split(",");
+                    int mappLen = mapp.length;
+                    LinkedList<String> tmpList = new LinkedList<>();
+                    for(int k = 0 ; k < mappLen ; k ++) {
+                        String tmp[] = mapp[k].split(":");
+                        tmpList.add(tmp[1]+" ");
+                    }
+                    reList.add(tmpList);
+                }
+//                int reListLen = reList.size();
+
+//                for(int j = 0 ; j < reListLen ; j ++) {
+//                    LinkedList<String> tmpList = reList.get(j);
+//                    int tmpListLen = tmpList.size();
+//                    for(int k = 0 ;k < tmpListLen ; k ++){
+//                        System.out.print(tmpList.get(k) + " ");
+//                    }
+//                    System.out.println();
+//                }
+                //编译成功
+                int arrLen = reList.size();
+                //综合所有的测试样例，判断出本题的判题结果
+                //AC 0 TLE 1 RE 4 WA -1
+                //一个RE则RE 一个TLE则TLE 一个WA则WA 全部AC则AC
+                String finalRe = "";
+                int flag = 1;
+                int maxTimeCost = -1;
+                int maxMemoryCost = -1;
+
+                for(int j = 0 ; j < arrLen ; j++)
+                {
+                    LinkedList<String> tmpList = reList.get(j);
+                    String result = tmpList.get(0).trim();
+                    int cpu_time = Integer.parseInt(tmpList.get(1).trim());
+                    int memory = Integer.parseInt(tmpList.get(2).trim());
+
+                    if(maxTimeCost < cpu_time)
+                        maxTimeCost = cpu_time;
+                    if(maxMemoryCost < memory)
+                        maxMemoryCost = memory;
+
+                    if(result.equals("RE"))
+                    {
+                        finalRe = "re";
+                        flag = 0;
+                        break;
+                    }
+                    else if(result.equals("TLE"))
+                    {
+                        finalRe = "tle";
+                        flag = 0;
+                        break;
+                    }
+                    else if(result.equals("WA"))
+                    {
+                        finalRe = "wa";
+                        flag = 0;
+                        break;
+                    }
+                    else if(result.equals("MLE"))
+                    {
+                        finalRe = "mle";
+                        flag = 0;
+                        break;
+                    }
+                    else if(result.equals("OLE"))
+                    {
+                        finalRe = "ole";
+                        flag = 0;
+                        break;
+                    }
+                    else if(result.equals("SE"))
+                    {
+                        finalRe = "se";
+                        flag = 0;
+                        break;
+                    }
+                }
+                //没有遇到不ac的情况
+                if(flag == 1)
+                {
+                    finalRe = "ac";
+                    acFlag = 1;
+                }
+                //写入state timeCost memoryCost
+                stateMapperObject.updateState(stateId,finalRe,"");
+                stateMapperObject.setTimeCost(stateId,maxTimeCost);
+                stateMapperObject.setMemoryCost(stateId,maxMemoryCost);
+            }
+            //判题完成。开始处理用户的solvedList,attemptList,solvedNum
+            String solvedList = "";
+            String attemptList = "";
+            if(userMapperObject.getUserSolvedListById(authorId) != null)
+                solvedList = userMapperObject.getUserSolvedListById(authorId);
+            if(userMapperObject.getUserAttemptListById(authorId) != null)
+                attemptList = userMapperObject.getUserAttemptListById(authorId);
+
+            //如果本题ac了，如果solved中没有则需要加入，而且num++
+            if(acFlag == 1)
+            {
+                String acList[] = solvedList.split(",");
+                int acLen = acList.length;
+                //标志solved中是否有该题目
+                int existFlag = 0;
+                if(!solvedList.equals(""))
+                {
+                    for(int j = 0 ; j < acLen ; j ++)
+                    {
+                        if(Integer.parseInt(acList[j]) == problemId)
+                        {
+                            existFlag = 1;
+                            break;
+                        }
+                    }
+                }
+                //solved中没有该题目,加入，num++
+                if(existFlag == 0)
+                {
+                    if(solvedList.equals(""))
+                        userMapperObject.setUserSolvedListById(authorId,String.valueOf(problemId));
+                    else
+                        userMapperObject.setUserSolvedListById(authorId,solvedList+","+ problemId);
+                    userMapperObject.setSolvedNumPlus(authorId);
+                    //题目的totalSubmit++ acSubmit++
+                    problemMapperObject.totalSubmitPlus(problemId);
+                    problemMapperObject.acSubmitPlus(problemId);
+                }
+            }
+            //若本题没ac，如果attempt中没有则需要加入
+            else
+            {
+                String attList[] = attemptList.split(",");
+                int attLen = attList.length;
+                //标志attempt中是否有该题目
+                int existFlag = 0;
+                if(!attemptList.equals(""))
+                {
+                    for(int j = 0 ; j < attLen ; j ++)
+                    {
+                        if(Integer.parseInt(attList[j]) == problemId)
+                        {
+                            existFlag =1;
+                            break;
+                        }
+                    }
+                }
+                //attempt中没有该题目,加入
+                if(existFlag == 0)
+                {
+                    if(attemptList.equals(""))
+                        userMapperObject.setUserAttemptListById(authorId,String.valueOf(problemId));
+                    else
+                        userMapperObject.setUserAttemptListById(authorId,attemptList+","+ problemId);
+                }
+                //题目的totalSubmit++
+                problemMapperObject.totalSubmitPlus(problemId);
+            }
+        }
+    }
+    */
 
     public static String judge(String url, JSONObject jsonObject) throws org.apache.http.ParseException, IOException {
         String body = "";
