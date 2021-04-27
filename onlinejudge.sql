@@ -11,7 +11,7 @@
  Target Server Version : 50717
  File Encoding         : 65001
 
- Date: 25/04/2021 19:17:43
+ Date: 27/04/2021 17:58:25
 */
 
 SET NAMES utf8mb4;
@@ -50,6 +50,15 @@ INSERT INTO `announcement` VALUES (1013, '2021-04-25 18:25:05', '测试公告', 
 COMMIT;
 
 -- ----------------------------
+-- Table structure for pending
+-- ----------------------------
+DROP TABLE IF EXISTS `pending`;
+CREATE TABLE `pending` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1097 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
 -- Table structure for problem
 -- ----------------------------
 DROP TABLE IF EXISTS `problem`;
@@ -75,7 +84,7 @@ CREATE TABLE `problem` (
 -- ----------------------------
 BEGIN;
 INSERT INTO `problem` VALUES (1000, '奶牛排队', '样例输出即可。', '无需输入', 'this is out', '无需输入', 'this is out', 'no hint', 1, 2, '2020-11-04 13:58:32', 1000, 1);
-INSERT INTO `problem` VALUES (1013, 'A+B for Input-Output Practice', 'our task is to Calculate a + b. Too easy?! Of course! I specially designed the problem for acm beginners. You must have found that some problems have the same titles with this one, yes, all these problems were designed for the same aim。\nthe same line:our task is to Calculate a + b. Too easy?! Of course! I specially designed the problem for acm beginners. You must have found that some problems have the same titles with this one, yes, all these problems were designed for the same aim。', 'The input will consist of a series of pairs of integers a and b, separated by a space, one pair of integers per line.\n\n\n', 'For each pair of input integers a and b you should output the sum of a and b in one line, and with one line of output for each line in input.\n\n\n', '1 5\n10 20', '6\n30', '这是一个求两数之和的题目，输入多对用空格分开的两个数a b，输出a+b的和，每一对数据的和占一行。\n编写代码时需要注意的是，由于没有指出有多少对输入数据，因此我们可以编写如下代码：\nC语言\n#include <stdio.h>\nint main() //把main函数定义成int类型\n{\n    int a,b;\n    while(scanf(\"%d %d\",&a, &b) != EOF) // 输入结束时，scanf函数返回值为EOF，即没有数据输入时则退出while循环\n        printf(\"%d\\n\",a+b);\n    return 0; //返回值为0\n}\nC++\n#include <iostream> //注意头文件的使用方法\nusing namespace std;\nint main()\n{\n    int a,b;\n    while(cin >> a >> b)\n        cout << a+b << endl;\n    return 0;\n}\n这道题目用以熟悉oj上的做题方式。\n真正的挑战在后面(关于题目不要害怕，并不是所有题都是英文的)', 1, 1, '2020-11-04 13:58:32', 1003, 1);
+INSERT INTO `problem` VALUES (1013, 'A+B for Input-Output Practice', 'our task is to Calculate a + b. Too easy?! Of course! I specially designed the problem for acm beginners. You must have found that some problems have the same titles with this one, yes, all these problems were designed for the same aim。\nthe same line:our task is to Calculate a + b. Too easy?! Of course! I specially designed the problem for acm beginners. You must have found that some problems have the same titles with this one, yes, all these problems were designed for the same aim。', 'The input will consist of a series of pairs of integers a and b, separated by a space, one pair of integers per line.\n\n\n', 'For each pair of input integers a and b you should output the sum of a and b in one line, and with one line of output for each line in input.\n\n\n', '1 5\n10 20', '6\n30', '这是一个求两数之和的题目，输入多对用空格分开的两个数a b，输出a+b的和，每一对数据的和占一行。\n编写代码时需要注意的是，由于没有指出有多少对输入数据，因此我们可以编写如下代码：\nC语言\n#include <stdio.h>\nint main() //把main函数定义成int类型\n{\n    int a,b;\n    while(scanf(\"%d %d\",&a, &b) != EOF) // 输入结束时，scanf函数返回值为EOF，即没有数据输入时则退出while循环\n        printf(\"%d\\n\",a+b);\n    return 0; //返回值为0\n}\nC++\n#include <iostream> //注意头文件的使用方法\nusing namespace std;\nint main()\n{\n    int a,b;\n    while(cin >> a >> b)\n        cout << a+b << endl;\n    return 0;\n}\n这道题目用以熟悉oj上的做题方式。\n真正的挑战在后面(关于题目不要害怕，并不是所有题都是英文的)', 1, 50, '2020-11-04 13:58:32', 1003, 1);
 COMMIT;
 
 -- ----------------------------
@@ -94,7 +103,7 @@ CREATE TABLE `state` (
   `timeCost` int(11) DEFAULT '0',
   `code` varchar(5005) DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1094 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=1097 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of state
@@ -103,6 +112,9 @@ BEGIN;
 INSERT INTO `state` VALUES (1000, 1000, 1000, '2021-04-25 18:27:28', 'C++', 'ce', 'testInfo', 0, 0, 'testCode');
 INSERT INTO `state` VALUES (1092, 1000, 1000, '2021-04-25 19:16:47', 'C++', 'ac', '', 3399680, 0, '#include \"iostream\"\nusing namespace std;\nint main()\n{\ncout << \"this is out\";\n}');
 INSERT INTO `state` VALUES (1093, 1013, 1000, '2021-04-25 19:17:22', 'C++', 'ac', '', 3403776, 2, '#include <iostream> //注意头文件的使用方法\nusing namespace std;\nint main()\n{\n    int a,b;\n    while(cin >> a >> b)\n        cout << a+b << endl;\n    return 0;\n}');
+INSERT INTO `state` VALUES (1094, 1013, 1000, '2021-04-27 17:43:34', 'C++', 'ce', '/judger/run/a55252c622974bdeaa121f18dbb4e6f0/main.c:1:1: error: expected unqualified-id before numeric constant\n 11111\n ^~~~~', 0, 0, '11111');
+INSERT INTO `state` VALUES (1095, 1013, 1000, '2021-04-27 17:57:25', 'C++', 'ac', '', 3457024, 2, '#include <iostream> //注意头文件的使用方法\nusing namespace std;\nint main()\n{\nint a,b;\nwhile(cin >> a >> b)\ncout << a+b << endl;\nreturn 0;\n}');
+INSERT INTO `state` VALUES (1096, 1013, 1000, '2021-04-27 17:57:42', 'C++', 'ac', '', 3461120, 2, '#include <iostream> //注意头文件的使用方法\nusing namespace std;\nint main()\n{\nint a,b;\nwhile(cin >> a >> b)\ncout << a+b << endl;\nreturn 0;\n}');
 COMMIT;
 
 -- ----------------------------
@@ -130,7 +142,7 @@ CREATE TABLE `user` (
 -- Records of user
 -- ----------------------------
 BEGIN;
-INSERT INTO `user` VALUES (1000, 'root', '4297f44b13955235245b2497399d7a93', 'admin', 'root@q.com1', 1, '161934499037946788062', 'http://k423.tech', 'https://github.com/teleport-10032', '「我将坠入苦痛 , 换你留在红莲」', '1000,1013', '', 2);
+INSERT INTO `user` VALUES (1000, 'root', '4297f44b13955235245b2497399d7a93', 'admin', 'root@q.com1', 1, '161951660798350528667', 'http://k423.tech', 'https://github.com/teleport-10032', '「我将坠入苦痛 , 换你留在红莲」', '1000,1013', '1013', 2);
 INSERT INTO `user` VALUES (1001, 'user1', '4297f44b13955235245b2497399d7a93', 'user', 'user1@q.com', 1, '160914538124477634192', 'about:blank', 'test', 'test', '', ' ', 0);
 INSERT INTO `user` VALUES (1002, 'user2', '4297f44b13955235245b2497399d7a93', 'user', 'user2@q.com', 1, '160377279468058589669', 'about:blank', 'about:blank', '这里没有签名档', '', ' ', 0);
 INSERT INTO `user` VALUES (1003, 'root2', '4297f44b13955235245b2497399d7a93', 'admin', 'root2@q.com', 1, '160871958310498213237', 'about:blank', 'about:blank', '这里没有签名档', '', '', 0);

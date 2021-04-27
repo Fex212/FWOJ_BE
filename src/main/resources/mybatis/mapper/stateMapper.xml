@@ -14,17 +14,42 @@
     <select id="getStateSum" resultType="int">
     select count(id) from onlinejudge.state
    </select>
+
     <!--    按id查询详情-->
     <select id="getStateDetail" resultType="state">
-    select state.id,problemId,username as authorName,date,language,state,cast(memoryCost/1024/1024 as decimal(10,0)) as memoryCost,compileInfo,timeCost,code
-    from state,user where authorId=user.id and state.id=#{id}
+        select state.id,problemId,username as authorName,date,language,state,cast(memoryCost/1024/1024 as decimal(10,0)) as memoryCost,compileInfo,timeCost,code
+        from state,user where authorId=user.id and state.id=#{id}
+    </select>
+    <!--    按id查询all-->
+    <select id="getStateAll" resultType="state">
+        select * from state where id=#{id}
     </select>
 
-<!--    插入一条state-->
+    <!--    插入一条state-->
     <insert id="addState" parameterType="state">
         insert into state (problemId, authorId, date, language, state, memoryCost, timeCost, code)
         values (#{problemId},#{authorId},#{date},#{language},'pd','0','0',#{code});
     </insert>
+
+<!--    getLastStateId-->
+    <select id="getLastStateId" resultType="int">
+        SELECT id from state order by id desc limit 1
+    </select>
+
+    <!--    getPendingTableList-->
+    <select id="getPendingIdList" resultType="int">
+        select id from pending
+    </select>
+    <!--    插入一条pending-->
+    <insert id="addPendingId" parameterType="int">
+        insert into pending (id) values (#{id})
+    </insert>
+<!--    delete pending by id-->
+    <insert id="deletePendingId" parameterType="int">
+        delete from pending where id=#{id}
+    </insert>
+    
+    
 
 <!--    查询Pending列表-->
     <select id="getPendingList" resultType="state">

@@ -78,9 +78,10 @@ public class stateServiceImpl implements stateService {
             int authorId = userMapperObject.getUserIdByToken(token);
             int isVisible = problemMapperObject.getProblemVisibleById(problemId);
             if (isVisible == 1
-                    &&
-                    stateMapperObject.addState(problemId, authorId, date, language, code.trim()) == 1)
-            {
+                    && stateMapperObject.addState(problemId, authorId, date, language, code.trim()) == 1) {
+                //id送到pending 表
+                int lastId = stateMapperObject.getLastStateId();
+                stateMapperObject.addPendingId(lastId);
                 s.put("error", "0");
             }
             else
@@ -93,9 +94,14 @@ public class stateServiceImpl implements stateService {
     @Override
     public void judgeServer() throws JSONException, IOException, ParseException {
 
-        List<state> list = stateMapperObject.getPendingList();
+        List<Integer> idList = stateMapperObject.getPendingIdList();
+        List<state> list = new LinkedList<>();
+        int len = idList.size();
 
-        int len = list.size();
+        for(int i = 0 ; i < len;i ++) {
+            list.add(stateMapperObject.getStateAll(idList.get(i)));
+        }
+
         for(int i = 0 ; i < len ; i ++)
         {
             int stateId = list.get(i).getId();
@@ -154,6 +160,7 @@ public class stateServiceImpl implements stateService {
                 }
                 stateMapperObject.setTimeCost(stateId,0);
                 stateMapperObject.setMemoryCost(stateId,0);
+                stateMapperObject.deletePendingId(list.get(i).getId());
             }
             else
             {
@@ -208,6 +215,8 @@ public class stateServiceImpl implements stateService {
                 stateMapperObject.updateState(stateId,finalRe,"");
                 stateMapperObject.setTimeCost(stateId,maxTimeCost);
                 stateMapperObject.setMemoryCost(stateId,maxMemoryCost);
+                //删除pending表中的id
+                stateMapperObject.deletePendingId(list.get(i).getId());
             }
             //判题完成。开始处理用户的solvedList,attemptList,solvedNum
             String solvedList = "";
@@ -224,12 +233,9 @@ public class stateServiceImpl implements stateService {
                 int acLen = acList.length;
                 //标志solved中是否有该题目
                 int existFlag = 0;
-                if(!solvedList.equals(""))
-                {
-                    for(int j = 0 ; j < acLen ; j ++)
-                    {
-                        if(Integer.parseInt(acList[j]) == problemId)
-                        {
+                if(!solvedList.equals("")) {
+                    for(int j = 0 ; j < acLen ; j ++) {
+                        if(Integer.parseInt(acList[j]) == problemId) {
                             existFlag = 1;
                             break;
                         }
@@ -249,8 +255,7 @@ public class stateServiceImpl implements stateService {
                 }
             }
             //若本题没ac，如果attempt中没有则需要加入
-            else
-            {
+            else {
                 String attList[] = attemptList.split(",");
                 int attLen = attList.length;
                 //标志attempt中是否有该题目
@@ -267,8 +272,7 @@ public class stateServiceImpl implements stateService {
                     }
                 }
                 //attempt中没有该题目,加入
-                if(existFlag == 0)
-                {
+                if(existFlag == 0) {
                     if(attemptList.equals(""))
                         userMapperObject.setUserAttemptListById(authorId,String.valueOf(problemId));
                     else
