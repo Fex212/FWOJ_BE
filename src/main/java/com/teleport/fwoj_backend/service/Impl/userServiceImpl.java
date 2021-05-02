@@ -180,9 +180,8 @@ public class userServiceImpl implements userService {
         String github = userMapperObject.getUserGithubById(id);
         String username = userMapperObject.getUserNameById(id);
         String solvedListString = userMapperObject.getUserSolvedListById(id);
+        int len = userMapperObject.getUserSolvedNumberById(id);
 
-        String tmp[] = solvedListString.split(",");
-        int len  = tmp.length;
         if(type != null)
         {
             s.put("error","0");

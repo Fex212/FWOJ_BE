@@ -153,11 +153,13 @@
     <select id="getUserTypeById" resultType="String">
         select type from user where id=#{id}
     </select>
-<!--    根据id查看available-->
+    <!--    根据id查看available-->
     <select id="getUserAvailableById" resultType="int">
         select available from user where id=#{id}
     </select>
-
+    <select id="getUserSolvedNumberById" resultType="int">
+        select solvedNum from user where id=#{id}
+    </select>
 
 
 <!--    根据id查看solvedList-->

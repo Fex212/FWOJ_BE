@@ -49,6 +49,8 @@ public interface userMapper {
     String getUserTypeById(@Param("id") int id);
     //根据id查看available
     Integer getUserAvailableById(@Param("id") int id);
+    //根据id查看solvedNumber
+    Integer getUserSolvedNumberById(@Param("id") int id);
 
     //根据id查看solvedList
     String getUserSolvedListById(@Param("id") int id);
